@@ -31,13 +31,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-->
         <dependency>
             <groupId>com.github.copilot</groupId>
             <artifactId>copilot-sdk</artifactId>
             <version>1.0.11</version>
         </dependency>
-
+        <!-->
         <dependency>
             <groupId>com.openai</groupId>
             <artifactId>openai-java</artifactId>
