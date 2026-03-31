@@ -1,4 +1,4 @@
-package com.cscd488.html.services;
+/** package com.cscd488.html.services;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
