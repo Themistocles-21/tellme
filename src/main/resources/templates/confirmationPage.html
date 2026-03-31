@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="ISO-8859-1">
+    <title>Order Submitted</title>
+</head>
+<body>
+
+
+<p><strong>Confirm:</strong> <span th:text="${confirmationMsg}"></span></p>
+<hr>
+
+<p><strong>Order Number:</strong> <span th:text="${orderNumber}"></span></p>
+<p><strong>Date & Time:</strong> <span th:text="${dateTime}"></span></p>
+<p><strong>Spam reminder: </strong> <span th:text="${msgToReadEmail}"></span></p>
+<p><strong>Email:</strong> <span th:text="${email}"></span></p>
+
+
+<br/>
+
+<form action="/home" method="get">
+    <button type="submit">Return Home</button>
+</form>
+
+</body>
+
+</html>

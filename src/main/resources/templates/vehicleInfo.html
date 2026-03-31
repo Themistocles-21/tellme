@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>vehicleInfo</title>
+</head>
+<body>
+
+<h3>CSCD488 Project</h3>
+<hr>
+
+<form action="/review" method="post">
+
+    <!-- Hidden customer fields -->
+    <input type="hidden" name="fname" th:value="${firstname}">
+    <input type="hidden" name="lname" th:value="${lastname}">
+    <input type="hidden" name="email" th:value="${email}">
+    <input type="hidden" name="phone" th:value="${phone}">
+    <input type="hidden" name="address" th:value="${address}">
+
+    <p class="vehicleDetails">
+        Vehicle Information <br>
+
+        <label for="make">Make:</label><br>
+        <input type="text" id="make" name="make" required><br><br>
+
+
+        <label for="model">Model:</label><br>
+        <input type="text" id="model" name="model" required><br><br>
+
+        <label for="year">Year:</label><br>
+        <input type="text" id="year" name="year" required><br><br>
+
+        <label for="vin">VIN #:</label><br>
+        <input type="text" id="vin" name="vin" required><br><br>
+    </p>
+
+    <label for="freeFormText">Describe the issue:</label><br>
+    <textarea id="freeFormText" name="freeFormText" rows="15" required></textarea><br><br>
+
+    <button type="submit">Next</button>
+
+</form>
+
+</body>
+</html>
