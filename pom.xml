@@ -6,16 +6,19 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.CSCD488.html</groupId>
     <artifactId>springboot-html</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboot-html</name>
     <description>Springboot html application</description>
+
     <properties>
         <java.version>17</java.version>
+        <start-class>com.cscd488.html.SpringbootHtmlApplication</start-class>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,6 +27,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
         <dependency>
@@ -45,17 +53,6 @@
             <artifactId>openai-java</artifactId>
             <version>4.29.0</version>
         </dependency>
-
-        <!-- Mail dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -63,8 +60,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.cscd488.html.SpringbootHtmlApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
