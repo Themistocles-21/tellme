@@ -3,7 +3,7 @@ package com.cscd488.html.controller;
 import com.cscd488.html.services.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.cscd488.html.model.Customer;
-import com.cscd488.html.model.FileWriter;
+import com.cscd488.html.model.CustomerFileWriter;
 import com.cscd488.html.model.Vehicle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ public class ReviewController {
         return "confirmationPage";
     }
 
-    FileWriter fileWriter = new FileWriter();
+    CustomerFileWriter customerFileWriter = new CustomerFileWriter();
     @Autowired
     private EmailSenderService service;
 
@@ -59,7 +59,7 @@ public class ReviewController {
         //If file writer is here the order number will be different. But it works here !
         String text = formattedDateTime + "\nOrder Number: " + orderNumber + customer.toString() + vehicle.toString();
 
-        fileWriter.writeToFile(text, customer.getLname() + ".txt");
+        customerFileWriter.writeToFile(text, customer.getLname() + ".txt");
 
         //sends email without attachment
         // service.sendSimpleEmail(customer.getEmail(), text,customer.getLname());

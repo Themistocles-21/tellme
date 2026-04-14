@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class FileWriter {
+public class CustomerFileWriter {
 
     public void writeToFile(String text, String fileName) throws IOException {
         Files.write(

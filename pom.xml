@@ -8,7 +8,7 @@
         <version>3.1.5</version>
         <relativePath/>
     </parent>
-    <groupId>com.CSCD488.html</groupId>
+    <groupId>com.cscd488.html</groupId>
     <artifactId>springboot-html</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboot-html</name>
@@ -53,6 +53,17 @@
             <artifactId>openai-java</artifactId>
             <version>4.29.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
