@@ -1,17 +1,13 @@
 package com.cscd488.html.controller;
 
-import com.cscd488.html.model.*;
+import com.cscd488.html.model.Customer;
+import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.services.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Controller
-@SessionAttributes({"customer", "vehicle"})
 public class ReviewController {
 
     private final CustomerService customerService;
@@ -21,29 +17,39 @@ public class ReviewController {
     }
 
     @PostMapping("/review")
-    public String finalize(@ModelAttribute("customer") Customer customer,
-                           @ModelAttribute("vehicle") Vehicle vehicle,
-                           HttpSession session,
-                           Model model) {
+    public String review(@ModelAttribute Customer customer,
+                         @ModelAttribute Vehicle vehicle,
+                         Model model) {
 
-        // DEBUG (IMPORTANT)
-        System.out.println("CUSTOMER: " + customer.getEmail());
-        System.out.println("VEHICLE: " + vehicle.getVin());
+        model.addAttribute("firstname", customer.getFname());
+        model.addAttribute("lastname", customer.getLname());
+        model.addAttribute("email", customer.getEmail());
+        model.addAttribute("phone", customer.getPhone());
+        model.addAttribute("address", customer.getAddress());
 
-        // SAVE ONCE
-        CustomerEntity savedCustomer = customerService.saveCustomer(customer);
-        vehicle.setCustomer(savedCustomer);
+        model.addAttribute("make", vehicle.getMake());
+        model.addAttribute("model", vehicle.getModel());
+        model.addAttribute("year", vehicle.getYear());
+        model.addAttribute("vin", vehicle.getVin());
+        model.addAttribute("freeFormText", vehicle.getFreeFormText());
+
+        return "reviewPage";
+    }
+
+    @PostMapping("/confirmationPage")
+    public String confirm(@ModelAttribute Customer customer,
+                          @ModelAttribute Vehicle vehicle,
+                          Model model) {
+
+        customerService.saveCustomer(customer);
         customerService.saveVehicle(vehicle);
 
-        // CLEAR SESSION
-        session.invalidate();
-
-        // CONFIRMATION DATA
-        model.addAttribute("confirmationMsg", "Success");
-        model.addAttribute("orderNumber", UUID.randomUUID().toString().substring(0, 8));
-        model.addAttribute("dateTime", LocalDateTime.now().toString());
+        model.addAttribute("confirmationMsg", "Submission complete!");
+        model.addAttribute("orderNumber", vehicle.getVin());
+        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
+        model.addAttribute("msgToReadEmail", "Check your email");
         model.addAttribute("email", customer.getEmail());
 
-        return "confirmation";
+        return "confirmationPage";
     }
 }

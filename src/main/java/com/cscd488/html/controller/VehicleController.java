@@ -1,45 +1,37 @@
 package com.cscd488.html.controller;
 
-import com.cscd488.html.model.Customer;
-import com.cscd488.html.model.CustomerEntity;
 import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.services.CustomerService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Controller
-@SessionAttributes({"customer", "vehicle"})
-public class ReviewController {
+public class VehicleController {
 
     private final CustomerService customerService;
 
-    public ReviewController(CustomerService customerService) {
+    public VehicleController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
-    @PostMapping("/review")
-    public String confirm(@ModelAttribute("customer") Customer customer,
-                          @ModelAttribute("vehicle") Vehicle vehicle,
-                          Model model,
-                          HttpSession session) {
+    @GetMapping("/vehicle")
+    public String vehiclePage() {
+        return "vehicleInfo";
+    }
 
-        CustomerEntity savedCustomer = customerService.saveCustomer(customer);
+    @PostMapping("/vehicle/register")
+    public String vehicleRegister(@ModelAttribute Vehicle vehicle,
+                                  Model model) {
 
-        vehicle.setCustomer(savedCustomer);
         customerService.saveVehicle(vehicle);
 
-        session.invalidate();
+        model.addAttribute("confirmationMsg", "Vehicle saved successfully");
+        model.addAttribute("orderNumber", vehicle.getVin());
+        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
+        model.addAttribute("msgToReadEmail", "Check email for details");
+        model.addAttribute("email", "not linked yet");
 
-        model.addAttribute("confirmationMsg", "Success");
-        model.addAttribute("orderNumber", UUID.randomUUID().toString().substring(0, 8));
-        model.addAttribute("dateTime", LocalDateTime.now().toString());
-        model.addAttribute("email", customer.getEmail());
-
-        return "confirmation";
+        return "confirmationPage";
     }
 }
