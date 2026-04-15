@@ -14,61 +14,29 @@ public class Vehicle {
     private String make;
     private String model;
     private String year;
+
+    @Column(name = "free_form_text")
     private String freeFormText;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    private String customerEmail;
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public String getVin() {
-        return vin;
-    }
+    public String getVin() { return vin; }
+    public void setVin(String vin) { this.vin = vin; }
 
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
+    public String getMake() { return make; }
+    public void setMake(String make) { this.make = make; }
 
-    public String getMake() {
-        return make;
-    }
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
+    public String getYear() { return year; }
+    public void setYear(String year) { this.year = year; }
 
-    public String getModel() {
-        return model;
-    }
+    public String getFreeFormText() { return freeFormText; }
+    public void setFreeFormText(String freeFormText) { this.freeFormText = freeFormText; }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getFreeFormText() {
-        return freeFormText;
-    }
-
-    public void setFreeFormText(String freeFormText) {
-        this.freeFormText = freeFormText;
-    }
-
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
-    }
+    public String getCustomerEmail() { return customerEmail; }
+    public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
 }

@@ -32,7 +32,7 @@ public class VehicleController {
         model.addAttribute("confirmationMsg", "Vehicle submitted successfully");
         model.addAttribute("orderNumber", vehicle.getVin());
         model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check your email for details");
+        model.addAttribute("msgToReadEmail", "Check email");
         model.addAttribute("email", email);
 
         return "confirmation";

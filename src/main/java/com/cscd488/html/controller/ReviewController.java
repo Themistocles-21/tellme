@@ -42,7 +42,7 @@ public class ReviewController {
                           Model model) {
 
         customerService.saveCustomer(customer);
-        customerService.saveVehicle(vehicle);
+        customerService.saveVehicle(vehicle, customer.getEmail());
 
         model.addAttribute("confirmationMsg", "Submission complete!");
         model.addAttribute("orderNumber", vehicle.getVin());
