@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Controller
 public class ReviewController {
 
@@ -17,9 +19,10 @@ public class ReviewController {
     }
 
     @PostMapping("/review")
-    public String review(@ModelAttribute Customer customer,
-                         @ModelAttribute Vehicle vehicle,
-                         Model model) {
+    public String reviewPage(
+            @ModelAttribute Customer customer,
+            @ModelAttribute Vehicle vehicle,
+            Model model) {
 
         model.addAttribute("firstname", customer.getFname());
         model.addAttribute("lastname", customer.getLname());
@@ -39,7 +42,7 @@ public class ReviewController {
     @PostMapping("/confirmationPage")
     public String confirm(@ModelAttribute Customer customer,
                           @ModelAttribute Vehicle vehicle,
-                          Model model) {
+                          Model model) throws IOException {
 
         customerService.saveCustomer(customer);
         customerService.saveVehicle(vehicle, customer.getEmail());
