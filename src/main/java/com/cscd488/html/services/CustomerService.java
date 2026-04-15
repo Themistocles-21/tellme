@@ -17,7 +17,7 @@ public class CustomerService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public void saveCustomer(Customer customer) {
+    public CustomerEntity saveCustomer(Customer customer) {
 
         CustomerEntity entity = new CustomerEntity();
         entity.setFname(customer.getFname());
@@ -26,10 +26,10 @@ public class CustomerService {
         entity.setPhone(customer.getPhone());
         entity.setAddress(customer.getAddress());
 
-        customerRepository.save(entity);
+        return customerRepository.save(entity);
     }
 
-    public void saveVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+    public Vehicle saveVehicle(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
     }
 }

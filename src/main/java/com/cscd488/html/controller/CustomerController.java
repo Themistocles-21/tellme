@@ -14,13 +14,10 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String customerRegistration(@ModelAttribute Customer customer, Model model) {
+    public String customerRegistration(@ModelAttribute Customer customer,
+                                       Model model) {
 
-        model.addAttribute("firstname", customer.getFname());
-        model.addAttribute("lastname", customer.getLname());
-        model.addAttribute("email", customer.getEmail());
-        model.addAttribute("phone", customer.getPhone());
-        model.addAttribute("address", customer.getAddress());
+        model.addAttribute("customer", customer);
 
         return "vehicleInfo";
     }

@@ -23,13 +23,15 @@ public class ReviewController {
                               @ModelAttribute Vehicle vehicle,
                               Model model) {
 
-        customerService.saveCustomer(customer);
+        CustomerEntity savedCustomer = customerService.saveCustomer(customer);
+
+        vehicle.setCustomer(savedCustomer);
         customerService.saveVehicle(vehicle);
 
         model.addAttribute("confirmationMsg", "Success");
         model.addAttribute("orderNumber", UUID.randomUUID().toString().substring(0, 8));
         model.addAttribute("dateTime", LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check your email");
+        model.addAttribute("msgToReadEmail", "Check your email for details");
         model.addAttribute("email", customer.getEmail());
 
         return "confirmation";
