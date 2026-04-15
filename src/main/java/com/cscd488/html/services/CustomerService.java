@@ -10,6 +10,14 @@ import jakarta.transaction.Transactional;
 @Service
 public class CustomerService {
 
+    public Customer findByEmail(String email) {
+        return entityManager.createQuery("SELECT c FROM Customer c WHERE c.email = :email", Customer.class)
+                .setParameter("email", email)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
     @PersistenceContext
     private EntityManager entityManager;
 
