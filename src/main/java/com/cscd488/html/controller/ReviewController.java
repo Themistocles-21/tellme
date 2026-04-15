@@ -6,10 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Controller
+@SessionAttributes({"customer", "vehicle"})
 public class ReviewController {
 
     private final CustomerService customerService;
@@ -19,19 +21,21 @@ public class ReviewController {
     }
 
     @PostMapping("/review")
-    public String finalSubmit(@ModelAttribute Customer customer,
-                              @ModelAttribute Vehicle vehicle,
-                              Model model) {
+    public String finalizeOrder(@ModelAttribute("customer") Customer customer,
+                                @ModelAttribute("vehicle") Vehicle vehicle,
+                                HttpSession session,
+                                Model model) {
 
         CustomerEntity savedCustomer = customerService.saveCustomer(customer);
 
         vehicle.setCustomer(savedCustomer);
         customerService.saveVehicle(vehicle);
 
+        session.invalidate();
+
         model.addAttribute("confirmationMsg", "Success");
         model.addAttribute("orderNumber", UUID.randomUUID().toString().substring(0, 8));
         model.addAttribute("dateTime", LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check your email for details");
         model.addAttribute("email", customer.getEmail());
 
         return "confirmation";

@@ -6,7 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@SessionAttributes("customer")
 public class CustomerController {
+
+    @ModelAttribute("customer")
+    public Customer customer() {
+        return new Customer();
+    }
 
     @GetMapping("/home")
     public String home() {
@@ -14,11 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String customerRegistration(@ModelAttribute Customer customer,
-                                       Model model) {
-
-        model.addAttribute("customer", customer);
-
+    public String registerCustomer(@ModelAttribute Customer customer) {
         return "vehicleInfo";
     }
 }
