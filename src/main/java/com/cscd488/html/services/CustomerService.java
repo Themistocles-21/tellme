@@ -1,9 +1,9 @@
 package com.cscd488.html.services;
 
 import com.cscd488.html.model.*;
-import com.cscd488.html.model.CustomerEntity;
 import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.repository.CustomerRepository;
+import com.cscd488.html.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,48 +12,24 @@ import java.io.IOException;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final VehicleRepository vehicleRepository;
     private final CustomerFileWriter fileWriter = new CustomerFileWriter();
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository,
+                           VehicleRepository vehicleRepository) {
         this.customerRepository = customerRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
-    // -------------------------
-    // CUSTOMER SAVE
-    // -------------------------
-    public void saveCustomer(Customer customer) throws IOException {
+    public void saveVehicle(Vehicle vehicle, Long customerId) throws IOException {
 
-        String text =
-                "Customer Info\n" +
-                        "First Name: " + customer.getFname() + "\n" +
-                        "Last Name: " + customer.getLname() + "\n" +
-                        "Email: " + customer.getEmail() + "\n" +
-                        "Phone: " + customer.getPhone() + "\n" +
-                        "Address: " + customer.getAddress();
+        CustomerEntity customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        fileWriter.writeToFile(text, "customer.txt");
+        vehicle.setCustomer(customer);
 
-        CustomerEntity entity = new CustomerEntity();
-        entity.setFname(customer.getFname());
-        entity.setLname(customer.getLname());
-        entity.setEmail(customer.getEmail());
-        entity.setPhone(customer.getPhone());
-        entity.setAddress(customer.getAddress());
+        fileWriter.writeToFile("Vehicle Info\n" + vehicle.toString(), "vehicle.txt");
 
-        customerRepository.save(entity);
-    }
-
-    // -------------------------
-    // VEHICLE SAVE (placeholder)
-    // -------------------------
-    public void saveVehicle(Vehicle vehicle) throws IOException {
-
-        String text =
-                "Vehicle Info\n" +
-                        vehicle.toString();
-
-        fileWriter.writeToFile(text, "vehicle.txt");
-
-        // DB logic for vehicle will come next step
+        vehicleRepository.save(vehicle);
     }
 }

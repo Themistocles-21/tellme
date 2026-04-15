@@ -1,6 +1,7 @@
 package com.cscd488.html.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -15,6 +16,9 @@ public class CustomerEntity {
     private String email;
     private String phone;
     private String address;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Vehicle> vehicles;
 
     public Long getId() {
         return id;
@@ -62,5 +66,13 @@ public class CustomerEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }

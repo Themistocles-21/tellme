@@ -22,11 +22,10 @@ public class VehicleController {
     }
 
     @PostMapping("/vehicle/register")
-    public String vehicleRegistration(@ModelAttribute Vehicle vehicleInf)
-            throws IOException {
+    public String vehicleRegistration(@ModelAttribute Vehicle vehicleInf,
+                                      @RequestParam Long customerId) throws IOException {
 
-        customerService.saveVehicle(vehicleInf);
-
+        customerService.saveVehicle(vehicleInf, customerId);
         return "confirmation";
     }
 }

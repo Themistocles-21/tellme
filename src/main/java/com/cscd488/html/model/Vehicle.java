@@ -1,12 +1,26 @@
 package com.cscd488.html.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "vehicle")
 public class Vehicle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String make;
     private String model;
     private String year;
-    private String vin;
-    private String freeFormText;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getMake() {
         return make;
@@ -32,28 +46,11 @@ public class Vehicle {
         this.year = year;
     }
 
-    public String getVin() {
-        return vin;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public String getFreeFormText() {
-        return freeFormText;
-    }
-
-    public void setFreeFormText(String freeFormText) {
-        this.freeFormText = freeFormText;
-    }
-
-    @Override
-    public String toString() {
-        return "\n\nBelow is Vehicle information:\nMake: " + make +
-                "\nModel: " + model +
-                "\nYear: " + year +
-                "\nVIN: " + vin +
-                "\nTechnical Issue: " + freeFormText;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 }

@@ -1,5 +1,9 @@
 package com.cscd488.html.model;
 
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
+
 public class Customer {
 
     private String fname;
