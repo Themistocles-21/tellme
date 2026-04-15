@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!--
+
 <p><strong>Confirm:</strong> <span th:text="${confirmationMsg}"></span></p>
 <hr>
 
@@ -15,22 +15,7 @@
 <p><strong>Date & Time:</strong> <span th:text="${dateTime}"></span></p>
 <p><strong>Spam reminder: </strong> <span th:text="${msgToReadEmail}"></span></p>
 <p><strong>Email:</strong> <span th:text="${email}"></span></p>
-!-->
-<p><strong>Confirm:</strong>
-    <span th:text="${confirmationMsg != null ? confirmationMsg : 'Success'}"></span>
-</p>
 
-<p><strong>Order Number:</strong>
-    <span th:text="${orderNumber != null ? orderNumber : 'N/A'}"></span>
-</p>
-
-<p><strong>Date & Time:</strong>
-    <span th:text="${dateTime != null ? dateTime : 'N/A'}"></span>
-</p>
-
-<p><strong>Email:</strong>
-    <span th:text="${email != null ? email : 'Not provided'}"></span>
-</p>
 
 <br/>
 
