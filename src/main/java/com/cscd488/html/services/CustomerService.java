@@ -1,36 +1,25 @@
 package com.cscd488.html.services;
 
 import com.cscd488.html.model.Customer;
-import com.cscd488.html.model.CustomerEntity;
 import com.cscd488.html.model.Vehicle;
-import com.cscd488.html.repository.CustomerRepository;
-import com.cscd488.html.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CustomerService {
 
-    private final CustomerRepository customerRepository;
-    private final VehicleRepository vehicleRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public CustomerService(CustomerRepository customerRepository,
-                           VehicleRepository vehicleRepository) {
-        this.customerRepository = customerRepository;
-        this.vehicleRepository = vehicleRepository;
-    }
-
+    @Transactional
     public void saveCustomer(Customer customer) {
-        CustomerEntity entity = new CustomerEntity();
-        entity.setFname(customer.getFname());
-        entity.setLname(customer.getLname());
-        entity.setEmail(customer.getEmail());
-        entity.setPhone(customer.getPhone());
-        entity.setAddress(customer.getAddress());
-
-        customerRepository.save(entity);
+        entityManager.persist(customer);
     }
 
+    @Transactional
     public void saveVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+        entityManager.persist(vehicle);
     }
 }

@@ -15,13 +15,16 @@ public class Vehicle {
     private String model;
     private String year;
 
-    @Column(name = "free_form_text")
+    @Column(name = "free_form_text", length = 1000)
     private String freeFormText;
 
-    @Column(name = "customer_email")
-    private String customerEmail;
+    @ManyToOne
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
+    private Customer customer;
 
+    // Getters and setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getVin() { return vin; }
     public void setVin(String vin) { this.vin = vin; }
@@ -38,6 +41,6 @@ public class Vehicle {
     public String getFreeFormText() { return freeFormText; }
     public void setFreeFormText(String freeFormText) { this.freeFormText = freeFormText; }
 
-    public String getCustomerEmail() { return customerEmail; }
-    public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
 }

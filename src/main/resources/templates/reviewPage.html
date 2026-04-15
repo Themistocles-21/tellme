@@ -1,10 +1,24 @@
-<p th:text="${customer.fname}"></p>
-<p th:text="${customer.lname}"></p>
-<p th:text="${customer.email}"></p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Your Information</title>
+</head>
+<body>
 
-<p th:text="${vehicle.make}"></p>
-<p th:text="${vehicle.model}"></p>
-<p th:text="${vehicle.vin}"></p>
+<h2>Review Your Information</h2>
+
+<p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
+<p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
+<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
+<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+
+<p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
+<p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
+<p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
+<p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
+<p><strong>Issue:</strong> <span th:text="${vehicle.freeFormText}"></span></p>
 
 <form action="/confirmationPage" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
@@ -19,5 +33,8 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
-    <button type="submit">Confirm</button>
+    <button type="submit">Confirm Submission</button>
 </form>
+
+</body>
+</html>

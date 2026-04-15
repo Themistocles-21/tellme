@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Controller
 public class ReviewController {
@@ -24,15 +25,21 @@ public class ReviewController {
                           @ModelAttribute Vehicle vehicle,
                           Model model) throws IOException {
 
+        // Save to database
         customerService.saveCustomer(customer);
         customerService.saveVehicle(vehicle);
 
+        // Generate order number
+        String orderNumber = UUID.randomUUID().toString().substring(0, 8);
+
+        // Add to model for display
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-
-        model.addAttribute("confirmationMsg", "Submission complete!");
-        model.addAttribute("orderNumber", vehicle.getVin());
+        model.addAttribute("confirmationMsg", "Your order was successfully submitted!");
+        model.addAttribute("orderNumber", orderNumber);
         model.addAttribute("dateTime", LocalDateTime.now().toString());
+        model.addAttribute("email", customer.getEmail());
+        model.addAttribute("msgToReadEmail", "Please check your inbox and make sure email is not marked as spam.");
 
         return "confirmationPage";
     }
