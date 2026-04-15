@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Vehicle Information</title>
+</head>
+<body>
+
+<h3>Vehicle Information</h3>
+<hr>
+
 <form action="/vehicle/register" method="post">
 
     <!-- CUSTOMER PASSED THROUGH MODEL -->
@@ -7,20 +18,24 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
 
-    <label>Make:</label>
-    <input type="text" name="make">
+    <label for="make">Make :</label> <br/>
+    <input type="text" name="make" id="make"/> <br/><br/>
 
-    <label>Model:</label>
-    <input type="text" name="model">
+    <label for="model">Model :</label> <br/>
+    <input type="text" name="model" id="model"/> <br/><br/>
 
-    <label>Year:</label>
-    <input type="text" name="year">
+    <label for="year">Year :</label> <br/>
+    <input type="text" name="year" id="year"/> <br/><br/>
 
-    <label>VIN:</label>
-    <input type="text" name="vin">
+    <label for="vin">VIN :</label> <br/>
+    <input type="text" name="vin" id="vin"/> <br/><br/>
 
-    <label>Issue:</label>
-    <textarea name="freeFormText"></textarea>
+    <label for="freeFormText">Describe the issue :</label> <br/>
+    <textarea name="freeFormText" id="freeFormText" rows="4" cols="50"></textarea> <br/><br/>
 
     <button type="submit">Next</button>
+
 </form>
+
+</body>
+</html>
