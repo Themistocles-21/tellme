@@ -5,11 +5,14 @@ import com.cscd488.html.repository.CustomerRepository;
 import com.cscd488.html.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final VehicleRepository vehicleRepository;
+    private final CustomerFileWriter fileWriter = new CustomerFileWriter();
 
     public CustomerService(CustomerRepository customerRepository,
                            VehicleRepository vehicleRepository) {
@@ -17,7 +20,7 @@ public class CustomerService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public void saveCustomer(Customer customer) {
+    public void saveCustomer(Customer customer) throws IOException {
 
         CustomerEntity entity = new CustomerEntity();
         entity.setFname(customer.getFname());
@@ -29,8 +32,15 @@ public class CustomerService {
         customerRepository.save(entity);
     }
 
-    public void saveVehicle(Vehicle vehicle) {
+    public void saveVehicle(Vehicle vehicle) throws IOException {
 
-        vehicleRepository.save(vehicle);
+        VehicleEntity entity = new VehicleEntity();
+        entity.setVin(vehicle.getVin());
+        entity.setMake(vehicle.getMake());
+        entity.setModel(vehicle.getModel());
+        entity.setYear(vehicle.getYear());
+        entity.setFreeFormText(vehicle.getFreeFormText());
+
+        vehicleRepository.save(entity);
     }
 }

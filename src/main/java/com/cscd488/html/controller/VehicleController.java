@@ -15,23 +15,23 @@ public class VehicleController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/vehicle")
-    public String vehiclePage() {
-        return "vehicleInfo";
-    }
-
     @PostMapping("/vehicle/register")
-    public String vehicleRegister(@ModelAttribute Vehicle vehicle,
-                                  Model model) {
+    public String vehicleRegistration(@ModelAttribute Vehicle vehicle, Model model) throws Exception {
 
         customerService.saveVehicle(vehicle);
 
-        model.addAttribute("confirmationMsg", "Vehicle saved successfully");
-        model.addAttribute("orderNumber", vehicle.getVin());
-        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check email for details");
-        model.addAttribute("email", "not linked yet");
+        model.addAttribute("firstname", model.getAttribute("firstname"));
+        model.addAttribute("lastname", model.getAttribute("lastname"));
+        model.addAttribute("email", model.getAttribute("email"));
+        model.addAttribute("phone", model.getAttribute("phone"));
+        model.addAttribute("address", model.getAttribute("address"));
 
-        return "confirmationPage";
+        model.addAttribute("make", vehicle.getMake());
+        model.addAttribute("model", vehicle.getModel());
+        model.addAttribute("year", vehicle.getYear());
+        model.addAttribute("vin", vehicle.getVin());
+        model.addAttribute("freeFormText", vehicle.getFreeFormText());
+
+        return "reviewPage";
     }
 }
