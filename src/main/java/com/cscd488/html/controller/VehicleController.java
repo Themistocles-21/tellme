@@ -1,38 +1,30 @@
 package com.cscd488.html.controller;
 
-import com.cscd488.html.model.*;
-import com.cscd488.html.services.CustomerService;
+import com.cscd488.html.model.Vehicle;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class VehicleController {
 
-    private final CustomerService customerService;
-
-    public VehicleController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping("/vehicle")
-    public String vehicleInfo() {
-        return "vehicleInfo";
-    }
-
     @PostMapping("/vehicle/register")
-    public String vehicleRegistration(@ModelAttribute Vehicle vehicleInf, Model model)
-            throws IOException {
+    public String vehicleRegistration(@ModelAttribute Vehicle vehicle,
+                                      @ModelAttribute("firstname") String firstname,
+                                      @ModelAttribute("lastname") String lastname,
+                                      @ModelAttribute("email") String email,
+                                      @ModelAttribute("phone") String phone,
+                                      @ModelAttribute("address") String address,
+                                      Model model) {
 
-        customerService.saveVehicle(vehicleInf);
+        model.addAttribute("customerFirst", firstname);
+        model.addAttribute("customerLast", lastname);
+        model.addAttribute("customerEmail", email);
+        model.addAttribute("customerPhone", phone);
+        model.addAttribute("customerAddress", address);
 
-        model.addAttribute("confirmationMsg", "Vehicle submitted successfully");
-        model.addAttribute("orderNumber", vehicleInf.getVin());
-        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check your email for details");
-        model.addAttribute("email", "not linked in vehicle flow");
+        model.addAttribute("vehicle", vehicle);
 
-        return "confirmation";
+        return "reviewPage";
     }
 }

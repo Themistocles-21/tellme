@@ -1,41 +1,26 @@
 package com.cscd488.html.controller;
 
 import com.cscd488.html.model.Customer;
-import com.cscd488.html.services.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @Controller
 public class CustomerController {
 
-    private final CustomerService customerService;
-
-    private static final String TEAM_MEMBERS =
-            "Aaron Oehler, Derik Little, Danish Wahidi";
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping("home")
-    public String index() {
+    @GetMapping("/home")
+    public String home() {
         return "customerInfo";
     }
 
     @PostMapping("/register")
-    public String customerRegistration(@ModelAttribute Customer customerInf, Model model) throws IOException {
+    public String customerRegistration(@ModelAttribute Customer customer, Model model) {
 
-        model.addAttribute("firstname", customerInf.getFname());
-        model.addAttribute("lastname", customerInf.getLname());
-        model.addAttribute("email", customerInf.getEmail());
-        model.addAttribute("phone", customerInf.getPhone());
-        model.addAttribute("address", customerInf.getAddress());
-        model.addAttribute("teamMembers", TEAM_MEMBERS);
-        
-        customerService.saveCustomer(customerInf);
+        model.addAttribute("firstname", customer.getFname());
+        model.addAttribute("lastname", customer.getLname());
+        model.addAttribute("email", customer.getEmail());
+        model.addAttribute("phone", customer.getPhone());
+        model.addAttribute("address", customer.getAddress());
 
         return "vehicleInfo";
     }
