@@ -25,6 +25,9 @@ public class ReviewController {
                           @ModelAttribute Vehicle vehicle,
                           Model model) throws IOException {
 
+        // Link vehicle to customer
+        vehicle.setCustomer(customer);
+
         // Save to database
         customerService.saveCustomer(customer);
         customerService.saveVehicle(vehicle);
