@@ -46,11 +46,11 @@ public class CustomerService {
 
         String text =
                 "Vehicle Info\n" +
-                        "VIN: " + vehicle.getVin() + "\n" +
                         "Make: " + vehicle.getMake() + "\n" +
                         "Model: " + vehicle.getModel() + "\n" +
                         "Year: " + vehicle.getYear() + "\n" +
-                        "Notes: " + vehicle.getFreeFormText();
+                        "VIN: " + vehicle.getVin() + "\n" +
+                        "Describe the issue: " + vehicle.getFreeFormText();
 
         fileWriter.writeToFile(text, "vehicle.txt");
 
