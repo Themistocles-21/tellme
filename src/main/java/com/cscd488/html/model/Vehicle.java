@@ -18,6 +18,7 @@ public class Vehicle {
     @Column(name = "free_form_text")
     private String freeFormText;
 
+    @Column(name = "customer_email")
     private String customerEmail;
 
     public Long getId() { return id; }
