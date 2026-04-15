@@ -1,7 +1,5 @@
 package com.cscd488.html.model;
 
-import jakarta.persistence.OneToMany;
-
 import java.util.List;
 
 public class Customer {
@@ -12,10 +10,9 @@ public class Customer {
     private String address;
     private String phone;
 
+    private List<Vehicle> vehicles;
+
     public String getFname() {
-        if (fname != null && fname.equals("Danish")) {
-            return "Project Contributor";
-        }
         return fname;
     }
 
@@ -55,12 +52,11 @@ public class Customer {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "\n\nBelow is Customer Information:\nFirst Name: " + fname +
-                "\nLast Name: " + lname +
-                "\nEmail: " + email +
-                "\nPhone: " + phone +
-                "\nAddress: " + address;
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }

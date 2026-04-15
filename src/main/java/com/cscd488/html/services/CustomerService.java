@@ -1,7 +1,6 @@
 package com.cscd488.html.services;
 
 import com.cscd488.html.model.*;
-import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.repository.CustomerRepository;
 import com.cscd488.html.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,39 @@ public class CustomerService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public void saveVehicle(Vehicle vehicle, Long customerId) throws IOException {
+    public void saveCustomer(Customer customer) throws IOException {
 
-        CustomerEntity customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        String text =
+                "Customer Info\n" +
+                        "First Name: " + customer.getFname() + "\n" +
+                        "Last Name: " + customer.getLname() + "\n" +
+                        "Email: " + customer.getEmail() + "\n" +
+                        "Phone: " + customer.getPhone() + "\n" +
+                        "Address: " + customer.getAddress();
 
-        vehicle.setCustomer(customer);
+        fileWriter.writeToFile(text, "customer.txt");
 
-        fileWriter.writeToFile("Vehicle Info\n" + vehicle.toString(), "vehicle.txt");
+        CustomerEntity entity = new CustomerEntity();
+        entity.setFname(customer.getFname());
+        entity.setLname(customer.getLname());
+        entity.setEmail(customer.getEmail());
+        entity.setPhone(customer.getPhone());
+        entity.setAddress(customer.getAddress());
+
+        customerRepository.save(entity);
+    }
+
+    public void saveVehicle(Vehicle vehicle) throws IOException {
+
+        String text =
+                "Vehicle Info\n" +
+                        "VIN: " + vehicle.getVin() + "\n" +
+                        "Make: " + vehicle.getMake() + "\n" +
+                        "Model: " + vehicle.getModel() + "\n" +
+                        "Year: " + vehicle.getYear() + "\n" +
+                        "Notes: " + vehicle.getFreeFormText();
+
+        fileWriter.writeToFile(text, "vehicle.txt");
 
         vehicleRepository.save(vehicle);
     }
