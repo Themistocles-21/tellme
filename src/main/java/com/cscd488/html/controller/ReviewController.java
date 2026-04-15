@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Controller
 public class ReviewController {
@@ -18,40 +19,20 @@ public class ReviewController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/review")
-    public String reviewPage(
-            @ModelAttribute Customer customer,
-            @ModelAttribute Vehicle vehicle,
-            Model model) {
-
-        model.addAttribute("firstname", customer.getFname());
-        model.addAttribute("lastname", customer.getLname());
-        model.addAttribute("email", customer.getEmail());
-        model.addAttribute("phone", customer.getPhone());
-        model.addAttribute("address", customer.getAddress());
-
-        model.addAttribute("make", vehicle.getMake());
-        model.addAttribute("model", vehicle.getModel());
-        model.addAttribute("year", vehicle.getYear());
-        model.addAttribute("vin", vehicle.getVin());
-        model.addAttribute("freeFormText", vehicle.getFreeFormText());
-
-        return "reviewPage";
-    }
-
     @PostMapping("/confirmationPage")
     public String confirm(@ModelAttribute Customer customer,
                           @ModelAttribute Vehicle vehicle,
                           Model model) throws IOException {
 
         customerService.saveCustomer(customer);
-        customerService.saveVehicle(vehicle, customer.getEmail());
+        customerService.saveVehicle(vehicle);
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", vehicle);
 
         model.addAttribute("confirmationMsg", "Submission complete!");
         model.addAttribute("orderNumber", vehicle.getVin());
-        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
-        model.addAttribute("msgToReadEmail", "Check your email");
-        model.addAttribute("email", customer.getEmail());
+        model.addAttribute("dateTime", LocalDateTime.now().toString());
 
         return "confirmationPage";
     }

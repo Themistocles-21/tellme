@@ -1,46 +1,23 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Review Page</title>
-</head>
-<body>
+<p th:text="${customer.fname}"></p>
+<p th:text="${customer.lname}"></p>
+<p th:text="${customer.email}"></p>
 
-<h2>Review Page</h2>
-<hr>
+<p th:text="${vehicle.make}"></p>
+<p th:text="${vehicle.model}"></p>
+<p th:text="${vehicle.vin}"></p>
 
-<h3>Please review below information for accuracy before submitting.</h3>
+<form action="/confirmationPage" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
 
-<p><h3><u>Customer information</u></h3></p>
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
-<p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
-
-<p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
-
-<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-
-<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
-
-<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
-
-<hr>
-
-<p><h3><u>Vehicle information</u></h3></p>
-
-<p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
-
-<p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
-
-<p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
-
-<p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
-
-<h4><u>Vehicle Issue:</u></h4>
-<p th:text="${vehicle.freeFormText}"></p>
-
-<form action="/review" method="post">
-    <button type="submit">Submit</button>
+    <button type="submit">Confirm</button>
 </form>
-
-</body>
-</html>
