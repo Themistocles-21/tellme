@@ -22,7 +22,8 @@ public class VehicleController {
     }
 
     @PostMapping("/vehicle/register")
-    public String vehicleRegistration(@ModelAttribute Vehicle vehicleInf, Model model) {
+    public String vehicleRegistration(@ModelAttribute Vehicle vehicleInf, Model model)
+            throws IOException {
 
         customerService.saveVehicle(vehicleInf);
 
