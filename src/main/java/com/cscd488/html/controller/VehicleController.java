@@ -1,31 +1,45 @@
 package com.cscd488.html.controller;
 
+import com.cscd488.html.model.Customer;
+import com.cscd488.html.model.CustomerEntity;
 import com.cscd488.html.model.Vehicle;
+import com.cscd488.html.services.CustomerService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Controller
 @SessionAttributes({"customer", "vehicle"})
-public class VehicleController {
+public class ReviewController {
 
-    @ModelAttribute("vehicle")
-    public Vehicle vehicle() {
-        return new Vehicle();
+    private final CustomerService customerService;
+
+    public ReviewController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
-    @GetMapping("/vehicle")
-    public String vehiclePage(Model model) {
-        model.addAttribute("vehicle", new Vehicle());
-        return "vehicleInfo";
-    }
+    @PostMapping("/review")
+    public String confirm(@ModelAttribute("customer") Customer customer,
+                          @ModelAttribute("vehicle") Vehicle vehicle,
+                          Model model,
+                          HttpSession session) {
 
-    @PostMapping("/vehicle/register")
-    public String vehicleSubmit(@ModelAttribute("vehicle") Vehicle vehicle,
-                                Model model) {
+        CustomerEntity savedCustomer = customerService.saveCustomer(customer);
 
-        model.addAttribute("vehicle", vehicle);
+        vehicle.setCustomer(savedCustomer);
+        customerService.saveVehicle(vehicle);
 
-        return "reviewPage";
+        session.invalidate();
+
+        model.addAttribute("confirmationMsg", "Success");
+        model.addAttribute("orderNumber", UUID.randomUUID().toString().substring(0, 8));
+        model.addAttribute("dateTime", LocalDateTime.now().toString());
+        model.addAttribute("email", customer.getEmail());
+
+        return "confirmation";
     }
 }

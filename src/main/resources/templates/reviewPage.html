@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Confirmation</title>
+    <title>Review Page</title>
 </head>
 <body>
 
@@ -13,33 +13,32 @@
 
 <p><h3><u>Customer information</u></h3></p>
 
-<p><strong>First Name:</strong> <span th:text="${firstname}"></span></p>
+<p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
 
-<p><strong>Last Name:</strong> <span th:text="${lastname}"></span></p>
+<p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
 
-<p><strong>Email:    </strong> <span th:text="${email}"></span></p>
+<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
 
-<p><strong>Phone:</strong> <span th:text="${phone}"></span></p>
+<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
 
-<p><strong>Address:</strong> <span th:text="${address}"></span></p>
+<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
 
 <hr>
+
 <p><h3><u>Vehicle information</u></h3></p>
 
-<p> <strong> Make: </strong> <span th:text="${make}"> </span> </p>
+<p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
 
-<p> <strong> Model: </strong> <span th:text="${model}"></span> </p>
+<p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
 
-<p> <strong> Year: </strong> <span th:text="${year}"></span></p>
+<p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
 
-<p> <strong> VIN: </strong> <span th:text="${vin}"> </span></p>
-
+<p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
 
 <h4><u>Vehicle Issue:</u></h4>
-<h4 th:text="${freeFormText}">freeFormText</h4>
+<p th:text="${vehicle.freeFormText}"></p>
 
-
-<form action="/confirmationPage" method="post">
+<form action="/review" method="post">
     <button type="submit">Submit</button>
 </form>
 
