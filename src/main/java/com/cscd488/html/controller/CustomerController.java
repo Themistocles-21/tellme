@@ -15,12 +15,13 @@ public class CustomerController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("customer", new Customer());
         return "customerInfo";
     }
 
     @PostMapping("/register")
-    public String registerCustomer(@ModelAttribute Customer customer) {
-        return "vehicleInfo";
+    public String register(@ModelAttribute("customer") Customer customer) {
+        return "redirect:/vehicle";
     }
 }

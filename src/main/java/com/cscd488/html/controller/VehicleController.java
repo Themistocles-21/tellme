@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@SessionAttributes("vehicle")
+@SessionAttributes({"customer", "vehicle"})
 public class VehicleController {
 
     @ModelAttribute("vehicle")
@@ -14,10 +14,15 @@ public class VehicleController {
         return new Vehicle();
     }
 
+    @GetMapping("/vehicle")
+    public String vehiclePage(Model model) {
+        model.addAttribute("vehicle", new Vehicle());
+        return "vehicleInfo";
+    }
+
     @PostMapping("/vehicle/register")
-    public String registerVehicle(@ModelAttribute Vehicle vehicle,
-                                  @ModelAttribute("customer") Object customer,
-                                  Model model) {
+    public String vehicleSubmit(@ModelAttribute("vehicle") Vehicle vehicle,
+                                Model model) {
 
         model.addAttribute("vehicle", vehicle);
 
