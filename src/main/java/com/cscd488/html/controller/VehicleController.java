@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Controller
 public class VehicleController {
 
@@ -15,23 +17,24 @@ public class VehicleController {
         this.customerService = customerService;
     }
 
+    @GetMapping("/vehicle")
+    public String vehicleInfo() {
+        return "vehicleInfo";
+    }
+
     @PostMapping("/vehicle/register")
-    public String vehicleRegistration(@ModelAttribute Vehicle vehicle, Model model) throws Exception {
+    public String vehicleRegistration(@ModelAttribute Vehicle vehicle,
+                                      @RequestParam String email,
+                                      Model model) throws IOException {
 
-        customerService.saveVehicle(vehicle);
+        customerService.saveVehicle(vehicle, email);
 
-        model.addAttribute("firstname", model.getAttribute("firstname"));
-        model.addAttribute("lastname", model.getAttribute("lastname"));
-        model.addAttribute("email", model.getAttribute("email"));
-        model.addAttribute("phone", model.getAttribute("phone"));
-        model.addAttribute("address", model.getAttribute("address"));
+        model.addAttribute("confirmationMsg", "Vehicle submitted successfully");
+        model.addAttribute("orderNumber", vehicle.getVin());
+        model.addAttribute("dateTime", java.time.LocalDateTime.now().toString());
+        model.addAttribute("msgToReadEmail", "Check your email for details");
+        model.addAttribute("email", email);
 
-        model.addAttribute("make", vehicle.getMake());
-        model.addAttribute("model", vehicle.getModel());
-        model.addAttribute("year", vehicle.getYear());
-        model.addAttribute("vin", vehicle.getVin());
-        model.addAttribute("freeFormText", vehicle.getFreeFormText());
-
-        return "reviewPage";
+        return "confirmation";
     }
 }

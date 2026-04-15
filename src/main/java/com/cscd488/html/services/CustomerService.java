@@ -32,15 +32,10 @@ public class CustomerService {
         customerRepository.save(entity);
     }
 
-    public void saveVehicle(Vehicle vehicle) throws IOException {
+    public void saveVehicle(Vehicle vehicle, String customerEmail) throws IOException {
 
-        VehicleEntity entity = new VehicleEntity();
-        entity.setVin(vehicle.getVin());
-        entity.setMake(vehicle.getMake());
-        entity.setModel(vehicle.getModel());
-        entity.setYear(vehicle.getYear());
-        entity.setFreeFormText(vehicle.getFreeFormText());
+        vehicle.setCustomerEmail(customerEmail);
 
-        vehicleRepository.save(entity);
+        vehicleRepository.save(vehicle);
     }
 }
