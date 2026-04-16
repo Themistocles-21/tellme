@@ -11,7 +11,6 @@
 
 <form action="/vehicle/register" method="post">
 
-    <!-- CUSTOMER PASSED THROUGH MODEL -->
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
     <input type="hidden" name="email" th:value="${customer.email}">
@@ -19,19 +18,19 @@
     <input type="hidden" name="address" th:value="${customer.address}">
 
     <label for="make">Make :</label> <br/>
-    <input type="text" name="make" id="make"/> <br/><br/>
+    <input type="text" name="make" id="make" required/> <br/><br/>
 
     <label for="model">Model :</label> <br/>
-    <input type="text" name="model" id="model"/> <br/><br/>
+    <input type="text" name="model" id="model" required/> <br/><br/>
 
     <label for="year">Year :</label> <br/>
-    <input type="text" name="year" id="year"/> <br/><br/>
+    <input type="text" name="year" id="year" required/> <br/><br/>
 
     <label for="vin">VIN :</label> <br/>
-    <input type="text" name="vin" id="vin"/> <br/><br/>
+    <input type="text" name="vin" id="vin" required/> <br/><br/>
 
     <label for="freeFormText">Describe the issue :</label> <br/>
-    <textarea name="freeFormText" id="freeFormText"></textarea> <br/><br/>
+    <textarea name="freeFormText" id="freeFormText" rows="15" required></textarea> <br/><br/>
 
     <button type="submit">Next</button>
 
