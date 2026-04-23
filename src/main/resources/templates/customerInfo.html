@@ -5,15 +5,14 @@
     <title>Customer Information</title>
     <style>
         .language-buttons {
-            text-align: right;
-            margin-bottom: 20px;
+            text-align: center;
+            margin: 20px 0;
             padding: 10px;
-            background-color: #f0f0f0;
         }
         .lang-btn {
             font-size: 16px;
-            padding: 8px 16px;
-            margin: 0 5px;
+            padding: 8px 20px;
+            margin: 0 10px;
             cursor: pointer;
             border: 1px solid #ccc;
             background-color: white;
@@ -21,6 +20,9 @@
         }
         .lang-btn:hover {
             background-color: #ddd;
+        }
+        hr {
+            margin: 10px 0 20px 0;
         }
         .form-group {
             margin-bottom: 15px;
@@ -34,9 +36,9 @@
             padding: 8px;
             width: 250px;
         }
-        button[type="submit"] {
+        .next-btn {
             font-size: 18px;
-            padding: 10px 20px;
+            padding: 10px 30px;
             margin-top: 20px;
             background-color: #4CAF50;
             color: white;
@@ -44,22 +46,25 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .next-btn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-
-<div class="language-buttons">
-    <a href="?lang=en"><button type="button" class="lang-btn">English</button></a>
-    <a href="?lang=fa"><button type="button" class="lang-btn">فارسی</button></a>
-    <a href="?lang=ru"><button type="button" class="lang-btn">Русский</button></a>
-</div>
 
 <h3>CSCD488 Project</h3>
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
-<form action="/register" method="post">
-    <input type="hidden" name="language" id="language" th:value="${param.lang != null ? param.lang : 'en'}">
+<div class="language-buttons">
+    <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
+    <button type="button" class="lang-btn" onclick="setLanguage('fa')">Farsi</button>
+    <button type="button" class="lang-btn" onclick="setLanguage('ru')">Russian</button>
+</div>
+
+<form action="/register" method="post" id="customerForm">
+    <input type="hidden" name="language" id="language" value="en">
 
     <div class="form-group">
         <label for="fname">First name :</label>
@@ -86,8 +91,14 @@
         <input type="text" name="address" id="address" required/>
     </div>
 
-    <button type="submit">Next</button>
+    <button type="submit" class="next-btn">Next</button>
 </form>
+
+<script>
+    function setLanguage(lang) {
+        document.getElementById('language').value = lang;
+    }
+</script>
 
 </body>
 </html>
