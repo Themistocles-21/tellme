@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{issue.location.title}">Issue Location</title>
+    <title>Issue Location</title>
     <style>
         .button-grid {
             display: grid;
@@ -34,7 +34,7 @@
 </head>
 <body>
 
-<h3 th:text="#{issue.location.title}">Select Issue Location</h3>
+<h3>Select Issue Location</h3>
 <hr>
 
 <form action="/vehicle/issue/location" method="post">
@@ -50,16 +50,16 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
 
     <div class="button-grid">
-        <button type="submit" name="issueLocation" value="engine" class="issue-btn" th:text="#{issue.location.engine}">Engine</button>
-        <button type="submit" name="issueLocation" value="transmission" class="issue-btn" th:text="#{issue.location.transmission}">Transmission</button>
-        <button type="submit" name="issueLocation" value="brakes" class="issue-btn" th:text="#{issue.location.brakes}">Brakes</button>
-        <button type="submit" name="issueLocation" value="electrical" class="issue-btn" th:text="#{issue.location.electrical}">Electrical / Battery</button>
-        <button type="submit" name="issueLocation" value="suspension" class="issue-btn" th:text="#{issue.location.suspension}">Suspension / Steering</button>
-        <button type="submit" name="issueLocation" value="exhaust" class="issue-btn" th:text="#{issue.location.exhaust}">Exhaust</button>
-        <button type="submit" name="issueLocation" value="hvac" class="issue-btn" th:text="#{issue.location.hvac}">HVAC</button>
-        <button type="submit" name="issueLocation" value="exterior" class="issue-btn" th:text="#{issue.location.exterior}">Body / Exterior</button>
-        <button type="submit" name="issueLocation" value="interior" class="issue-btn" th:text="#{issue.location.interior}">Interior</button>
-        <button type="submit" name="issueLocation" value="other" class="issue-btn" th:text="#{issue.location.other}">Other</button>
+        <button type="submit" name="issueLocation" value="engine" class="issue-btn">Engine</button>
+        <button type="submit" name="issueLocation" value="transmission" class="issue-btn">Transmission</button>
+        <button type="submit" name="issueLocation" value="brakes" class="issue-btn">Brakes</button>
+        <button type="submit" name="issueLocation" value="electrical" class="issue-btn">Electrical / Battery</button>
+        <button type="submit" name="issueLocation" value="suspension" class="issue-btn">Suspension / Steering</button>
+        <button type="submit" name="issueLocation" value="exhaust" class="issue-btn">Exhaust</button>
+        <button type="submit" name="issueLocation" value="hvac" class="issue-btn">HVAC</button>
+        <button type="submit" name="issueLocation" value="exterior" class="issue-btn">Body / Exterior</button>
+        <button type="submit" name="issueLocation" value="interior" class="issue-btn">Interior</button>
+        <button type="submit" name="issueLocation" value="other" class="issue-btn">Other</button>
     </div>
 </form>
 

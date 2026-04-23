@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     @GetMapping("/home")
-    public String home(@RequestParam(required = false) String lang, Model model) {
+    public String home() {
         return "customerInfo";
     }
 
