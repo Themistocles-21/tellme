@@ -5,7 +5,6 @@ import com.cscd488.html.model.Vehicle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.Locale;
 
 @Controller
 public class VehicleController {
@@ -16,7 +15,6 @@ public class VehicleController {
                                   Model model) {
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "issueLocation";
     }
 
@@ -28,7 +26,6 @@ public class VehicleController {
         vehicle.setIssueLocation(issueLocation);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "issueType";
     }
 
@@ -40,7 +37,6 @@ public class VehicleController {
         vehicle.setIssueType(issueType);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "issueSeverity";
     }
 
@@ -52,7 +48,6 @@ public class VehicleController {
         vehicle.setSeverity(severity);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "issueDetails";
     }
 
@@ -66,18 +61,6 @@ public class VehicleController {
         }
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "reviewPage";
-    }
-
-    private Locale getLocaleFromCustomer(Customer customer) {
-        if (customer == null || customer.getLanguage() == null) {
-            return Locale.ENGLISH;
-        }
-        switch(customer.getLanguage()) {
-            case "fa": return new Locale("fa");
-            case "ru": return new Locale("ru");
-            default: return Locale.ENGLISH;
-        }
     }
 }

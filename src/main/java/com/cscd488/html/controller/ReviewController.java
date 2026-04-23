@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -62,7 +61,6 @@ public class ReviewController {
         model.addAttribute("email", displayCustomer.getEmail());
         model.addAttribute("msgToReadEmail", "Please check your inbox and make sure email is not marked as spam.");
         model.addAttribute("issueSummary", issueSummary);
-        model.addAttribute("locale", getLocaleFromCustomer(displayCustomer));
 
         return "confirmationPage";
     }
@@ -72,16 +70,5 @@ public class ReviewController {
                 vehicle.getIssueLocation(),
                 vehicle.getIssueType()
         );
-    }
-
-    private Locale getLocaleFromCustomer(Customer customer) {
-        if (customer == null || customer.getLanguage() == null) {
-            return Locale.ENGLISH;
-        }
-        switch(customer.getLanguage()) {
-            case "fa": return new Locale("fa");
-            case "ru": return new Locale("ru");
-            default: return Locale.ENGLISH;
-        }
     }
 }

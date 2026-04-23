@@ -2,15 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{issue.severity.title}">Issue Severity</title>
+    <title>Additional Details</title>
     <style>
-        .severity-buttons {
-            display: flex;
-            gap: 15px;
+        textarea {
+            padding: 12px;
+            width: 100%;
+            max-width: 500px;
+            height: 150px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
             margin: 20px 0;
-            flex-wrap: wrap;
         }
-        .severity-btn {
+        .next-btn {
             font-size: 16px;
             padding: 12px 24px;
             background-color: #f0f0f0;
@@ -20,7 +26,7 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .severity-btn:hover {
+        .next-btn:hover {
             background-color: #e0e0e0;
         }
         h3 {
@@ -33,10 +39,10 @@
 </head>
 <body>
 
-<h3 th:text="#{issue.severity.title}">How Severe Is The Issue?</h3>
+<h3>Additional Details (Optional)</h3>
 <hr>
 
-<form action="/vehicle/issue/severity" method="post">
+<form action="/vehicle/issue/details" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
     <input type="hidden" name="email" th:value="${customer.email}">
@@ -49,13 +55,11 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
+    <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <div class="severity-buttons">
-        <button type="submit" name="severity" value="mild" class="severity-btn" th:text="#{issue.severity.mild}">Mild</button>
-        <button type="submit" name="severity" value="moderate" class="severity-btn" th:text="#{issue.severity.moderate}">Moderate</button>
-        <button type="submit" name="severity" value="severe" class="severity-btn" th:text="#{issue.severity.severe}">Severe</button>
-        <button type="submit" name="severity" value="emergency" class="severity-btn" th:text="#{issue.severity.emergency}">Emergency</button>
-    </div>
+    <textarea name="additionalInfo" id="additionalInfo" rows="6" cols="50" placeholder="Anything else we should know? (When did it start? How often does it happen? etc.)"></textarea>
+    <br/>
+    <button type="submit" class="next-btn">Next</button>
 </form>
 
 </body>

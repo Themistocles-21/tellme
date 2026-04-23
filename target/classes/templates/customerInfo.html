@@ -19,7 +19,6 @@
             color: #333;
             border-radius: 4px;
             transition: background-color 0.2s;
-            text-decoration: none;
         }
         .lang-btn:hover {
             background-color: #e0e0e0;
@@ -64,13 +63,13 @@
 <hr>
 
 <div class="language-buttons">
-    <a href="/home?lang=en"><button type="button" class="lang-btn">English</button></a>
-    <a href="/home?lang=fa"><button type="button" class="lang-btn">فارسی</button></a>
-    <a href="/home?lang=ru"><button type="button" class="lang-btn">Русский</button></a>
+    <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
+    <button type="button" class="lang-btn" onclick="setLanguage('fa')">Farsi</button>
+    <button type="button" class="lang-btn" onclick="setLanguage('ru')">Russian</button>
 </div>
 
 <form action="/register" method="post" id="customerForm">
-    <input type="hidden" name="language" id="language" th:value="${param.lang != null ? param.lang : 'en'}">
+    <input type="hidden" name="language" id="language" value="en">
 
     <div class="form-group">
         <label for="fname">First name :</label>
@@ -99,6 +98,12 @@
 
     <button type="submit" class="next-btn">Next</button>
 </form>
+
+<script>
+    function setLanguage(lang) {
+        document.getElementById('language').value = lang;
+    }
+</script>
 
 </body>
 </html>

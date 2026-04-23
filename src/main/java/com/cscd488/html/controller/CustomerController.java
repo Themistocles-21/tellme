@@ -5,16 +5,12 @@ import com.cscd488.html.model.Vehicle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.Locale;
 
 @Controller
 public class CustomerController {
 
     @GetMapping("/home")
     public String home(@RequestParam(required = false) String lang, Model model) {
-        if (lang != null) {
-            model.addAttribute("selectedLang", lang);
-        }
         return "customerInfo";
     }
 

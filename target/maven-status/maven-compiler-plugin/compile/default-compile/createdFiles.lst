@@ -1,0 +1,13 @@
+com\cscd488\html\controller\TranslationController.class
+com\cscd488\html\model\Customer.class
+com\cscd488\html\services\FileService.class
+com\cscd488\html\controller\CustomerController.class
+com\cscd488\html\services\EmailService.class
+com\cscd488\html\controller\ReviewController.class
+com\cscd488\html\services\CustomerService.class
+com\cscd488\html\services\EmailSenderService.class
+com\cscd488\html\SpringbootHtmlApplication.class
+com\cscd488\html\services\CopilotService.class
+com\cscd488\html\model\Vehicle.class
+com\cscd488\html\model\CustomerFileWriter.class
+com\cscd488\html\controller\VehicleController.class

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{issue.severity.title}">Issue Severity</title>
+    <title>Issue Severity</title>
     <style>
         .severity-buttons {
             display: flex;
@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<h3 th:text="#{issue.severity.title}">How Severe Is The Issue?</h3>
+<h3>How Severe Is The Issue?</h3>
 <hr>
 
 <form action="/vehicle/issue/severity" method="post">
@@ -51,10 +51,10 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
 
     <div class="severity-buttons">
-        <button type="submit" name="severity" value="mild" class="severity-btn" th:text="#{issue.severity.mild}">Mild</button>
-        <button type="submit" name="severity" value="moderate" class="severity-btn" th:text="#{issue.severity.moderate}">Moderate</button>
-        <button type="submit" name="severity" value="severe" class="severity-btn" th:text="#{issue.severity.severe}">Severe</button>
-        <button type="submit" name="severity" value="emergency" class="severity-btn" th:text="#{issue.severity.emergency}">Emergency</button>
+        <button type="submit" name="severity" value="mild" class="severity-btn">Mild</button>
+        <button type="submit" name="severity" value="moderate" class="severity-btn">Moderate</button>
+        <button type="submit" name="severity" value="severe" class="severity-btn">Severe</button>
+        <button type="submit" name="severity" value="emergency" class="severity-btn">Emergency</button>
     </div>
 </form>
 

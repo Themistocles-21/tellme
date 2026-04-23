@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Additional Details</title>
+    <title th:text="#{issue.details.title}">Additional Details</title>
     <style>
         textarea {
             padding: 12px;
@@ -39,28 +39,4 @@
 </head>
 <body>
 
-<h3>Additional Details (Optional)</h3>
-<hr>
-
-<form action="/vehicle/issue/details" method="post">
-    <input type="hidden" name="fname" th:value="${customer.fname}">
-    <input type="hidden" name="lname" th:value="${customer.lname}">
-    <input type="hidden" name="email" th:value="${customer.email}">
-    <input type="hidden" name="phone" th:value="${customer.phone}">
-    <input type="hidden" name="address" th:value="${customer.address}">
-    <input type="hidden" name="language" th:value="${customer.language}">
-    <input type="hidden" name="make" th:value="${vehicle.make}">
-    <input type="hidden" name="model" th:value="${vehicle.model}">
-    <input type="hidden" name="year" th:value="${vehicle.year}">
-    <input type="hidden" name="vin" th:value="${vehicle.vin}">
-    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
-    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
-    <input type="hidden" name="severity" th:value="${vehicle.severity}">
-
-    <textarea name="additionalInfo" id="additionalInfo" rows="6" cols="50" placeholder="Anything else we should know? (When did it start? How often does it happen? etc.)"></textarea>
-    <br/>
-    <button type="submit" class="next-btn">Next</button>
-</form>
-
-</body>
-</html>
+<h3 th:text="#{issue.details.title}">Additional Details
