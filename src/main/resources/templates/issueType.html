@@ -27,11 +27,17 @@
         h3 {
             margin-bottom: 5px;
         }
+        .progress {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <h3>Select Issue Type</h3>
+<div class="progress">Step 2 of 4: What specific problem?</div>
 <hr>
 
 <form action="/vehicle/issue/type" method="post">
@@ -111,7 +117,7 @@
             <button type="submit" name="issueType" value="buttons" class="type-btn">Buttons / Controls not working</button>
         </div>
         <div th:case="other" class="button-grid">
-            <button type="submit" name="issueType" value="other" class="type-btn">Other issue (please describe next)</button>
+            <button type="submit" name="issueType" value="other" class="type-btn">Other issue (please continue)</button>
         </div>
     </div>
 </form>

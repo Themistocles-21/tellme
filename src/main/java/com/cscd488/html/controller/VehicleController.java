@@ -41,16 +41,26 @@ public class VehicleController {
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("locale", getLocaleFromCustomer(customer));
+        return "issueSeverity";
+    }
+
+    @PostMapping("/vehicle/issue/severity")
+    public String saveIssueSeverity(@ModelAttribute Customer customer,
+                                    @ModelAttribute Vehicle vehicle,
+                                    @RequestParam String severity,
+                                    Model model) {
+        vehicle.setSeverity(severity);
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("locale", getLocaleFromCustomer(customer));
         return "issueDetails";
     }
 
     @PostMapping("/vehicle/issue/details")
     public String saveIssueDetails(@ModelAttribute Customer customer,
                                    @ModelAttribute Vehicle vehicle,
-                                   @RequestParam String severity,
                                    @RequestParam(required = false) String additionalInfo,
                                    Model model) {
-        vehicle.setSeverity(severity);
         if (additionalInfo != null && !additionalInfo.trim().isEmpty()) {
             vehicle.setFreeFormText(additionalInfo);
         }
