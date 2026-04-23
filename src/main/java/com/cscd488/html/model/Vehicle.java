@@ -14,6 +14,9 @@ public class Vehicle {
     private String make;
     private String model;
     private String year;
+    private String issueLocation;
+    private String issueType;
+    private String severity;
 
     @Column(name = "free_form_text", length = 1000)
     private String freeFormText;
@@ -22,7 +25,6 @@ public class Vehicle {
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
 
-    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -37,6 +39,15 @@ public class Vehicle {
 
     public String getYear() { return year; }
     public void setYear(String year) { this.year = year; }
+
+    public String getIssueLocation() { return issueLocation; }
+    public void setIssueLocation(String issueLocation) { this.issueLocation = issueLocation; }
+
+    public String getIssueType() { return issueType; }
+    public void setIssueType(String issueType) { this.issueType = issueType; }
+
+    public String getSeverity() { return severity; }
+    public void setSeverity(String severity) { this.severity = severity; }
 
     public String getFreeFormText() { return freeFormText; }
     public void setFreeFormText(String freeFormText) { this.freeFormText = freeFormText; }

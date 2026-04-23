@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>CustomerInfo</title>
+    <meta charset="UTF-8">
+    <title>Customer Information</title>
 </head>
 <body>
 
 <h3>CSCD488 Project</h3>
-<h4> Team # 4: <br> Aaron Oehler, Derik Little, Danish Wahidi</h4>
+<h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
-<label for="language">Language :</label> <br/>
-<select name="language">
-    <option value="- languageSelection -">- Select Language -</option>
-    <option value="farsi">Farsi</option>
-    <option value="russian">Russian</option>
-</select>
-<button>OK</button>
-
-<br><br>
-
 <form action="/register" method="post">
+    <label for="language">Language :</label> <br/>
+    <select name="language" id="language" required>
+        <option value="">- Select Language -</option>
+        <option value="en">English</option>
+        <option value="fa">Farsi</option>
+        <option value="ru">Russian</option>
+    </select>
+
+    <br><br>
+    <hr>
+    <br>
 
     <label for="fname">First name :</label> <br/>
-    <input type="text" name="fname" required/> <br/>
+    <input type="text" name="fname" id="fname" required/> <br/>
 
     <label for="lname">Last name :</label> <br/>
-    <input type="text" name="lname" required/> <br/>
+    <input type="text" name="lname" id="lname" required/> <br/>
 
     <label for="email">Email :</label> <br/>
-    <input type="email" name="email" required/> <br/>
+    <input type="email" name="email" id="email" required/> <br/>
 
     <label for="phone">Phone :</label> <br/>
-    <input type="text" name="phone" required/> <br/>
+    <input type="text" name="phone" id="phone" required/> <br/>
 
     <label for="address">Address :</label> <br/>
-    <input type="text" name="address" required/> <br/>
-
+    <input type="text" name="address" id="address" required/> <br/>
 
     <br/>
     <button type="submit">Next</button>
-
 </form>
 
 </body>

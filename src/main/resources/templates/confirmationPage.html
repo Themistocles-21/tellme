@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
 <head>
     <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
@@ -7,15 +7,14 @@
 </head>
 <body>
 
-
 <p><strong>Confirm:</strong> <span th:text="${confirmationMsg}"></span></p>
 <hr>
 
 <p><strong>Order Number:</strong> <span th:text="${orderNumber}"></span></p>
 <p><strong>Date & Time:</strong> <span th:text="${dateTime}"></span></p>
-<p><strong>Spam reminder: </strong> <span th:text="${msgToReadEmail}"></span></p>
+<p><strong>Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
+<p><strong>Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
 <p><strong>Email:</strong> <span th:text="${email}"></span></p>
-
 
 <br/>
 
@@ -24,5 +23,4 @@
 </form>
 
 </body>
-
 </html>

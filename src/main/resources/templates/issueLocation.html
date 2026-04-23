@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<head>
+    <meta charset="UTF-8">
+    <title>Issue Location</title>
+</head>
+<body>
+
+<h3>Select Issue Location</h3>
+<hr>
+
+<form action="/vehicle/issue/location" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+
+    <div>
+        <button type="submit" name="issueLocation" value="engine">Engine</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="transmission">Transmission</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="brakes">Brakes</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="electrical">Electrical/Battery</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="suspension">Suspension/Steering</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="exhaust">Exhaust</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="hvac">HVAC</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="exterior">Body/Exterior</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="interior">Interior</button>
+    </div>
+    <div>
+        <button type="submit" name="issueLocation" value="other">Other</button>
+    </div>
+</form>
+
+</body>
+</html>

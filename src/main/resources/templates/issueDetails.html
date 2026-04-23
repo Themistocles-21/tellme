@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<head>
+    <meta charset="UTF-8">
+    <title>Additional Details</title>
+</head>
+<body>
+
+<h3>Additional Details (Optional)</h3>
+<hr>
+
+<form action="/vehicle/issue/details" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
+    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
+
+    <p><strong>Severity:</strong></p>
+    <div>
+        <button type="submit" name="severity" value="mild">Mild</button>
+        <button type="submit" name="severity" value="moderate">Moderate</button>
+        <button type="submit" name="severity" value="severe">Severe</button>
+        <button type="submit" name="severity" value="emergency">Emergency</button>
+    </div>
+
+    <br/>
+
+    <label for="additionalInfo">Additional Information (Optional):</label><br/>
+    <textarea name="additionalInfo" id="additionalInfo" rows="4" cols="50" placeholder="Anything else we should know..."></textarea>
+
+    <br/><br/>
+    <button type="submit">Next</button>
+</form>
+
+</body>
+</html>

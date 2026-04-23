@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<head>
+    <meta charset="UTF-8">
+    <title>Issue Type</title>
+</head>
+<body>
+
+<h3>Select Issue Type</h3>
+<hr>
+
+<form action="/vehicle/issue/type" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
+
+    <div th:switch="${vehicle.issueLocation}">
+        <div th:case="engine">
+            <button type="submit" name="issueType" value="no_start">Won't start / No power</button><br/>
+            <button type="submit" name="issueType" value="check_engine">Check engine light on</button><br/>
+            <button type="submit" name="issueType" value="rough_idle">Rough idle / Stalling</button><br/>
+            <button type="submit" name="issueType" value="loss_power">Loss of power / Acceleration issues</button><br/>
+            <button type="submit" name="issueType" value="knocking">Knocking / Unusual noise</button><br/>
+            <button type="submit" name="issueType" value="overheating">Overheating</button><br/>
+            <button type="submit" name="issueType" value="oil_leak">Oil leak</button><br/>
+            <button type="submit" name="issueType" value="smoke">Smoke from exhaust</button>
+        </div>
+        <div th:case="transmission">
+            <button type="submit" name="issueType" value="slipping">Slipping gears</button><br/>
+            <button type="submit" name="issueType" value="rough_shifting">Rough shifting</button><br/>
+            <button type="submit" name="issueType" value="delayed_engagement">Delayed engagement</button><br/>
+            <button type="submit" name="issueType" value="leaking">Fluid leak</button><br/>
+            <button type="submit" name="issueType" value="noise">Unusual noise</button>
+        </div>
+        <div th:case="brakes">
+            <button type="submit" name="issueType" value="squeaking">Squeaking noise</button><br/>
+            <button type="submit" name="issueType" value="grinding">Grinding noise</button><br/>
+            <button type="submit" name="issueType" value="soft_pedal">Soft pedal</button><br/>
+            <button type="submit" name="issueType" value="vibration">Vibration when braking</button><br/>
+            <button type="submit" name="issueType" value="pulling">Pulling to one side</button>
+        </div>
+        <div th:case="electrical">
+            <button type="submit" name="issueType" value="battery">Battery not holding charge</button><br/>
+            <button type="submit" name="issueType" value="alternator">Alternator issue</button><br/>
+            <button type="submit" name="issueType" value="lights">Lights not working</button><br/>
+            <button type="submit" name="issueType" value="windows">Power windows not working</button><br/>
+            <button type="submit" name="issueType" value="sensors">Sensor malfunction</button>
+        </div>
+        <div th:case="suspension">
+            <button type="submit" name="issueType" value="bumpy">Rough / Bumpy ride</button><br/>
+            <button type="submit" name="issueType" value="noise">Clunking noise</button><br/>
+            <button type="submit" name="issueType" value="steering">Steering wheel vibration</button><br/>
+            <button type="submit" name="issueType" value="pulling">Vehicle pulls to one side</button><br/>
+            <button type="submit" name="issueType" value="uneven">Uneven tire wear</button>
+        </div>
+        <div th:case="exhaust">
+            <button type="submit" name="issueType" value="loud">Loud noise</button><br/>
+            <button type="submit" name="issueType" value="smoke">Excessive smoke</button><br/>
+            <button type="submit" name="issueType" value="smell">Gas smell</button><br/>
+            <button type="submit" name="issueType" value="rust">Rust / Hole in exhaust</button>
+        </div>
+        <div th:case="hvac">
+            <button type="submit" name="issueType" value="no_heat">No heat</button><br/>
+            <button type="submit" name="issueType" value="no_ac">No cold air / AC not working</button><br/>
+            <button type="submit" name="issueType" value="fan">Fan not working</button><br/>
+            <button type="submit" name="issueType" value="smell">Unusual smell</button>
+        </div>
+        <div th:case="exterior">
+            <button type="submit" name="issueType" value="dent">Dent / Scratch</button><br/>
+            <button type="submit" name="issueType" value="lights">Light not working</button><br/>
+            <button type="submit" name="issueType" value="mirror">Mirror damaged</button><br/>
+            <button type="submit" name="issueType" value="windshield">Windshield crack</button>
+        </div>
+        <div th:case="interior">
+            <button type="submit" name="issueType" value="seat">Seat issue</button><br/>
+            <button type="submit" name="issueType" value="dashboard">Dashboard warning light</button><br/>
+            <button type="submit" name="issueType" value="smell">Unusual smell</button><br/>
+            <button type="submit" name="issueType" value="buttons">Buttons / Controls not working</button>
+        </div>
+        <div th:case="other">
+            <button type="submit" name="issueType" value="other">Other issue (please describe in next step)</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

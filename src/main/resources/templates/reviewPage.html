@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
 <head>
     <meta charset="UTF-8">
     <title>Review Your Information</title>
@@ -18,7 +18,14 @@
 <p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
 <p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
 <p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
-<p><strong>Issue:</strong> <span th:text="${vehicle.freeFormText}"></span></p>
+
+<p><strong>Issue Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
+<p><strong>Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
+<p><strong>Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
+
+<p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
+    <strong>Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
+</p>
 
 <form action="/confirmationPage" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
@@ -26,11 +33,15 @@
     <input type="hidden" name="email" th:value="${customer.email}">
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
 
     <input type="hidden" name="make" th:value="${vehicle.make}">
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
+    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
+    <input type="hidden" name="severity" th:value="${vehicle.severity}">
     <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
     <button type="submit">Confirm Submission</button>

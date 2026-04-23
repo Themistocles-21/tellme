@@ -1,50 +1,39 @@
-package com.cscd488.html.model;
+package com.cscd488.html.controller;
 
-import jakarta.persistence.*;
-import java.util.List;
+import com.cscd488.html.model.Customer;
+import com.cscd488.html.model.Vehicle;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import java.util.Locale;
 
-@Entity
-@Table(name = "customer")
-public class Customer {
+@Controller
+public class CustomerController {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GetMapping("/home")
+    public String home() {
+        return "customerInfo";
+    }
 
-    @Column(name = "fname")
-    private String fname;
+    @PostMapping("/register")
+    public String registerCustomer(@ModelAttribute Customer customer,
+                                   @RequestParam String language,
+                                   Model model) {
+        customer.setLanguage(language);
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", new Vehicle());
+        model.addAttribute("locale", getLocaleFromCustomer(customer));
+        return "vehicleInfo";
+    }
 
-    @Column(name = "lname")
-    private String lname;
-
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    private String address;
-    private String phone;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Vehicle> vehicles;
-
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getFname() { return fname; }
-    public void setFname(String fname) { this.fname = fname; }
-
-    public String getLname() { return lname; }
-    public void setLname(String lname) { this.lname = lname; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-
-    public List<Vehicle> getVehicles() { return vehicles; }
-    public void setVehicles(List<Vehicle> vehicles) { this.vehicles = vehicles; }
+    private Locale getLocaleFromCustomer(Customer customer) {
+        if (customer == null || customer.getLanguage() == null) {
+            return Locale.ENGLISH;
+        }
+        switch(customer.getLanguage()) {
+            case "fa": return new Locale("fa");
+            case "ru": return new Locale("ru");
+            default: return Locale.ENGLISH;
+        }
+    }
 }
