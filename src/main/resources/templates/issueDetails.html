@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <title>Additional Details</title>
     <style>
-        .details-container {
-            margin: 30px 0;
-            text-align: center;
-        }
         textarea {
-            padding: 15px;
+            padding: 12px;
             width: 100%;
             max-width: 500px;
             height: 150px;
@@ -18,11 +14,11 @@
             border-radius: 4px;
             font-family: Arial, sans-serif;
             resize: vertical;
+            margin: 20px 0;
         }
         .next-btn {
             font-size: 16px;
             padding: 12px 24px;
-            margin-top: 20px;
             background-color: #f0f0f0;
             color: #333;
             border: 1px solid #ccc;
@@ -36,25 +32,14 @@
         h3 {
             margin-bottom: 5px;
         }
-        .progress {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
         hr {
             margin: 15px 0 25px 0;
-        }
-        .optional-badge {
-            color: #999;
-            font-size: 12px;
-            margin-left: 10px;
         }
     </style>
 </head>
 <body>
 
-<h3>Any Additional Details?</h3>
-<div class="progress">Step 4 of 4: Final thoughts (Optional)</div>
+<h3>Additional Details (Optional)</h3>
 <hr>
 
 <form action="/vehicle/issue/details" method="post">
@@ -72,11 +57,9 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <div class="details-container">
-        <textarea name="additionalInfo" id="additionalInfo" rows="6" cols="50" placeholder="When did it start? How often does it happen? Anything else we should know?..."></textarea>
-        <br/>
-        <button type="submit" class="next-btn">Review Submission →</button>
-    </div>
+    <textarea name="additionalInfo" id="additionalInfo" rows="6" cols="50" placeholder="Anything else we should know? (When did it start? How often does it happen? etc.)"></textarea>
+    <br/>
+    <button type="submit" class="next-btn">Next</button>
 </form>
 
 </body>
