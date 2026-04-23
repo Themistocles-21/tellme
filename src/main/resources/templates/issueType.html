@@ -47,9 +47,8 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
-    <div class="button-grid">
-        <!-- Engine Options -->
-        <div th:if="${vehicle.issueLocation == 'engine'}">
+    <div class="button-group" th:switch="${vehicle.issueLocation}">
+        <div th:case="engine" class="button-grid">
             <button type="submit" name="issueType" value="no_start" class="type-btn">Won't start / No power</button>
             <button type="submit" name="issueType" value="check_engine" class="type-btn">Check engine light on</button>
             <button type="submit" name="issueType" value="rough_idle" class="type-btn">Rough idle / Stalling</button>
@@ -59,77 +58,59 @@
             <button type="submit" name="issueType" value="oil_leak" class="type-btn">Oil leak</button>
             <button type="submit" name="issueType" value="smoke" class="type-btn">Smoke from exhaust</button>
         </div>
-
-        <!-- Transmission Options -->
-        <div th:if="${vehicle.issueLocation == 'transmission'}">
+        <div th:case="transmission" class="button-grid">
             <button type="submit" name="issueType" value="slipping" class="type-btn">Slipping gears</button>
             <button type="submit" name="issueType" value="rough_shifting" class="type-btn">Rough shifting</button>
             <button type="submit" name="issueType" value="delayed_engagement" class="type-btn">Delayed engagement</button>
             <button type="submit" name="issueType" value="leaking" class="type-btn">Fluid leak</button>
             <button type="submit" name="issueType" value="noise" class="type-btn">Unusual noise</button>
         </div>
-
-        <!-- Brakes Options -->
-        <div th:if="${vehicle.issueLocation == 'brakes'}">
+        <div th:case="brakes" class="button-grid">
             <button type="submit" name="issueType" value="squeaking" class="type-btn">Squeaking noise</button>
             <button type="submit" name="issueType" value="grinding" class="type-btn">Grinding noise</button>
             <button type="submit" name="issueType" value="soft_pedal" class="type-btn">Soft pedal</button>
             <button type="submit" name="issueType" value="vibration" class="type-btn">Vibration when braking</button>
             <button type="submit" name="issueType" value="pulling" class="type-btn">Pulling to one side</button>
         </div>
-
-        <!-- Electrical Options -->
-        <div th:if="${vehicle.issueLocation == 'electrical'}">
+        <div th:case="electrical" class="button-grid">
             <button type="submit" name="issueType" value="battery" class="type-btn">Battery not holding charge</button>
             <button type="submit" name="issueType" value="alternator" class="type-btn">Alternator issue</button>
             <button type="submit" name="issueType" value="lights" class="type-btn">Lights not working</button>
             <button type="submit" name="issueType" value="windows" class="type-btn">Power windows not working</button>
             <button type="submit" name="issueType" value="sensors" class="type-btn">Sensor malfunction</button>
         </div>
-
-        <!-- Suspension Options -->
-        <div th:if="${vehicle.issueLocation == 'suspension'}">
+        <div th:case="suspension" class="button-grid">
             <button type="submit" name="issueType" value="bumpy" class="type-btn">Rough / Bumpy ride</button>
             <button type="submit" name="issueType" value="noise" class="type-btn">Clunking noise</button>
             <button type="submit" name="issueType" value="steering" class="type-btn">Steering wheel vibration</button>
             <button type="submit" name="issueType" value="pulling" class="type-btn">Vehicle pulls to one side</button>
             <button type="submit" name="issueType" value="uneven" class="type-btn">Uneven tire wear</button>
         </div>
-
-        <!-- Exhaust Options -->
-        <div th:if="${vehicle.issueLocation == 'exhaust'}">
+        <div th:case="exhaust" class="button-grid">
             <button type="submit" name="issueType" value="loud" class="type-btn">Loud noise</button>
             <button type="submit" name="issueType" value="smoke" class="type-btn">Excessive smoke</button>
             <button type="submit" name="issueType" value="smell" class="type-btn">Gas smell</button>
             <button type="submit" name="issueType" value="rust" class="type-btn">Rust / Hole in exhaust</button>
         </div>
-
-        <!-- HVAC Options -->
-        <div th:if="${vehicle.issueLocation == 'hvac'}">
+        <div th:case="hvac" class="button-grid">
             <button type="submit" name="issueType" value="no_heat" class="type-btn">No heat</button>
             <button type="submit" name="issueType" value="no_ac" class="type-btn">No cold air / AC not working</button>
             <button type="submit" name="issueType" value="fan" class="type-btn">Fan not working</button>
             <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
         </div>
-
-        <!-- Exterior Options -->
-        <div th:if="${vehicle.issueLocation == 'exterior'}">
+        <div th:case="exterior" class="button-grid">
             <button type="submit" name="issueType" value="dent" class="type-btn">Dent / Scratch</button>
             <button type="submit" name="issueType" value="lights" class="type-btn">Light not working</button>
             <button type="submit" name="issueType" value="mirror" class="type-btn">Mirror damaged</button>
             <button type="submit" name="issueType" value="windshield" class="type-btn">Windshield crack</button>
         </div>
-
-        <!-- Interior Options -->
-        <div th:if="${vehicle.issueLocation == 'interior'}">
+        <div th:case="interior" class="button-grid">
             <button type="submit" name="issueType" value="seat" class="type-btn">Seat issue</button>
             <button type="submit" name="issueType" value="dashboard" class="type-btn">Dashboard warning light</button>
             <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
             <button type="submit" name="issueType" value="buttons" class="type-btn">Buttons / Controls not working</button>
         </div>
-
-        <!-- Other Option -->
-        <div th:if="${vehicle.issueLocation == 'other'}">
+        <div th:case="other" class="button-grid">
             <button type="submit" name="issueType" value="other" class="type-btn">Other issue (please describe next)</button>
         </div>
     </div>
