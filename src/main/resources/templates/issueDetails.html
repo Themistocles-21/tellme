@@ -42,6 +42,20 @@
 <h3>Additional Details (Optional)</h3>
 <hr>
 
+<div class="progress-container">
+    <div class="progress-steps">
+        <span class="step">Customer Info</span>
+        <span class="separator">→</span>
+        <span class="step">Vehicle Info</span>
+        <span class="separator">→</span>
+        <span class="step">Structured Diagnosis</span>
+        <span class="separator">→</span>
+        <span class="step active">Extra Comments</span>
+        <span class="separator">→</span>
+        <span class="step">Confirm Submission</span>
+    </div>
+</div>
+
 <form action="/vehicle/issue/details" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">

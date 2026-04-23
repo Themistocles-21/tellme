@@ -37,6 +37,20 @@
 <h3>Select Issue Location</h3>
 <hr>
 
+<div class="progress-container">
+    <div class="progress-steps">
+        <span class="step">Customer Info</span>
+        <span class="separator">→</span>
+        <span class="step">Vehicle Info</span>
+        <span class="separator">→</span>
+        <span class="step active">Structured Diagnosis</span>
+        <span class="separator">→</span>
+        <span class="step">Extra Comments</span>
+        <span class="separator">→</span>
+        <span class="step">Confirm Submission</span>
+    </div>
+</div>
+
 <form action="/vehicle/issue/location" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
