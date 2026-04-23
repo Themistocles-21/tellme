@@ -1,39 +1,53 @@
-package com.cscd488.html.controller;
+package com.cscd488.html.model;
 
-import com.cscd488.html.model.Customer;
-import com.cscd488.html.model.Vehicle;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import java.util.Locale;
+import jakarta.persistence.*;
+import java.util.List;
 
-@Controller
-public class CustomerController {
+@Entity
+@Table(name = "customer")
+public class Customer {
 
-    @GetMapping("/home")
-    public String home() {
-        return "customerInfo";
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @PostMapping("/register")
-    public String registerCustomer(@ModelAttribute Customer customer,
-                                   @RequestParam String language,
-                                   Model model) {
-        customer.setLanguage(language);
-        model.addAttribute("customer", customer);
-        model.addAttribute("vehicle", new Vehicle());
-        model.addAttribute("locale", getLocaleFromCustomer(customer));
-        return "vehicleInfo";
-    }
+    @Column(name = "fname")
+    private String fname;
 
-    private Locale getLocaleFromCustomer(Customer customer) {
-        if (customer == null || customer.getLanguage() == null) {
-            return Locale.ENGLISH;
-        }
-        switch(customer.getLanguage()) {
-            case "fa": return new Locale("fa");
-            case "ru": return new Locale("ru");
-            default: return Locale.ENGLISH;
-        }
-    }
+    @Column(name = "lname")
+    private String lname;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    private String address;
+    private String phone;
+    private String language;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Vehicle> vehicles;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getFname() { return fname; }
+    public void setFname(String fname) { this.fname = fname; }
+
+    public String getLname() { return lname; }
+    public void setLname(String lname) { this.lname = lname; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
+
+    public List<Vehicle> getVehicles() { return vehicles; }
+    public void setVehicles(List<Vehicle> vehicles) { this.vehicles = vehicles; }
 }
