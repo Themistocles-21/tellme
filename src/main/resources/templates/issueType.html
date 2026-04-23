@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <title>Issue Type</title>
     <style>
-        .button-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 400px;
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
             margin: 20px 0;
         }
         .type-btn {
             font-size: 16px;
-            padding: 12px 20px;
+            padding: 15px 20px;
             background-color: #FF9800;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            text-align: left;
-            transition: background-color 0.2s;
+            transition: transform 0.2s;
         }
         .type-btn:hover {
             background-color: #e68900;
+            transform: scale(1.02);
+        }
+        h3 {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -45,7 +48,7 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
-    <div class="button-list" th:switch="${vehicle.issueLocation}">
+    <div class="button-grid" th:switch="${vehicle.issueLocation}">
         <div th:case="engine">
             <button type="submit" name="issueType" value="no_start" class="type-btn">Won't start / No power</button>
             <button type="submit" name="issueType" value="check_engine" class="type-btn">Check engine light on</button>
