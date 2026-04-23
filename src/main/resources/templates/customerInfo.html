@@ -3,42 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Information</title>
+    <style>
+        .language-buttons {
+            text-align: right;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .lang-btn {
+            font-size: 16px;
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: white;
+            border-radius: 4px;
+        }
+        .lang-btn:hover {
+            background-color: #ddd;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+        button[type="submit"] {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+
+<div class="language-buttons">
+    <a href="?lang=en"><button type="button" class="lang-btn">English</button></a>
+    <a href="?lang=fa"><button type="button" class="lang-btn">فارسی</button></a>
+    <a href="?lang=ru"><button type="button" class="lang-btn">Русский</button></a>
+</div>
 
 <h3>CSCD488 Project</h3>
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
 <form action="/register" method="post">
-    <label for="language">Language :</label> <br/>
-    <select name="language" id="language" required>
-        <option value="">- Select Language -</option>
-        <option value="en">English</option>
-        <option value="fa">Farsi</option>
-        <option value="ru">Russian</option>
-    </select>
+    <input type="hidden" name="language" id="language" th:value="${param.lang != null ? param.lang : 'en'}">
 
-    <br><br>
-    <hr>
-    <br>
+    <div class="form-group">
+        <label for="fname">First name :</label>
+        <input type="text" name="fname" id="fname" required/>
+    </div>
 
-    <label for="fname">First name :</label> <br/>
-    <input type="text" name="fname" id="fname" required/> <br/>
+    <div class="form-group">
+        <label for="lname">Last name :</label>
+        <input type="text" name="lname" id="lname" required/>
+    </div>
 
-    <label for="lname">Last name :</label> <br/>
-    <input type="text" name="lname" id="lname" required/> <br/>
+    <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" name="email" id="email" required/>
+    </div>
 
-    <label for="email">Email :</label> <br/>
-    <input type="email" name="email" id="email" required/> <br/>
+    <div class="form-group">
+        <label for="phone">Phone :</label>
+        <input type="text" name="phone" id="phone" required/>
+    </div>
 
-    <label for="phone">Phone :</label> <br/>
-    <input type="text" name="phone" id="phone" required/> <br/>
+    <div class="form-group">
+        <label for="address">Address :</label>
+        <input type="text" name="address" id="address" required/>
+    </div>
 
-    <label for="address">Address :</label> <br/>
-    <input type="text" name="address" id="address" required/> <br/>
-
-    <br/>
     <button type="submit">Next</button>
 </form>
 

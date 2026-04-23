@@ -1,8 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
     <title>Vehicle Information</title>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,17 +45,25 @@
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
 
-    <label for="make">Make :</label> <br/>
-    <input type="text" name="make" id="make" required/> <br/><br/>
+    <div class="form-group">
+        <label for="make">Make :</label>
+        <input type="text" name="make" id="make" required/>
+    </div>
 
-    <label for="model">Model :</label> <br/>
-    <input type="text" name="model" id="model" required/> <br/><br/>
+    <div class="form-group">
+        <label for="model">Model :</label>
+        <input type="text" name="model" id="model" required/>
+    </div>
 
-    <label for="year">Year :</label> <br/>
-    <input type="text" name="year" id="year" required/> <br/><br/>
+    <div class="form-group">
+        <label for="year">Year :</label>
+        <input type="text" name="year" id="year" required/>
+    </div>
 
-    <label for="vin">VIN :</label> <br/>
-    <input type="text" name="vin" id="vin" required/> <br/><br/>
+    <div class="form-group">
+        <label for="vin">VIN :</label>
+        <input type="text" name="vin" id="vin" required/>
+    </div>
 
     <button type="submit">Next</button>
 

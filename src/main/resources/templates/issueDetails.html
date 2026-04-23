@@ -1,8 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Additional Details</title>
+    <style>
+        .severity-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .severity-btn {
+            font-size: 18px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .severity-mild { background-color: #4CAF50; color: white; }
+        .severity-moderate { background-color: #FFC107; color: black; }
+        .severity-severe { background-color: #FF9800; color: white; }
+        .severity-emergency { background-color: #f44336; color: white; }
+        .severity-btn:hover { opacity: 0.85; transform: scale(1.02); }
+        textarea {
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .next-btn {
+            font-size: 18px;
+            padding: 12px 30px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .next-btn:hover {
+            background-color: #0b7dda;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,20 +65,19 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
 
     <p><strong>Severity:</strong></p>
-    <div>
-        <button type="submit" name="severity" value="mild">Mild</button>
-        <button type="submit" name="severity" value="moderate">Moderate</button>
-        <button type="submit" name="severity" value="severe">Severe</button>
-        <button type="submit" name="severity" value="emergency">Emergency</button>
+    <div class="severity-buttons">
+        <button type="submit" name="severity" value="mild" class="severity-btn severity-mild">🟢 Mild</button>
+        <button type="submit" name="severity" value="moderate" class="severity-btn severity-moderate">🟡 Moderate</button>
+        <button type="submit" name="severity" value="severe" class="severity-btn severity-severe">🟠 Severe</button>
+        <button type="submit" name="severity" value="emergency" class="severity-btn severity-emergency">🔴 Emergency</button>
     </div>
 
     <br/>
-
-    <label for="additionalInfo">Additional Information (Optional):</label><br/>
+    <label for="additionalInfo"><strong>Additional Information (Optional):</strong></label><br/>
     <textarea name="additionalInfo" id="additionalInfo" rows="4" cols="50" placeholder="Anything else we should know..."></textarea>
 
-    <br/><br/>
-    <button type="submit">Next</button>
+    <br/>
+    <button type="submit" class="next-btn">Next ➡️</button>
 </form>
 
 </body>
