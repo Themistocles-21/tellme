@@ -15,19 +15,22 @@
         input {
             padding: 8px;
             width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
-        button {
-            font-size: 18px;
+        .next-btn {
+            font-size: 16px;
             padding: 12px 24px;
-            margin: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
-        button:hover {
-            background-color: #45a049;
+        .next-btn:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
@@ -65,7 +68,7 @@
         <input type="text" name="vin" id="vin" required/>
     </div>
 
-    <button type="submit">Next</button>
+    <button type="submit" class="next-btn">Next</button>
 
 </form>
 

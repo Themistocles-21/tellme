@@ -1,9 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${locale}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
     <title>Order Submitted</title>
+    <style>
+        .home-btn {
+            font-size: 16px;
+            padding: 12px 24px;
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .home-btn:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
 
@@ -19,7 +35,7 @@
 <br/>
 
 <form action="/home" method="get">
-    <button type="submit">Return Home</button>
+    <button type="submit" class="home-btn">Return Home</button>
 </form>
 
 </body>
