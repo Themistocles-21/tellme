@@ -34,8 +34,12 @@
             margin-top: 8px;
             color: #666;
         }
-        h3 { margin-bottom: 5px; }
-        hr { margin: 15px 0 25px 0; }
+        h3 {
+            margin-bottom: 5px;
+        }
+        hr {
+            margin: 15px 0 25px 0;
+        }
         .progress-bar {
             font-family: monospace;
             font-size: 14px;
@@ -48,11 +52,11 @@
 </head>
 <body>
 
-<h3>🔍 Step 3: Where is the issue located?</h3>
+<h3>Where is the issue located?</h3>
 <hr>
 
 <div class="progress-bar">
-    [ Customer Info ] --- [ Vehicle Info ] --- [ <span style="color: red; font-weight: bold;">Diagnosis (1/4)</span> ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
+    [ Customer Info ] --- [ Vehicle Info ] --- [ Diagnosis 1/4 ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
 </div>
 <hr>
 
@@ -70,27 +74,27 @@
 
     <div class="zone-grid">
         <button type="submit" name="issueZone" value="front" class="zone-btn">
-            🚗 FRONT
+            FRONT
             <div class="zone-desc">Engine, radiator, headlights, front bumper</div>
         </button>
         <button type="submit" name="issueZone" value="rear" class="zone-btn">
-            🚙 REAR
+            REAR
             <div class="zone-desc">Trunk, exhaust, taillights, rear bumper</div>
         </button>
         <button type="submit" name="issueZone" value="side" class="zone-btn">
-            🚪 SIDE
+            SIDE
             <div class="zone-desc">Doors, mirrors, windows, rocker panels</div>
         </button>
         <button type="submit" name="issueZone" value="interior" class="zone-btn">
-            🪑 INTERIOR
+            INTERIOR
             <div class="zone-desc">Seats, dashboard, AC, smells, noises inside</div>
         </button>
         <button type="submit" name="issueZone" value="top" class="zone-btn">
-            ☀️ TOP / ROOF
+            TOP / ROOF
             <div class="zone-desc">Headliner, sunroof, windshield, roof</div>
         </button>
         <button type="submit" name="issueZone" value="bottom" class="zone-btn">
-            🔧 BOTTOM / UNDERCARRIAGE
+            BOTTOM / UNDERCARRIAGE
             <div class="zone-desc">Under engine, transmission, exhaust, suspension</div>
         </button>
     </div>

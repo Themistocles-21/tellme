@@ -28,7 +28,9 @@
             margin-bottom: 20px;
             color: #2c3e50;
         }
-        hr { margin: 15px 0 25px 0; }
+        hr {
+            margin: 15px 0 25px 0;
+        }
         .progress-bar {
             font-family: monospace;
             font-size: 14px;
@@ -41,11 +43,11 @@
 </head>
 <body>
 
-<h3>📍 Exactly where? (<span th:text="${vehicle.issueZone}"></span> zone)</h3>
+<h3>Exactly where? (Zone: <span th:text="${vehicle.issueZone}"></span>)</h3>
 <hr>
 
 <div class="progress-bar">
-    [ Customer Info ] --- [ Vehicle Info ] --- [ <span style="color: red; font-weight: bold;">Diagnosis (2/4)</span> ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
+    [ Customer Info ] --- [ Vehicle Info ] --- [ Diagnosis 2/4 ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
 </div>
 <hr>
 
@@ -63,30 +65,24 @@
     <input type="hidden" name="issueZone" th:value="${vehicle.issueZone}">
 
     <div class="sublocation-grid" th:switch="${vehicle.issueZone}">
-        <!-- FRONT zone sub-locations -->
         <div th:case="front">
             <button type="submit" name="issueSubLocation" value="front_left" class="sub-btn">Front Left</button>
             <button type="submit" name="issueSubLocation" value="front_center" class="sub-btn">Front Center</button>
             <button type="submit" name="issueSubLocation" value="front_right" class="sub-btn">Front Right</button>
             <button type="submit" name="issueSubLocation" value="front_whole" class="sub-btn">Whole Front End</button>
         </div>
-
-        <!-- REAR zone sub-locations -->
         <div th:case="rear">
             <button type="submit" name="issueSubLocation" value="rear_left" class="sub-btn">Rear Left</button>
             <button type="submit" name="issueSubLocation" value="rear_center" class="sub-btn">Rear Center</button>
             <button type="submit" name="issueSubLocation" value="rear_right" class="sub-btn">Rear Right</button>
             <button type="submit" name="issueSubLocation" value="rear_whole" class="sub-btn">Whole Rear End</button>
         </div>
-
-        <!-- SIDE zone sub-locations -->
         <div th:case="side">
             <button type="submit" name="issueSubLocation" value="driver_door" class="sub-btn">Driver Door</button>
             <button type="submit" name="issueSubLocation" value="passenger_door" class="sub-btn">Passenger Door</button>
             <button type="submit" name="issueSubLocation" value="both_sides" class="sub-btn">Both Sides</button>
+            <button type="submit" name="issueSubLocation" value="side_general" class="sub-btn">General Side Area</button>
         </div>
-
-        <!-- INTERIOR zone sub-locations -->
         <div th:case="interior">
             <button type="submit" name="issueSubLocation" value="dashboard" class="sub-btn">Dashboard / Instrument Panel</button>
             <button type="submit" name="issueSubLocation" value="seats" class="sub-btn">Seats</button>
@@ -94,16 +90,12 @@
             <button type="submit" name="issueSubLocation" value="headliner" class="sub-btn">Headliner / Ceiling</button>
             <button type="submit" name="issueSubLocation" value="interior_general" class="sub-btn">General / Everywhere inside</button>
         </div>
-
-        <!-- TOP zone sub-locations -->
         <div th:case="top">
             <button type="submit" name="issueSubLocation" value="roof" class="sub-btn">Roof / Headliner</button>
             <button type="submit" name="issueSubLocation" value="sunroof" class="sub-btn">Sunroof / Moonroof</button>
             <button type="submit" name="issueSubLocation" value="windshield" class="sub-btn">Windshield</button>
             <button type="submit" name="issueSubLocation" value="rear_window" class="sub-btn">Rear Window</button>
         </div>
-
-        <!-- BOTTOM zone sub-locations -->
         <div th:case="bottom">
             <button type="submit" name="issueSubLocation" value="under_engine" class="sub-btn">Under Engine Area</button>
             <button type="submit" name="issueSubLocation" value="under_cabin" class="sub-btn">Under Cabin / Floorpan</button>

@@ -30,6 +30,14 @@
         hr {
             margin: 15px 0 25px 0;
         }
+        .progress-bar {
+            font-family: monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -37,8 +45,8 @@
 <h3>Select Issue Type</h3>
 <hr>
 
-<div style="font-family: monospace; font-size: 14px; margin: 15px 0; padding: 8px; background-color: #f5f5f5; border-radius: 4px;">
-    [ Customer Info ] --- [ Vehicle Info ] --- [ <span style="color: red; font-weight: bold;">Structured Diagnosis</span> ] --- [ Extra Comments ] --- [ Confirm Submission ] --- [ Complete ]
+<div class="progress-bar">
+    [ Customer Info ] --- [ Vehicle Info ] --- [ Diagnosis 4/4 ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
 </div>
 <hr>
 
@@ -53,6 +61,8 @@
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueZone" th:value="${vehicle.issueZone}">
+    <input type="hidden" name="issueSubLocation" th:value="${vehicle.issueSubLocation}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
     <div class="button-group" th:switch="${vehicle.issueLocation}">
@@ -106,20 +116,32 @@
             <button type="submit" name="issueType" value="fan" class="type-btn">Fan not working</button>
             <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
         </div>
-        <div th:case="exterior" class="button-grid">
+        <div th:case="body" class="button-grid">
             <button type="submit" name="issueType" value="dent" class="type-btn">Dent / Scratch</button>
             <button type="submit" name="issueType" value="lights" class="type-btn">Light not working</button>
             <button type="submit" name="issueType" value="mirror" class="type-btn">Mirror damaged</button>
             <button type="submit" name="issueType" value="windshield" class="type-btn">Windshield crack</button>
         </div>
-        <div th:case="interior" class="button-grid">
-            <button type="submit" name="issueType" value="seat" class="type-btn">Seat issue</button>
-            <button type="submit" name="issueType" value="dashboard" class="type-btn">Dashboard warning light</button>
-            <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
-            <button type="submit" name="issueType" value="buttons" class="type-btn">Buttons / Controls not working</button>
+        <div th:case="tires" class="button-grid">
+            <button type="submit" name="issueType" value="flat" class="type-btn">Flat tire / Low pressure</button>
+            <button type="submit" name="issueType" value="vibration" class="type-btn">Vibration while driving</button>
+            <button type="submit" name="issueType" value="uneven_wear" class="type-btn">Uneven tire wear</button>
+            <button type="submit" name="issueType" value="noise" class="type-btn">Tire noise</button>
+        </div>
+        <div th:case="fuel" class="button-grid">
+            <button type="submit" name="issueType" value="no_fuel" class="type-btn">Car won't get fuel</button>
+            <button type="submit" name="issueType" value="smell" class="type-btn">Fuel smell</button>
+            <button type="submit" name="issueType" value="leak" class="type-btn">Fuel leak</button>
+            <button type="submit" name="issueType" value="mpg" class="type-btn">Poor fuel economy</button>
+        </div>
+        <div th:case="cooling" class="button-grid">
+            <button type="submit" name="issueType" value="overheating" class="type-btn">Engine overheating</button>
+            <button type="submit" name="issueType" value="leak" class="type-btn">Coolant leak</button>
+            <button type="submit" name="issueType" value="no_heat" class="type-btn">No heat from vents</button>
+            <button type="submit" name="issueType" value="fan" class="type-btn">Radiator fan not working</button>
         </div>
         <div th:case="other" class="button-grid">
-            <button type="submit" name="issueType" value="other" class="type-btn">Other issue (please continue)</button>
+            <button type="submit" name="issueType" value="other" class="type-btn">Other issue (please explain)</button>
         </div>
     </div>
 </form>

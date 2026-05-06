@@ -15,11 +15,15 @@
             font-size: 16px;
             padding: 12px 24px;
             background-color: #f0f0f0;
+            color: #333;
             border: 1px solid #ccc;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .issue-btn:hover { background-color: #e0e0e0; }
+        .issue-btn:hover {
+            background-color: #e0e0e0;
+        }
         .suggestion {
             background: #e8f4f8;
             padding: 10px;
@@ -27,7 +31,12 @@
             margin: 15px 0;
             font-size: 14px;
         }
-        hr { margin: 15px 0 25px 0; }
+        h3 {
+            margin-bottom: 5px;
+        }
+        hr {
+            margin: 15px 0 25px 0;
+        }
         .progress-bar {
             font-family: monospace;
             font-size: 14px;
@@ -40,15 +49,14 @@
 </head>
 <body>
 
-<h3>🔧 Which system has the problem?</h3>
+<h3>Which system has the problem?</h3>
 <div class="suggestion">
-    💡 Based on location (<strong th:text="${vehicle.issueZone} + ' / ' + ${vehicle.issueSubLocation}"></strong>),
-    here are the most likely systems:
+    Based on location: <strong th:text="${vehicle.issueZone} + ' / ' + ${vehicle.issueSubLocation}"></strong>
 </div>
 <hr>
 
 <div class="progress-bar">
-    [ Customer Info ] --- [ Vehicle Info ] --- [ <span style="color: red; font-weight: bold;">Diagnosis (3/4)</span> ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
+    [ Customer Info ] --- [ Vehicle Info ] --- [ Diagnosis 3/4 ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
 </div>
 <hr>
 
@@ -67,18 +75,18 @@
     <input type="hidden" name="issueSubLocation" th:value="${vehicle.issueSubLocation}">
 
     <div class="button-grid">
-        <button type="submit" name="issueLocation" value="engine" class="issue-btn">🏭 Engine</button>
-        <button type="submit" name="issueLocation" value="transmission" class="issue-btn">⚙️ Transmission</button>
-        <button type="submit" name="issueLocation" value="brakes" class="issue-btn">🛑 Brakes</button>
-        <button type="submit" name="issueLocation" value="suspension" class="issue-btn">🔄 Suspension / Steering</button>
-        <button type="submit" name="issueLocation" value="electrical" class="issue-btn">🔋 Electrical / Battery</button>
-        <button type="submit" name="issueLocation" value="exhaust" class="issue-btn">💨 Exhaust</button>
-        <button type="submit" name="issueLocation" value="hvac" class="issue-btn">❄️🔥 HVAC (Heat/AC)</button>
-        <button type="submit" name="issueLocation" value="body" class="issue-btn">🚗 Body / Paint / Glass</button>
-        <button type="submit" name="issueLocation" value="tires" class="issue-btn">🛞 Tires / Wheels</button>
-        <button type="submit" name="issueLocation" value="fuel" class="issue-btn">⛽ Fuel System</button>
-        <button type="submit" name="issueLocation" value="cooling" class="issue-btn">🌡️ Cooling System</button>
-        <button type="submit" name="issueLocation" value="other" class="issue-btn">❓ Other</button>
+        <button type="submit" name="issueLocation" value="engine" class="issue-btn">Engine</button>
+        <button type="submit" name="issueLocation" value="transmission" class="issue-btn">Transmission</button>
+        <button type="submit" name="issueLocation" value="brakes" class="issue-btn">Brakes</button>
+        <button type="submit" name="issueLocation" value="suspension" class="issue-btn">Suspension / Steering</button>
+        <button type="submit" name="issueLocation" value="electrical" class="issue-btn">Electrical / Battery</button>
+        <button type="submit" name="issueLocation" value="exhaust" class="issue-btn">Exhaust</button>
+        <button type="submit" name="issueLocation" value="hvac" class="issue-btn">HVAC (Heat/AC)</button>
+        <button type="submit" name="issueLocation" value="body" class="issue-btn">Body / Paint / Glass</button>
+        <button type="submit" name="issueLocation" value="tires" class="issue-btn">Tires / Wheels</button>
+        <button type="submit" name="issueLocation" value="fuel" class="issue-btn">Fuel System</button>
+        <button type="submit" name="issueLocation" value="cooling" class="issue-btn">Cooling System</button>
+        <button type="submit" name="issueLocation" value="other" class="issue-btn">Other</button>
     </div>
 </form>
 
