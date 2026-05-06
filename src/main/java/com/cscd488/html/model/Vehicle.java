@@ -54,4 +54,18 @@ public class Vehicle {
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
+
+    // Add these fields to the existing Vehicle class
+    @Column(name = "issue_zone")
+    private String issueZone;  // front, rear, side, interior, top, bottom
+
+    @Column(name = "issue_sub_location")
+    private String issueSubLocation;  // front_left, dashboard, under_engine, etc.
+
+    // Add getters and setters
+    public String getIssueZone() { return issueZone; }
+    public void setIssueZone(String issueZone) { this.issueZone = issueZone; }
+
+    public String getIssueSubLocation() { return issueSubLocation; }
+    public void setIssueSubLocation(String issueSubLocation) { this.issueSubLocation = issueSubLocation; }
 }

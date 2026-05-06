@@ -63,4 +63,28 @@ public class VehicleController {
         model.addAttribute("vehicle", vehicle);
         return "reviewPage";
     }
+
+    // Add these methods to VehicleController
+
+    @PostMapping("/vehicle/issue/zone")
+    public String saveIssueZone(@ModelAttribute Customer customer,
+                                @ModelAttribute Vehicle vehicle,
+                                @RequestParam String issueZone,
+                                Model model) {
+        vehicle.setIssueZone(issueZone);
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", vehicle);
+        return "issueSubLocation";
+    }
+
+    @PostMapping("/vehicle/issue/sublocation")
+    public String saveIssueSubLocation(@ModelAttribute Customer customer,
+                                       @ModelAttribute Vehicle vehicle,
+                                       @RequestParam String issueSubLocation,
+                                       Model model) {
+        vehicle.setIssueSubLocation(issueSubLocation);
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", vehicle);
+        return "issueLocation";
+    }
 }

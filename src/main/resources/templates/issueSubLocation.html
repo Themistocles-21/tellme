@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exactly where?</title>
+    <style>
+        .sublocation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px 0;
+        }
+        .sub-btn {
+            font-size: 18px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sub-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .zone-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        hr { margin: 15px 0 25px 0; }
+        .progress-bar {
+            font-family: monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h3>📍 Exactly where? (<span th:text="${vehicle.issueZone}"></span> zone)</h3>
+<hr>
+
+<div class="progress-bar">
+    [ Customer Info ] --- [ Vehicle Info ] --- [ <span style="color: red; font-weight: bold;">Diagnosis (2/4)</span> ] --- [ Details ] --- [ Confirm ] --- [ Complete ]
+</div>
+<hr>
+
+<form action="/vehicle/issue/sublocation" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueZone" th:value="${vehicle.issueZone}">
+
+    <div class="sublocation-grid" th:switch="${vehicle.issueZone}">
+        <!-- FRONT zone sub-locations -->
+        <div th:case="front">
+            <button type="submit" name="issueSubLocation" value="front_left" class="sub-btn">Front Left</button>
+            <button type="submit" name="issueSubLocation" value="front_center" class="sub-btn">Front Center</button>
+            <button type="submit" name="issueSubLocation" value="front_right" class="sub-btn">Front Right</button>
+            <button type="submit" name="issueSubLocation" value="front_whole" class="sub-btn">Whole Front End</button>
+        </div>
+
+        <!-- REAR zone sub-locations -->
+        <div th:case="rear">
+            <button type="submit" name="issueSubLocation" value="rear_left" class="sub-btn">Rear Left</button>
+            <button type="submit" name="issueSubLocation" value="rear_center" class="sub-btn">Rear Center</button>
+            <button type="submit" name="issueSubLocation" value="rear_right" class="sub-btn">Rear Right</button>
+            <button type="submit" name="issueSubLocation" value="rear_whole" class="sub-btn">Whole Rear End</button>
+        </div>
+
+        <!-- SIDE zone sub-locations -->
+        <div th:case="side">
+            <button type="submit" name="issueSubLocation" value="driver_door" class="sub-btn">Driver Door</button>
+            <button type="submit" name="issueSubLocation" value="passenger_door" class="sub-btn">Passenger Door</button>
+            <button type="submit" name="issueSubLocation" value="both_sides" class="sub-btn">Both Sides</button>
+        </div>
+
+        <!-- INTERIOR zone sub-locations -->
+        <div th:case="interior">
+            <button type="submit" name="issueSubLocation" value="dashboard" class="sub-btn">Dashboard / Instrument Panel</button>
+            <button type="submit" name="issueSubLocation" value="seats" class="sub-btn">Seats</button>
+            <button type="submit" name="issueSubLocation" value="floor" class="sub-btn">Floor / Carpet</button>
+            <button type="submit" name="issueSubLocation" value="headliner" class="sub-btn">Headliner / Ceiling</button>
+            <button type="submit" name="issueSubLocation" value="interior_general" class="sub-btn">General / Everywhere inside</button>
+        </div>
+
+        <!-- TOP zone sub-locations -->
+        <div th:case="top">
+            <button type="submit" name="issueSubLocation" value="roof" class="sub-btn">Roof / Headliner</button>
+            <button type="submit" name="issueSubLocation" value="sunroof" class="sub-btn">Sunroof / Moonroof</button>
+            <button type="submit" name="issueSubLocation" value="windshield" class="sub-btn">Windshield</button>
+            <button type="submit" name="issueSubLocation" value="rear_window" class="sub-btn">Rear Window</button>
+        </div>
+
+        <!-- BOTTOM zone sub-locations -->
+        <div th:case="bottom">
+            <button type="submit" name="issueSubLocation" value="under_engine" class="sub-btn">Under Engine Area</button>
+            <button type="submit" name="issueSubLocation" value="under_cabin" class="sub-btn">Under Cabin / Floorpan</button>
+            <button type="submit" name="issueSubLocation" value="under_trunk" class="sub-btn">Under Trunk / Rear</button>
+            <button type="submit" name="issueSubLocation" value="whole_undercarriage" class="sub-btn">Whole Undercarriage</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
