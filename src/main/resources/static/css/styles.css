@@ -91,6 +91,10 @@
 }
 
 .step.completed + .step .progress-line {
+    background-color: #28a745 !important;
+}
+
+.step.completed .progress-line {
     background-color: #28a745;
 }
 
