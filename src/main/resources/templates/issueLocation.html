@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 3: Where is the problem?</title>
+    <title>Step 3: Issue Location</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Step 3 of 9: Where is the problem located?</h3>
+<h3>Step 3 of 7: Select the issue location</h3>
 <hr>
 
 <div class="progress-container">
@@ -29,32 +29,23 @@
         </div>
         <div class="step pending">
             <div class="step-circle"><span>4</span></div>
-            <div class="step-label">Symptom</div>
+            <div class="step-label">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>5</span></div>
-            <div class="step-label">Specific</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step pending">
-            <div class="step-circle"><span>6</span></div>
             <div class="step-label">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
-            <div class="step-circle"><span>7</span></div>
+            <div class="step-circle"><span>6</span></div>
             <div class="step-label">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
-            <div class="step-circle"><span>8</span></div>
+            <div class="step-circle"><span>7</span></div>
             <div class="step-label">Review</div>
             <div class="progress-line"></div>
-        </div>
-        <div class="step pending">
-            <div class="step-circle"><span>9</span></div>
-            <div class="step-label">Complete</div>
         </div>
     </div>
 </div>
@@ -73,15 +64,16 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
 
     <div class="location-grid">
-        <button type="submit" name="issueLocation" value="front" class="location-btn">Front of vehicle</button>
-        <button type="submit" name="issueLocation" value="rear" class="location-btn">Rear of vehicle</button>
-        <button type="submit" name="issueLocation" value="left_side" class="location-btn">Left side (driver side)</button>
-        <button type="submit" name="issueLocation" value="right_side" class="location-btn">Right side (passenger side)</button>
-        <button type="submit" name="issueLocation" value="inside" class="location-btn">Inside the cabin</button>
-        <button type="submit" name="issueLocation" value="underneath" class="location-btn">Underneath the vehicle</button>
-        <button type="submit" name="issueLocation" value="engine_bay" class="location-btn">Under the hood / engine bay</button>
-        <button type="submit" name="issueLocation" value="multiple" class="location-btn">Multiple places</button>
-        <button type="submit" name="issueLocation" value="unsure" class="location-btn">Not sure</button>
+        <button type="submit" name="issueLocation" value="engine" class="location-btn">Engine</button>
+        <button type="submit" name="issueLocation" value="transmission" class="location-btn">Transmission</button>
+        <button type="submit" name="issueLocation" value="brakes" class="location-btn">Brakes</button>
+        <button type="submit" name="issueLocation" value="electrical" class="location-btn">Electrical / Battery</button>
+        <button type="submit" name="issueLocation" value="suspension" class="location-btn">Suspension / Steering</button>
+        <button type="submit" name="issueLocation" value="exhaust" class="location-btn">Exhaust</button>
+        <button type="submit" name="issueLocation" value="hvac" class="location-btn">HVAC</button>
+        <button type="submit" name="issueLocation" value="exterior" class="location-btn">Body / Exterior</button>
+        <button type="submit" name="issueLocation" value="interior" class="location-btn">Interior</button>
+        <button type="submit" name="issueLocation" value="other" class="location-btn">Other</button>
     </div>
 </form>
 

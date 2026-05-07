@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Review Your Information</title>
+    <title>Step 7: Review</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h2>Review Your Information</h2>
+<h2>Step 7 of 7: Review Your Information</h2>
 <hr>
 
 <div class="progress-container">
@@ -29,12 +29,7 @@
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Symptom</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label">Specific</div>
+            <div class="step-label">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
@@ -48,13 +43,9 @@
             <div class="progress-line"></div>
         </div>
         <div class="step current">
-            <div class="step-circle"><span>8</span></div>
+            <div class="step-circle"><span>7</span></div>
             <div class="step-label">Review</div>
             <div class="progress-line"></div>
-        </div>
-        <div class="step pending">
-            <div class="step-circle"><span>9</span></div>
-            <div class="step-label">Complete</div>
         </div>
     </div>
 </div>
@@ -80,8 +71,7 @@
 <div class="section">
     <h3>Issue Diagnosis</h3>
     <p><strong>Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
-    <p><strong>Symptom:</strong> <span th:text="${vehicle.issueSymptom}"></span></p>
-    <p><strong>Specific Issue:</strong> <span th:text="${vehicle.issueSpecific}"></span></p>
+    <p><strong>Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
     <p><strong>Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
     <p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
         <strong>Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
@@ -100,12 +90,11 @@
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
-    <input type="hidden" name="issueSymptom" th:value="${vehicle.issueSymptom}">
-    <input type="hidden" name="issueSpecific" th:value="${vehicle.issueSpecific}">
+    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
     <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
-    <button type="submit" class="confirm-btn">Confirm Submission</button>
+    <button type="submit" class="confirm-btn">Confirm</button>
 </form>
 
 </body>

@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 7: Additional details</title>
+    <title>Step 6: Additional Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Step 7 of 9: Any additional details?</h3>
+<h3>Step 6 of 7: Additional details (optional)</h3>
 <hr>
 
 <div class="progress-container">
@@ -29,12 +29,7 @@
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Symptom</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label">Specific</div>
+            <div class="step-label">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
@@ -43,18 +38,14 @@
             <div class="progress-line"></div>
         </div>
         <div class="step current">
-            <div class="step-circle"><span>7</span></div>
+            <div class="step-circle"><span>6</span></div>
             <div class="step-label">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
-            <div class="step-circle"><span>8</span></div>
+            <div class="step-circle"><span>7</span></div>
             <div class="step-label">Review</div>
             <div class="progress-line"></div>
-        </div>
-        <div class="step pending">
-            <div class="step-circle"><span>9</span></div>
-            <div class="step-label">Complete</div>
         </div>
     </div>
 </div>
@@ -72,13 +63,12 @@
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
-    <input type="hidden" name="issueSymptom" th:value="${vehicle.issueSymptom}">
-    <input type="hidden" name="issueSpecific" th:value="${vehicle.issueSpecific}">
+    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <textarea name="additionalInfo" rows="6" cols="50" placeholder="When did it start? How often does it happen? Any other details you want to share?"></textarea>
+    <textarea name="additionalInfo" rows="6" cols="50" placeholder="Additional details"></textarea>
     <br/>
-    <button type="submit" class="next-btn">Next - Review</button>
+    <button type="submit" class="next-btn">Next</button>
 </form>
 
 </body>

@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 6: How severe?</title>
+    <title>Step 5: Severity</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Step 6 of 9: How severe is the issue?</h3>
+<h3>Step 5 of 7: How severe is the issue?</h3>
 <hr>
 
 <div class="progress-container">
@@ -29,32 +29,23 @@
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Symptom</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label">Specific</div>
+            <div class="step-label">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step current">
-            <div class="step-circle"><span>6</span></div>
+            <div class="step-circle"><span>5</span></div>
             <div class="step-label">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
-            <div class="step-circle"><span>7</span></div>
+            <div class="step-circle"><span>6</span></div>
             <div class="step-label">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
-            <div class="step-circle"><span>8</span></div>
+            <div class="step-circle"><span>7</span></div>
             <div class="step-label">Review</div>
             <div class="progress-line"></div>
-        </div>
-        <div class="step pending">
-            <div class="step-circle"><span>9</span></div>
-            <div class="step-label">Complete</div>
         </div>
     </div>
 </div>
@@ -72,14 +63,13 @@
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
-    <input type="hidden" name="issueSymptom" th:value="${vehicle.issueSymptom}">
-    <input type="hidden" name="issueSpecific" th:value="${vehicle.issueSpecific}">
+    <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
 
     <div class="severity-buttons">
-        <button type="submit" name="severity" value="mild" class="severity-btn">Mild - Annoying but can wait</button>
-        <button type="submit" name="severity" value="moderate" class="severity-btn">Moderate - Need attention soon</button>
-        <button type="submit" name="severity" value="severe" class="severity-btn">Severe - Drivable but concerning</button>
-        <button type="submit" name="severity" value="emergency" class="severity-btn">Emergency - Not safe to drive</button>
+        <button type="submit" name="severity" value="mild" class="severity-btn">Mild</button>
+        <button type="submit" name="severity" value="moderate" class="severity-btn">Moderate</button>
+        <button type="submit" name="severity" value="severe" class="severity-btn">Severe</button>
+        <button type="submit" name="severity" value="emergency" class="severity-btn">Emergency</button>
     </div>
 </form>
 

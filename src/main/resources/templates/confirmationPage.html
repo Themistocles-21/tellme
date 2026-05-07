@@ -26,12 +26,7 @@
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Symptom</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label">Specific</div>
+            <div class="step-label">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
@@ -49,23 +44,18 @@
             <div class="step-label">Review</div>
             <div class="progress-line"></div>
         </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label">Complete</div>
-        </div>
     </div>
 </div>
 <hr>
 
 <div class="success-box">
-    <h2>Order Successfully Submitted!</h2>
+    <h2>Order Submitted</h2>
     <p th:text="${confirmationMsg}"></p>
 </div>
 
 <p><strong>Order Number:</strong> <span th:text="${orderNumber}"></span></p>
 <p><strong>Date & Time:</strong> <span th:text="${dateTime}"></span></p>
 <p><strong>Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
-<p><strong>Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
 <p><strong>Email:</strong> <span th:text="${email}"></span></p>
 
 <br/>

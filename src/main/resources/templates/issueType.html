@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 4: Issue Type</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<h3>Step 4 of 7: Select the issue type</h3>
+<hr>
+
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step current">
+            <div class="step-circle"><span>4</span></div>
+            <div class="step-label">Issue Type</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label">Review</div>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+</div>
+<hr>
+
+<form action="/vehicle/issue/type" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
+
+    <div class="type-grid" th:switch="${vehicle.issueLocation}">
+        <div th:case="engine" class="type-grid">
+            <button type="submit" name="issueType" value="no_start" class="type-btn">Won't start</button>
+            <button type="submit" name="issueType" value="check_engine" class="type-btn">Check engine light</button>
+            <button type="submit" name="issueType" value="rough_idle" class="type-btn">Rough idle</button>
+            <button type="submit" name="issueType" value="loss_power" class="type-btn">Loss of power</button>
+            <button type="submit" name="issueType" value="knocking" class="type-btn">Knocking noise</button>
+            <button type="submit" name="issueType" value="overheating" class="type-btn">Overheating</button>
+            <button type="submit" name="issueType" value="oil_leak" class="type-btn">Oil leak</button>
+            <button type="submit" name="issueType" value="smoke" class="type-btn">Smoke from exhaust</button>
+        </div>
+        <div th:case="transmission" class="type-grid">
+            <button type="submit" name="issueType" value="slipping" class="type-btn">Slipping gears</button>
+            <button type="submit" name="issueType" value="rough_shifting" class="type-btn">Rough shifting</button>
+            <button type="submit" name="issueType" value="delayed_engagement" class="type-btn">Delayed engagement</button>
+            <button type="submit" name="issueType" value="leaking" class="type-btn">Fluid leak</button>
+            <button type="submit" name="issueType" value="noise" class="type-btn">Unusual noise</button>
+        </div>
+        <div th:case="brakes" class="type-grid">
+            <button type="submit" name="issueType" value="squeaking" class="type-btn">Squeaking noise</button>
+            <button type="submit" name="issueType" value="grinding" class="type-btn">Grinding noise</button>
+            <button type="submit" name="issueType" value="soft_pedal" class="type-btn">Soft pedal</button>
+            <button type="submit" name="issueType" value="vibration" class="type-btn">Vibration when braking</button>
+            <button type="submit" name="issueType" value="pulling" class="type-btn">Pulling to one side</button>
+        </div>
+        <div th:case="electrical" class="type-grid">
+            <button type="submit" name="issueType" value="battery" class="type-btn">Battery not holding charge</button>
+            <button type="submit" name="issueType" value="alternator" class="type-btn">Alternator issue</button>
+            <button type="submit" name="issueType" value="lights" class="type-btn">Lights not working</button>
+            <button type="submit" name="issueType" value="windows" class="type-btn">Power windows not working</button>
+            <button type="submit" name="issueType" value="sensors" class="type-btn">Sensor malfunction</button>
+        </div>
+        <div th:case="suspension" class="type-grid">
+            <button type="submit" name="issueType" value="bumpy" class="type-btn">Rough ride</button>
+            <button type="submit" name="issueType" value="noise" class="type-btn">Clunking noise</button>
+            <button type="submit" name="issueType" value="steering" class="type-btn">Steering vibration</button>
+            <button type="submit" name="issueType" value="pulling" class="type-btn">Pulls to one side</button>
+            <button type="submit" name="issueType" value="uneven" class="type-btn">Uneven tire wear</button>
+        </div>
+        <div th:case="exhaust" class="type-grid">
+            <button type="submit" name="issueType" value="loud" class="type-btn">Loud noise</button>
+            <button type="submit" name="issueType" value="smoke" class="type-btn">Excessive smoke</button>
+            <button type="submit" name="issueType" value="smell" class="type-btn">Gas smell</button>
+            <button type="submit" name="issueType" value="rust" class="type-btn">Rust or hole</button>
+        </div>
+        <div th:case="hvac" class="type-grid">
+            <button type="submit" name="issueType" value="no_heat" class="type-btn">No heat</button>
+            <button type="submit" name="issueType" value="no_ac" class="type-btn">No AC</button>
+            <button type="submit" name="issueType" value="fan" class="type-btn">Fan not working</button>
+            <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
+        </div>
+        <div th:case="exterior" class="type-grid">
+            <button type="submit" name="issueType" value="dent" class="type-btn">Dent or scratch</button>
+            <button type="submit" name="issueType" value="lights" class="type-btn">Light not working</button>
+            <button type="submit" name="issueType" value="mirror" class="type-btn">Mirror damaged</button>
+            <button type="submit" name="issueType" value="windshield" class="type-btn">Windshield crack</button>
+        </div>
+        <div th:case="interior" class="type-grid">
+            <button type="submit" name="issueType" value="seat" class="type-btn">Seat issue</button>
+            <button type="submit" name="issueType" value="dashboard" class="type-btn">Dashboard warning</button>
+            <button type="submit" name="issueType" value="smell" class="type-btn">Unusual smell</button>
+            <button type="submit" name="issueType" value="buttons" class="type-btn">Controls not working</button>
+        </div>
+        <div th:case="other" class="type-grid">
+            <button type="submit" name="issueType" value="other" class="type-btn">Other issue</button>
+        </div>
+    </div>
+</form>
+
+<style>
+    .type-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        max-width: 600px;
+        margin: 20px 0;
+    }
+    .type-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .type-btn:hover {
+        background-color: #e0e0e0;
+    }
+</style>
+
+</body>
+</html>

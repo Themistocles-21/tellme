@@ -16,8 +16,7 @@ public class Vehicle {
     private String year;
 
     private String issueLocation;
-    private String issueSymptom;
-    private String issueSpecific;
+    private String issueType;
     private String severity;
 
     @Column(name = "free_form_text", length = 1000)
@@ -27,6 +26,7 @@ public class Vehicle {
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -45,11 +45,8 @@ public class Vehicle {
     public String getIssueLocation() { return issueLocation; }
     public void setIssueLocation(String issueLocation) { this.issueLocation = issueLocation; }
 
-    public String getIssueSymptom() { return issueSymptom; }
-    public void setIssueSymptom(String issueSymptom) { this.issueSymptom = issueSymptom; }
-
-    public String getIssueSpecific() { return issueSpecific; }
-    public void setIssueSpecific(String issueSpecific) { this.issueSpecific = issueSpecific; }
+    public String getIssueType() { return issueType; }
+    public void setIssueType(String issueType) { this.issueType = issueType; }
 
     public String getSeverity() { return severity; }
     public void setSeverity(String severity) { this.severity = severity; }
