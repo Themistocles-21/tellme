@@ -15,7 +15,6 @@ public class Vehicle {
     private String model;
     private String year;
 
-    // Diagnosis fields
     private String issueLocation;
     private String issueSymptom;
     private String issueSpecific;
@@ -28,7 +27,6 @@ public class Vehicle {
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

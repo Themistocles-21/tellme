@@ -32,6 +32,82 @@
         .next-btn:hover {
             background-color: #e0e0e0;
         }
+        hr {
+            margin: 15px 0;
+        }
+        .progress-container {
+            margin: 20px 0 30px 0;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 auto 8px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+        .step.completed .step-circle {
+            background-color: #28a745;
+        }
+        .step.completed .step-circle::after {
+            content: "?";
+        }
+        .step.current .step-circle {
+            background-color: #007bff;
+        }
+        .step.pending .step-circle {
+            background-color: #e0e0e0;
+        }
+        .step.pending .step-circle span {
+            color: #999;
+        }
+        .step-label {
+            font-size: 11px;
+            color: #666;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .step.current .step-label {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .step.pending .step-label {
+            color: #999;
+        }
+        .progress-line {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: -1;
+        }
+        .step:last-child .progress-line {
+            display: none;
+        }
+        .step.completed + .step .progress-line {
+            background-color: #28a745;
+        }
     </style>
 </head>
 <body>
@@ -39,13 +115,57 @@
 <h3>Vehicle Information</h3>
 <hr>
 
-<div style="font-family: monospace; font-size: 14px; margin: 15px 0; padding: 8px; background-color: #f5f5f5; border-radius: 4px;">
-    [ Customer Info ] --- [ <span style="color: red; font-weight: bold;">Vehicle Info</span> ] --- [ Structured Diagnosis ] --- [ Extra Comments ] --- [ Confirm Submission ] --- [ Complete ]
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step current">
+            <div class="step-circle"><span>2</span></div>
+            <div class="step-label">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>3</span></div>
+            <div class="step-label">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>4</span></div>
+            <div class="step-label">Symptom</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label">Specific</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>8</span></div>
+            <div class="step-label">Review</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>9</span></div>
+            <div class="step-label">Complete</div>
+        </div>
+    </div>
 </div>
 <hr>
 
 <form action="/vehicle/register" method="post">
-
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
     <input type="hidden" name="email" th:value="${customer.email}">
@@ -74,7 +194,6 @@
     </div>
 
     <button type="submit" class="next-btn">Next</button>
-
 </form>
 
 </body>

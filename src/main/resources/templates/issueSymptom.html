@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 2: What do you notice?</title>
+    <title>Step 4: What do you notice?</title>
     <style>
         .symptom-grid {
             display: grid;
@@ -29,29 +29,139 @@
             border-radius: 8px;
             margin: 15px 0;
         }
-        hr { margin: 15px 0; }
-        .progress-bar {
-            font-family: monospace;
-            font-size: 14px;
+        hr {
             margin: 15px 0;
-            padding: 8px;
-            background-color: #f5f5f5;
-            border-radius: 4px;
         }
-        .progress-current { color: red; font-weight: bold; }
-        .progress-step { color: #999; }
+        .progress-container {
+            margin: 20px 0 30px 0;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 auto 8px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+        .step.completed .step-circle {
+            background-color: #28a745;
+        }
+        .step.completed .step-circle::after {
+            content: "✓";
+        }
+        .step.current .step-circle {
+            background-color: #007bff;
+        }
+        .step.pending .step-circle {
+            background-color: #e0e0e0;
+        }
+        .step.pending .step-circle span {
+            color: #999;
+        }
+        .step-label {
+            font-size: 11px;
+            color: #666;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .step.current .step-label {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .step.pending .step-label {
+            color: #999;
+        }
+        .progress-line {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: -1;
+        }
+        .step:last-child .progress-line {
+            display: none;
+        }
+        .step.completed + .step .progress-line {
+            background-color: #28a745;
+        }
     </style>
 </head>
 <body>
 
-<h3>Step 2 of 5: What do you notice?</h3>
+<h3>Step 4 of 9: What do you notice?</h3>
 <div class="selected-info">
     Location: <strong th:text="${vehicle.issueLocation}"></strong>
 </div>
 <hr>
 
-<div class="progress-bar">
-    [ Customer ] --- [ Vehicle ] --- [ <span class="progress-step">1. Location</span> ] --- [ <span class="progress-current">2. Symptom</span> ] --- [ 3. Specific ] --- [ 4. Severity ] --- [ 5. Comments ] --- [ Review ]
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step current">
+            <div class="step-circle"><span>4</span></div>
+            <div class="step-label">Symptom</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label">Specific</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>8</span></div>
+            <div class="step-label">Review</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>9</span></div>
+            <div class="step-label">Complete</div>
+        </div>
+    </div>
 </div>
 <hr>
 
@@ -68,17 +178,98 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
-    <div class="symptom-grid">
-        <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (squeak, rattle, knock, hum)</button>
-        <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light is on</button>
-        <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
-        <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue (power, starting, shifting)</button>
-        <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell</button>
-        <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
-        <button type="submit" name="issueSymptom" value="climate" class="symptom-btn">Climate control (heat, AC, fan)</button>
-        <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (lights, windows, battery)</button>
-        <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (dent, crack, scratch)</button>
-        <button type="submit" name="issueSymptom" value="other" class="symptom-btn">Other / Not sure</button>
+    <div class="symptom-grid" th:switch="${vehicle.issueLocation}">
+        <div th:case="front">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (squeak, rattle, knock)</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light is on</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak (oil, coolant)</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue (power, starting)</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell (gas, burning)</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (dent, crack)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (lights, battery)</button>
+        </div>
+        <div th:case="rear">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (rattle, hum)</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak (exhaust, fuel)</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell (exhaust, gas)</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (dent, crack, lights)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (taillights, backup camera)</button>
+        </div>
+        <div th:case="left_side">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (squeak, rattle)</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (dent, scratch, mirror)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (window, lock, mirror)</button>
+        </div>
+        <div th:case="right_side">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (squeak, rattle)</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (dent, scratch, mirror)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (window, lock, mirror)</button>
+        </div>
+        <div th:case="inside">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (rattle, squeak, click)</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light on dashboard</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell (musty, burning)</button>
+            <button type="submit" name="issueSymptom" value="climate" class="symptom-btn">Climate control (heat, AC, fan)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (windows, radio, lights)</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (seat, trim, carpet)</button>
+        </div>
+        <div th:case="underneath">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (clunk, scrape, rattle)</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak (oil, coolant, fuel)</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue (shifting, vibration)</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell (gas, burning)</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (exhaust, shield, rust)</button>
+        </div>
+        <div th:case="engine_bay">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise (knock, tick, squeal)</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light on</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak (oil, coolant, fuel)</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue (power, starting, overheating)</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell (burning oil, gas, sweet)</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage (crack, rust, loose parts)</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical (battery, alternator, wiring)</button>
+        </div>
+        <div th:case="multiple">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light is on</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="climate" class="symptom-btn">Climate control</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage</button>
+        </div>
+        <div th:case="unsure">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light is on</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="climate" class="symptom-btn">Climate control</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage</button>
+        </div>
+        <div th:case="*">
+            <button type="submit" name="issueSymptom" value="noise" class="symptom-btn">Noise</button>
+            <button type="submit" name="issueSymptom" value="warning_light" class="symptom-btn">Warning light is on</button>
+            <button type="submit" name="issueSymptom" value="leak" class="symptom-btn">Fluid leak</button>
+            <button type="submit" name="issueSymptom" value="performance" class="symptom-btn">Performance issue</button>
+            <button type="submit" name="issueSymptom" value="smell" class="symptom-btn">Unusual smell</button>
+            <button type="submit" name="issueSymptom" value="vibration" class="symptom-btn">Vibration or shaking</button>
+            <button type="submit" name="issueSymptom" value="climate" class="symptom-btn">Climate control</button>
+            <button type="submit" name="issueSymptom" value="electrical" class="symptom-btn">Electrical</button>
+            <button type="submit" name="issueSymptom" value="visual" class="symptom-btn">Visual damage</button>
+        </div>
     </div>
 </form>
 
