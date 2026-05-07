@@ -2,49 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Vehicle Information</title>
+    <title th:text="#{vehicle.title}">Vehicle Information</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Vehicle Information</h3>
+<h3 th:text="#{vehicle.title}">Vehicle Information</h3>
 <hr>
 
 <div class="progress-container">
     <div class="progress-steps">
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Customer</div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
             <div class="progress-line"></div>
         </div>
         <div class="step current">
             <div class="step-circle"><span>2</span></div>
-            <div class="step-label">Vehicle</div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>3</span></div>
-            <div class="step-label">Location</div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>4</span></div>
-            <div class="step-label">Issue Type</div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>5</span></div>
-            <div class="step-label">Severity</div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>6</span></div>
-            <div class="step-label">Comments</div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>7</span></div>
-            <div class="step-label">Review</div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
             <div class="progress-line"></div>
         </div>
     </div>
@@ -60,26 +60,26 @@
     <input type="hidden" name="language" th:value="${customer.language}">
 
     <div class="form-group">
-        <label for="make">Make :</label>
+        <label for="make" th:text="#{vehicle.make}">Make :</label>
         <input type="text" name="make" id="make" required/>
     </div>
 
     <div class="form-group">
-        <label for="model">Model :</label>
+        <label for="model" th:text="#{vehicle.model}">Model :</label>
         <input type="text" name="model" id="model" required/>
     </div>
 
     <div class="form-group">
-        <label for="year">Year :</label>
+        <label for="year" th:text="#{vehicle.year}">Year :</label>
         <input type="text" name="year" id="year" required/>
     </div>
 
     <div class="form-group">
-        <label for="vin">VIN :</label>
+        <label for="vin" th:text="#{vehicle.vin}">VIN :</label>
         <input type="text" name="vin" id="vin" required/>
     </div>
 
-    <button type="submit" class="next-btn">Next</button>
+    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
 </form>
 
 </body>

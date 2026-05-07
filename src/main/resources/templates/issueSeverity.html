@@ -2,49 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 5: Severity</title>
+    <title th:text="#{severity.title}">Issue Severity</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Step 5 of 7: How severe is the issue?</h3>
+<h3 th:text="#{severity.title}">How severe is the issue?</h3>
 <hr>
 
 <div class="progress-container">
     <div class="progress-steps">
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Customer</div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Vehicle</div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Location</div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Issue Type</div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step current">
             <div class="step-circle"><span>5</span></div>
-            <div class="step-label">Severity</div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>6</span></div>
-            <div class="step-label">Comments</div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>7</span></div>
-            <div class="step-label">Review</div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
             <div class="progress-line"></div>
         </div>
     </div>
@@ -66,10 +66,10 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
 
     <div class="severity-buttons">
-        <button type="submit" name="severity" value="mild" class="severity-btn">Mild</button>
-        <button type="submit" name="severity" value="moderate" class="severity-btn">Moderate</button>
-        <button type="submit" name="severity" value="severe" class="severity-btn">Severe</button>
-        <button type="submit" name="severity" value="emergency" class="severity-btn">Emergency</button>
+        <button type="submit" name="severity" value="mild" class="severity-btn" th:text="#{severity.mild}">Mild</button>
+        <button type="submit" name="severity" value="moderate" class="severity-btn" th:text="#{severity.moderate}">Moderate</button>
+        <button type="submit" name="severity" value="severe" class="severity-btn" th:text="#{severity.severe}">Severe</button>
+        <button type="submit" name="severity" value="emergency" class="severity-btn" th:text="#{severity.emergency}">Emergency</button>
     </div>
 </form>
 

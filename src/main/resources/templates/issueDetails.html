@@ -2,49 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 6: Additional Details</title>
+    <title th:text="#{comments.title}">Additional Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Step 6 of 7: Additional details (optional)</h3>
+<h3 th:text="#{comments.title}">Additional details (optional)</h3>
 <hr>
 
 <div class="progress-container">
     <div class="progress-steps">
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Customer</div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Vehicle</div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Location</div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Issue Type</div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Severity</div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step current">
             <div class="step-circle"><span>6</span></div>
-            <div class="step-label">Comments</div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>7</span></div>
-            <div class="step-label">Review</div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
             <div class="progress-line"></div>
         </div>
     </div>
@@ -66,9 +66,9 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <textarea name="additionalInfo" rows="6" cols="50" placeholder="Additional details"></textarea>
+    <textarea name="additionalInfo" rows="6" cols="50" th:placeholder="#{comments.placeholder}"></textarea>
     <br/>
-    <button type="submit" class="next-btn">Next</button>
+    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
 </form>
 
 </body>

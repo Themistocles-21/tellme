@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Information</title>
+    <title th:text="#{customer.title}">Customer Information</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -15,37 +15,37 @@
     <div class="progress-steps">
         <div class="step current">
             <div class="step-circle"><span>1</span></div>
-            <div class="step-label">Customer</div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>2</span></div>
-            <div class="step-label">Vehicle</div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>3</span></div>
-            <div class="step-label">Location</div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>4</span></div>
-            <div class="step-label">Issue Type</div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>5</span></div>
-            <div class="step-label">Severity</div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>6</span></div>
-            <div class="step-label">Comments</div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step pending">
             <div class="step-circle"><span>7</span></div>
-            <div class="step-label">Review</div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
             <div class="progress-line"></div>
         </div>
     </div>
@@ -53,40 +53,49 @@
 <hr>
 
 <div class="language-buttons">
-    <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
-    <button type="button" class="lang-btn" onclick="setLanguage('fa')">فارسی</button>
-    <button type="button" class="lang-btn" onclick="setLanguage('ru')">Русский</button>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="en">
+        <button type="submit" class="lang-btn">English</button>
+    </form>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="fa">
+        <button type="submit" class="lang-btn">فارسی</button>
+    </form>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="ru">
+        <button type="submit" class="lang-btn">Русский</button>
+    </form>
 </div>
 
 <form action="/register" method="post" id="customerForm">
     <input type="hidden" name="language" id="language" value="en">
 
     <div class="form-group">
-        <label for="fname">First name :</label>
+        <label for="fname" th:text="#{customer.first_name}">First name :</label>
         <input type="text" name="fname" id="fname" required/>
     </div>
 
     <div class="form-group">
-        <label for="lname">Last name :</label>
+        <label for="lname" th:text="#{customer.last_name}">Last name :</label>
         <input type="text" name="lname" id="lname" required/>
     </div>
 
     <div class="form-group">
-        <label for="email">Email :</label>
+        <label for="email" th:text="#{customer.email}">Email :</label>
         <input type="email" name="email" id="email" required/>
     </div>
 
     <div class="form-group">
-        <label for="phone">Phone :</label>
+        <label for="phone" th:text="#{customer.phone}">Phone :</label>
         <input type="text" name="phone" id="phone" required/>
     </div>
 
     <div class="form-group">
-        <label for="address">Address :</label>
+        <label for="address" th:text="#{customer.address}">Address :</label>
         <input type="text" name="address" id="address" required/>
     </div>
 
-    <button type="submit" class="next-btn">Next</button>
+    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
 </form>
 
 <script>

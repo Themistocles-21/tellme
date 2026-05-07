@@ -2,49 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Step 7: Review</title>
+    <title th:text="#{review.title}">Review Your Information</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h2>Step 7 of 7: Review Your Information</h2>
+<h2 th:text="#{review.title}">Review Your Information</h2>
 <hr>
 
 <div class="progress-container">
     <div class="progress-steps">
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Customer</div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Vehicle</div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Location</div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Issue Type</div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Severity</div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
             <div class="progress-line"></div>
         </div>
         <div class="step completed">
             <div class="step-circle"><span></span></div>
-            <div class="step-label">Comments</div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
             <div class="progress-line"></div>
         </div>
         <div class="step current">
             <div class="step-circle"><span>7</span></div>
-            <div class="step-label">Review</div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
             <div class="progress-line"></div>
         </div>
     </div>
@@ -52,29 +52,29 @@
 <hr>
 
 <div class="section">
-    <h3>Customer Information</h3>
-    <p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
-    <p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-    <p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
-    <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+    <h3 th:text="#{review.customer}">Customer Information</h3>
+    <p><strong th:text="#{customer.first_name}">First Name:</strong> <span th:text="${customer.fname}"></span></p>
+    <p><strong th:text="#{customer.last_name}">Last Name:</strong> <span th:text="${customer.lname}"></span></p>
+    <p><strong th:text="#{customer.email}">Email:</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong th:text="#{customer.phone}">Phone:</strong> <span th:text="${customer.phone}"></span></p>
+    <p><strong th:text="#{customer.address}">Address:</strong> <span th:text="${customer.address}"></span></p>
 </div>
 
 <div class="section">
-    <h3>Vehicle Information</h3>
-    <p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
-    <p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
-    <p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
-    <p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
+    <h3 th:text="#{review.vehicle}">Vehicle Information</h3>
+    <p><strong th:text="#{vehicle.make}">Make:</strong> <span th:text="${vehicle.make}"></span></p>
+    <p><strong th:text="#{vehicle.model}">Model:</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong th:text="#{vehicle.year}">Year:</strong> <span th:text="${vehicle.year}"></span></p>
+    <p><strong th:text="#{vehicle.vin}">VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
 </div>
 
 <div class="section">
-    <h3>Issue Diagnosis</h3>
-    <p><strong>Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
-    <p><strong>Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
-    <p><strong>Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
+    <h3 th:text="#{review.diagnosis}">Issue Diagnosis</h3>
+    <p><strong th:text="#{review.location}">Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
+    <p><strong th:text="#{review.issue_type}">Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
+    <p><strong th:text="#{review.severity}">Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
     <p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
-        <strong>Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
+        <strong th:text="#{review.comments}">Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
     </p>
 </div>
 
@@ -94,7 +94,7 @@
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
     <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
-    <button type="submit" class="confirm-btn">Confirm</button>
+    <button type="submit" class="confirm-btn" th:text="#{button.confirm}">Confirm</button>
 </form>
 
 </body>
