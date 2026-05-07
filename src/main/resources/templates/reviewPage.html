@@ -18,6 +18,15 @@
         .confirm-btn:hover {
             background-color: #e0e0e0;
         }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        hr {
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -25,29 +34,34 @@
 <h2>Review Your Information</h2>
 <hr>
 
-<div style="font-family: monospace; font-size: 14px; margin: 15px 0; padding: 8px; background-color: #f5f5f5; border-radius: 4px;">
-    [ Customer Info ] --- [ Vehicle Info ] --- [ Structured Diagnosis ] --- [ Extra Comments ] --- [ <span style="color: red; font-weight: bold;">Confirm Submisssion</span> ] --- [  Complete  ]
+<div class="section">
+    <h3>Customer Information</h3>
+    <p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
+    <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
 </div>
-<hr>
 
-<p><strong>First Name:</strong> <span th:text="${customer.fname}"></span></p>
-<p><strong>Last Name:</strong> <span th:text="${customer.lname}"></span></p>
-<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
-<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+<div class="section">
+    <h3>Vehicle Information</h3>
+    <p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
+    <p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
+    <p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
+</div>
 
-<p><strong>Make:</strong> <span th:text="${vehicle.make}"></span></p>
-<p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
-<p><strong>Year:</strong> <span th:text="${vehicle.year}"></span></p>
-<p><strong>VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
-
-<p><strong>Issue Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
-<p><strong>Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
-<p><strong>Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
-
-<p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
-    <strong>Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
-</p>
+<div class="section">
+    <h3>Issue Diagnosis</h3>
+    <p><strong>Zone:</strong> <span th:text="${vehicle.issueZone}"></span></p>
+    <p><strong>Sub-Location:</strong> <span th:text="${vehicle.getSubLocationDisplayName()}"></span></p>
+    <p><strong>System:</strong> <span th:text="${vehicle.getSystemDisplayName(vehicle.issueLocation)}"></span></p>
+    <p><strong>Issue Type:</strong> <span th:text="${vehicle.getIssueTypeDisplayName(vehicle.issueType)}"></span></p>
+    <p><strong>Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
+    <p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
+        <strong>Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
+    </p>
+</div>
 
 <form action="/confirmationPage" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
@@ -56,11 +70,12 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
-
     <input type="hidden" name="make" th:value="${vehicle.make}">
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueZone" th:value="${vehicle.issueZone}">
+    <input type="hidden" name="issueSubLocation" th:value="${vehicle.issueSubLocation}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">

@@ -23,11 +23,6 @@
         .sub-btn:hover {
             background-color: #e0e0e0;
         }
-        .zone-header {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
         hr {
             margin: 15px 0 25px 0;
         }
@@ -39,11 +34,20 @@
             background-color: #f5f5f5;
             border-radius: 4px;
         }
+        .selected-zone {
+            background: #e8f4f8;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
 
-<h3>Exactly where? (Zone: <span th:text="${vehicle.issueZone}"></span>)</h3>
+<h3>Exactly where?</h3>
+<div class="selected-zone">
+    Selected zone: <strong th:text="${vehicle.issueZone}"></strong>
+</div>
 <hr>
 
 <div class="progress-bar">
@@ -64,43 +68,11 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueZone" th:value="${vehicle.issueZone}">
 
-    <div class="sublocation-grid" th:switch="${vehicle.issueZone}">
-        <div th:case="front">
-            <button type="submit" name="issueSubLocation" value="front_left" class="sub-btn">Front Left</button>
-            <button type="submit" name="issueSubLocation" value="front_center" class="sub-btn">Front Center</button>
-            <button type="submit" name="issueSubLocation" value="front_right" class="sub-btn">Front Right</button>
-            <button type="submit" name="issueSubLocation" value="front_whole" class="sub-btn">Whole Front End</button>
-        </div>
-        <div th:case="rear">
-            <button type="submit" name="issueSubLocation" value="rear_left" class="sub-btn">Rear Left</button>
-            <button type="submit" name="issueSubLocation" value="rear_center" class="sub-btn">Rear Center</button>
-            <button type="submit" name="issueSubLocation" value="rear_right" class="sub-btn">Rear Right</button>
-            <button type="submit" name="issueSubLocation" value="rear_whole" class="sub-btn">Whole Rear End</button>
-        </div>
-        <div th:case="side">
-            <button type="submit" name="issueSubLocation" value="driver_door" class="sub-btn">Driver Door</button>
-            <button type="submit" name="issueSubLocation" value="passenger_door" class="sub-btn">Passenger Door</button>
-            <button type="submit" name="issueSubLocation" value="both_sides" class="sub-btn">Both Sides</button>
-            <button type="submit" name="issueSubLocation" value="side_general" class="sub-btn">General Side Area</button>
-        </div>
-        <div th:case="interior">
-            <button type="submit" name="issueSubLocation" value="dashboard" class="sub-btn">Dashboard / Instrument Panel</button>
-            <button type="submit" name="issueSubLocation" value="seats" class="sub-btn">Seats</button>
-            <button type="submit" name="issueSubLocation" value="floor" class="sub-btn">Floor / Carpet</button>
-            <button type="submit" name="issueSubLocation" value="headliner" class="sub-btn">Headliner / Ceiling</button>
-            <button type="submit" name="issueSubLocation" value="interior_general" class="sub-btn">General / Everywhere inside</button>
-        </div>
-        <div th:case="top">
-            <button type="submit" name="issueSubLocation" value="roof" class="sub-btn">Roof / Headliner</button>
-            <button type="submit" name="issueSubLocation" value="sunroof" class="sub-btn">Sunroof / Moonroof</button>
-            <button type="submit" name="issueSubLocation" value="windshield" class="sub-btn">Windshield</button>
-            <button type="submit" name="issueSubLocation" value="rear_window" class="sub-btn">Rear Window</button>
-        </div>
-        <div th:case="bottom">
-            <button type="submit" name="issueSubLocation" value="under_engine" class="sub-btn">Under Engine Area</button>
-            <button type="submit" name="issueSubLocation" value="under_cabin" class="sub-btn">Under Cabin / Floorpan</button>
-            <button type="submit" name="issueSubLocation" value="under_trunk" class="sub-btn">Under Trunk / Rear</button>
-            <button type="submit" name="issueSubLocation" value="whole_undercarriage" class="sub-btn">Whole Undercarriage</button>
+    <div class="sublocation-grid">
+        <div th:each="subLoc : ${vehicle.getSubLocationsForZone()}">
+            <button type="submit" name="issueSubLocation" th:value="${subLoc}" class="sub-btn">
+                <span th:text="${vehicle.getSubLocationDisplayName(subLoc)}">Location</span>
+            </button>
         </div>
     </div>
 </form>
