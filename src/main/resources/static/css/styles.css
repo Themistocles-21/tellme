@@ -76,6 +76,7 @@
     color: #999;
 }
 
+/* Progress bar base line, all lines start gray */
 .progress-line {
     position: absolute;
     top: 16px;
@@ -90,12 +91,16 @@
     display: none;
 }
 
+
 .step.completed + .step .progress-line {
-    background-color: #28a745 !important;
+    background-color: #28a745;
 }
 
-.step.completed .progress-line {
-    background-color: #28a745;
+.step.current + .step .progress-line,
+.step.current ~ .step .progress-line,
+.step.pending + .step .progress-line,
+.step.pending ~ .step .progress-line {
+    background-color: #e0e0e0;
 }
 
 /* Form Styles */
