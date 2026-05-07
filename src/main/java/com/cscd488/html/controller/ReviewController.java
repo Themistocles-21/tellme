@@ -66,9 +66,11 @@ public class ReviewController {
     }
 
     private String buildIssueSummary(Vehicle vehicle) {
-        return String.format("%s - %s",
+        return String.format("Location: %s, Symptom: %s, Issue: %s, Severity: %s",
                 vehicle.getIssueLocation(),
-                vehicle.getIssueType()
+                vehicle.getIssueSymptom(),
+                vehicle.getIssueSpecific(),
+                vehicle.getSeverity()
         );
     }
 }

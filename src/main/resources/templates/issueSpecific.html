@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 3: What specific issue?</title>
+    <style>
+        .specific-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px 0;
+        }
+        .specific-btn {
+            font-size: 16px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .specific-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .selected-info {
+            background: #e8f4f8;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        hr { margin: 15px 0; }
+        .progress-bar {
+            font-family: monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        .progress-current { color: red; font-weight: bold; }
+        .progress-step { color: #999; }
+    </style>
+</head>
+<body>
+
+<h3>Step 3 of 5: Tell us more specifically</h3>
+<div class="selected-info">
+    Location: <strong th:text="${vehicle.issueLocation}"></strong><br/>
+    Symptom: <strong th:text="${vehicle.issueSymptom}"></strong>
+</div>
+<hr>
+
+<div class="progress-bar">
+    [ Customer ] --- [ Vehicle ] --- [ <span class="progress-step">1. Location</span> ] --- [ <span class="progress-step">2. Symptom</span> ] --- [ <span class="progress-current">3. Specific</span> ] --- [ 4. Severity ] --- [ 5. Comments ] --- [ Review ]
+</div>
+<hr>
+
+<form action="/vehicle/issue/specific" method="post">
+    <input type="hidden" name="fname" th:value="${customer.fname}">
+    <input type="hidden" name="lname" th:value="${customer.lname}">
+    <input type="hidden" name="email" th:value="${customer.email}">
+    <input type="hidden" name="phone" th:value="${customer.phone}">
+    <input type="hidden" name="address" th:value="${customer.address}">
+    <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="make" th:value="${vehicle.make}">
+    <input type="hidden" name="model" th:value="${vehicle.model}">
+    <input type="hidden" name="year" th:value="${vehicle.year}">
+    <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
+    <input type="hidden" name="issueSymptom" th:value="${vehicle.issueSymptom}">
+
+    <div class="specific-grid" th:switch="${vehicle.issueSymptom}">
+        <!-- Noise options -->
+        <div th:case="noise">
+            <button type="submit" name="issueSpecific" value="squeaking" class="specific-btn">Squeaking or squealing</button>
+            <button type="submit" name="issueSpecific" value="grinding" class="specific-btn">Grinding</button>
+            <button type="submit" name="issueSpecific" value="knocking" class="specific-btn">Knocking or tapping</button>
+            <button type="submit" name="issueSpecific" value="rattle" class="specific-btn">Rattling</button>
+            <button type="submit" name="issueSpecific" value="humming" class="specific-btn">Humming or whining</button>
+            <button type="submit" name="issueSpecific" value="clunk" class="specific-btn">Clunking over bumps</button>
+            <button type="submit" name="issueSpecific" value="other_noise" class="specific-btn">Other noise</button>
+        </div>
+
+        <!-- Warning light options -->
+        <div th:case="warning_light">
+            <button type="submit" name="issueSpecific" value="check_engine" class="specific-btn">Check engine light</button>
+            <button type="submit" name="issueSpecific" value="oil_light" class="specific-btn">Oil pressure light</button>
+            <button type="submit" name="issueSpecific" value="battery_light" class="specific-btn">Battery light</button>
+            <button type="submit" name="issueSpecific" value="brake_light" class="specific-btn">Brake warning light</button>
+            <button type="submit" name="issueSpecific" value="tire_light" class="specific-btn">Tire pressure light</button>
+            <button type="submit" name="issueSpecific" value="temp_light" class="specific-btn">Temperature light</button>
+            <button type="submit" name="issueSpecific" value="other_light" class="specific-btn">Other warning light</button>
+        </div>
+
+        <!-- Leak options -->
+        <div th:case="leak">
+            <button type="submit" name="issueSpecific" value="oil_leak" class="specific-btn">Oil leak</button>
+            <button type="submit" name="issueSpecific" value="coolant_leak" class="specific-btn">Coolant leak (green, pink, orange)</button>
+            <button type="submit" name="issueSpecific" value="transmission_leak" class="specific-btn">Transmission fluid leak (red)</button>
+            <button type="submit" name="issueSpecific" value="brake_leak" class="specific-btn">Brake fluid leak (clear/yellow)</button>
+            <button type="submit" name="issueSpecific" value="fuel_leak" class="specific-btn">Fuel leak (smells like gas)</button>
+            <button type="submit" name="issueSpecific" value="water_leak" class="specific-btn">Water leak (inside cabin)</button>
+            <button type="submit" name="issueSpecific" value="unknown_leak" class="specific-btn">Not sure what fluid</button>
+        </div>
+
+        <!-- Performance options -->
+        <div th:case="performance">
+            <button type="submit" name="issueSpecific" value="no_start" class="specific-btn">Won't start / No power</button>
+            <button type="submit" name="issueSpecific" value="hard_start" class="specific-btn">Hard to start / Cranks slow</button>
+            <button type="submit" name="issueSpecific" value="loss_power" class="specific-btn">Loss of power while driving</button>
+            <button type="submit" name="issueSpecific" value="rough_idle" class="specific-btn">Rough idle / Stalling</button>
+            <button type="submit" name="issueSpecific" value="shifting" class="specific-btn">Shifting problem (rough, slipping, delayed)</button>
+            <button type="submit" name="issueSpecific" value="acceleration" class="specific-btn">Poor acceleration / Hesitation</button>
+            <button type="submit" name="issueSpecific" value="overheating" class="specific-btn">Engine overheating</button>
+        </div>
+
+        <!-- Smell options -->
+        <div th:case="smell">
+            <button type="submit" name="issueSpecific" value="gas_smell" class="specific-btn">Gasoline smell</button>
+            <button type="submit" name="issueSpecific" value="burning_oil" class="specific-btn">Burning oil smell</button>
+            <button type="submit" name="issueSpecific" value="sweet_smell" class="specific-btn">Sweet smell (coolant)</button>
+            <button type="submit" name="issueSpecific" value="rotten_eggs" class="specific-btn">Rotten eggs smell</button>
+            <button type="submit" name="issueSpecific" value="burning_rubber" class="specific-btn">Burning rubber smell</button>
+            <button type="submit" name="issueSpecific" value="musty_smell" class="specific-btn">Musty / Moldy smell (inside)</button>
+        </div>
+
+        <!-- Vibration options -->
+        <div th:case="vibration">
+            <button type="submit" name="issueSpecific" value="steering_vibration" class="specific-btn">Steering wheel vibrates</button>
+            <button type="submit" name="issueSpecific" value="seat_vibration" class="specific-btn">Seat or floor vibrates</button>
+            <button type="submit" name="issueSpecific" value="brake_vibration" class="specific-btn">Vibration when braking</button>
+            <button type="submit" name="issueSpecific" value="highway_vibration" class="specific-btn">Vibration at highway speed</button>
+            <button type="submit" name="issueSpecific" value="idle_vibration" class="specific-btn">Vibration when idling</button>
+        </div>
+
+        <!-- Climate options -->
+        <div th:case="climate">
+            <button type="submit" name="issueSpecific" value="no_heat" class="specific-btn">No heat / Not getting warm</button>
+            <button type="submit" name="issueSpecific" value="no_ac" class="specific-btn">No cold air / AC not working</button>
+            <button type="submit" name="issueSpecific" value="fan_not_working" class="specific-btn">Fan not working / No air blowing</button>
+            <button type="submit" name="issueSpecific" value="wrong_vent" class="specific-btn">Air coming from wrong vents</button>
+            <button type="submit" name="issueSpecific" value="ac_noise" class="specific-btn">Strange noise when AC is on</button>
+            <button type="submit" name="issueSpecific" value="defrost" class="specific-btn">Defroster not working</button>
+        </div>
+
+        <!-- Electrical options -->
+        <div th:case="electrical">
+            <button type="submit" name="issueSpecific" value="battery_dies" class="specific-btn">Battery keeps dying</button>
+            <button type="submit" name="issueSpecific" value="lights_out" class="specific-btn">Lights not working (headlights, taillights, turn signals)</button>
+            <button type="submit" name="issueSpecific" value="interior_lights" class="specific-btn">Interior lights / Dashboard lights not working</button>
+            <button type="submit" name="issueSpecific" value="windows" class="specific-btn">Power windows not working</button>
+            <button type="submit" name="issueSpecific" value="door_locks" class="specific-btn">Power door locks not working</button>
+            <button type="submit" name="issueSpecific" value="screen" class="specific-btn">Screen / Radio / Infotainment not working</button>
+            <button type="submit" name="issueSpecific" value="fuses" class="specific-btn">Keeps blowing fuses</button>
+        </div>
+
+        <!-- Visual damage options -->
+        <div th:case="visual">
+            <button type="submit" name="issueSpecific" value="dent" class="specific-btn">Dent or ding</button>
+            <button type="submit" name="issueSpecific" value="scratch" class="specific-btn">Scratch or scuff</button>
+            <button type="submit" name="issueSpecific" value="cracked_windshield" class="specific-btn">Cracked windshield or glass</button>
+            <button type="submit" name="issueSpecific" value="broken_mirror" class="specific-btn">Broken mirror</button>
+            <button type="submit" name="issueSpecific" value="broken_light" class="specific-btn">Broken light housing</button>
+            <button type="submit" name="issueSpecific" value="paint_issue" class="specific-btn">Paint peeling or fading</button>
+            <button type="submit" name="issueSpecific" value="rust" class="specific-btn">Rust</button>
+        </div>
+
+        <!-- Other / Default -->
+        <div th:case="other">
+            <button type="submit" name="issueSpecific" value="other_issue" class="specific-btn">Other issue (explain in comments)</button>
+        </div>
+
+        <!-- Default case -->
+        <div th:case="*">
+            <button type="submit" name="issueSpecific" value="other_issue" class="specific-btn">Other issue (explain in comments)</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

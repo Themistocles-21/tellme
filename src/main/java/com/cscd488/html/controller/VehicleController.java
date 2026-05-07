@@ -15,28 +15,6 @@ public class VehicleController {
                                   Model model) {
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        return "issueZone";
-    }
-
-    @PostMapping("/vehicle/issue/zone")
-    public String saveIssueZone(@ModelAttribute Customer customer,
-                                @ModelAttribute Vehicle vehicle,
-                                @RequestParam String issueZone,
-                                Model model) {
-        vehicle.setIssueZone(issueZone);
-        model.addAttribute("customer", customer);
-        model.addAttribute("vehicle", vehicle);
-        return "issueSubLocation";
-    }
-
-    @PostMapping("/vehicle/issue/sublocation")
-    public String saveIssueSubLocation(@ModelAttribute Customer customer,
-                                       @ModelAttribute Vehicle vehicle,
-                                       @RequestParam String issueSubLocation,
-                                       Model model) {
-        vehicle.setIssueSubLocation(issueSubLocation);
-        model.addAttribute("customer", customer);
-        model.addAttribute("vehicle", vehicle);
         return "issueLocation";
     }
 
@@ -48,15 +26,26 @@ public class VehicleController {
         vehicle.setIssueLocation(issueLocation);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
-        return "issueType";
+        return "issueSymptom";
     }
 
-    @PostMapping("/vehicle/issue/type")
-    public String saveIssueType(@ModelAttribute Customer customer,
-                                @ModelAttribute Vehicle vehicle,
-                                @RequestParam String issueType,
-                                Model model) {
-        vehicle.setIssueType(issueType);
+    @PostMapping("/vehicle/issue/symptom")
+    public String saveIssueSymptom(@ModelAttribute Customer customer,
+                                   @ModelAttribute Vehicle vehicle,
+                                   @RequestParam String issueSymptom,
+                                   Model model) {
+        vehicle.setIssueSymptom(issueSymptom);
+        model.addAttribute("customer", customer);
+        model.addAttribute("vehicle", vehicle);
+        return "issueSpecific";
+    }
+
+    @PostMapping("/vehicle/issue/specific")
+    public String saveIssueSpecific(@ModelAttribute Customer customer,
+                                    @ModelAttribute Vehicle vehicle,
+                                    @RequestParam String issueSpecific,
+                                    Model model) {
+        vehicle.setIssueSpecific(issueSpecific);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
         return "issueSeverity";
