@@ -2,40 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta charset="ISO-8859-1">
-    <title>Order Submitted</title>
-    <style>
-        .home-btn {
-            font-size: 16px;
-            padding: 12px 24px;
-            margin-top: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .home-btn:hover {
-            background-color: #e0e0e0;
-        }
-    </style>
+    <title th:text="#{confirmation.title}">Order Submitted</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<p><strong>Confirm:</strong> <span th:text="${confirmationMsg}"></span></p>
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+</div>
 <hr>
 
-<p><strong>Order Number:</strong> <span th:text="${orderNumber}"></span></p>
-<p><strong>Date & Time:</strong> <span th:text="${dateTime}"></span></p>
-<p><strong>Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
-<p><strong>Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
-<p><strong>Email:</strong> <span th:text="${email}"></span></p>
+<div class="success-box">
+    <h2 th:text="#{confirmation.message}">Order Submitted</h2>
+    <p th:text="${confirmationMsg}"></p>
+</div>
+
+<p><strong th:text="#{confirmation.order_number}">Order Number:</strong> <span th:text="${orderNumber}"></span></p>
+<p><strong th:text="#{confirmation.date_time}">Date & Time:</strong> <span th:text="${dateTime}"></span></p>
+<p><strong th:text="#{confirmation.summary}">Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
+<p><strong th:text="#{confirmation.spam}">Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
+<p><strong th:text="#{confirmation.email}">Email:</strong> <span th:text="${email}"></span></p>
 
 <br/>
 
 <form action="/home" method="get">
-    <button type="submit" class="home-btn">Return Home</button>
+    <button type="submit" class="home-btn" th:text="#{button.home}">Return Home</button>
 </form>
 
 </body>

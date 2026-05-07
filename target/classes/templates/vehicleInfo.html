@@ -2,45 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Vehicle Information</title>
-    <style>
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
-        }
-        input {
-            padding: 8px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .next-btn {
-            font-size: 16px;
-            padding: 12px 24px;
-            margin-top: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .next-btn:hover {
-            background-color: #e0e0e0;
-        }
-    </style>
+    <title th:text="#{vehicle.title}">Vehicle Information</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>Vehicle Information</h3>
+<h3 th:text="#{vehicle.title}">Vehicle Information</h3>
+<hr>
+
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step current">
+            <div class="step-circle"><span>2</span></div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>3</span></div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>4</span></div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+</div>
 <hr>
 
 <form action="/vehicle/register" method="post">
-
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
     <input type="hidden" name="email" th:value="${customer.email}">
@@ -49,27 +60,26 @@
     <input type="hidden" name="language" th:value="${customer.language}">
 
     <div class="form-group">
-        <label for="make">Make :</label>
+        <label for="make" th:text="#{vehicle.make}">Make :</label>
         <input type="text" name="make" id="make" required/>
     </div>
 
     <div class="form-group">
-        <label for="model">Model :</label>
+        <label for="model" th:text="#{vehicle.model}">Model :</label>
         <input type="text" name="model" id="model" required/>
     </div>
 
     <div class="form-group">
-        <label for="year">Year :</label>
+        <label for="year" th:text="#{vehicle.year}">Year :</label>
         <input type="text" name="year" id="year" required/>
     </div>
 
     <div class="form-group">
-        <label for="vin">VIN :</label>
+        <label for="vin" th:text="#{vehicle.vin}">VIN :</label>
         <input type="text" name="vin" id="vin" required/>
     </div>
 
-    <button type="submit" class="next-btn">Next</button>
-
+    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
 </form>
 
 </body>

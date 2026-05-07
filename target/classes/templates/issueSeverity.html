@@ -2,38 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Issue Severity</title>
-    <style>
-        .severity-buttons {
-            display: flex;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .severity-btn {
-            font-size: 16px;
-            padding: 12px 24px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .severity-btn:hover {
-            background-color: #e0e0e0;
-        }
-        h3 {
-            margin-bottom: 5px;
-        }
-        hr {
-            margin: 15px 0 25px 0;
-        }
-    </style>
+    <title th:text="#{severity.title}">Issue Severity</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h3>How Severe Is The Issue?</h3>
+<h3 th:text="#{severity.title}">How severe is the issue?</h3>
+<hr>
+
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step completed">
+            <div class="step-circle"><span></span></div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step current">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+</div>
 <hr>
 
 <form action="/vehicle/issue/severity" method="post">
@@ -51,10 +66,10 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
 
     <div class="severity-buttons">
-        <button type="submit" name="severity" value="mild" class="severity-btn">Mild</button>
-        <button type="submit" name="severity" value="moderate" class="severity-btn">Moderate</button>
-        <button type="submit" name="severity" value="severe" class="severity-btn">Severe</button>
-        <button type="submit" name="severity" value="emergency" class="severity-btn">Emergency</button>
+        <button type="submit" name="severity" value="mild" class="severity-btn" th:text="#{severity.mild}">Mild</button>
+        <button type="submit" name="severity" value="moderate" class="severity-btn" th:text="#{severity.moderate}">Moderate</button>
+        <button type="submit" name="severity" value="severe" class="severity-btn" th:text="#{severity.severe}">Severe</button>
+        <button type="submit" name="severity" value="emergency" class="severity-btn" th:text="#{severity.emergency}">Emergency</button>
     </div>
 </form>
 

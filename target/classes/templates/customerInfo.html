@@ -2,59 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Information</title>
-    <style>
-        .language-buttons {
-            text-align: left;
-            margin: 20px 0;
-            padding: 10px 0;
-        }
-        .lang-btn {
-            font-size: 16px;
-            padding: 8px 20px;
-            margin: 0 10px 0 0;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            color: #333;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .lang-btn:hover {
-            background-color: #e0e0e0;
-        }
-        hr {
-            margin: 10px 0 20px 0;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
-        }
-        input {
-            padding: 8px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .next-btn {
-            font-size: 16px;
-            padding: 12px 24px;
-            margin-top: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .next-btn:hover {
-            background-color: #e0e0e0;
-        }
-    </style>
+    <title th:text="#{customer.title}">Customer Information</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
@@ -62,41 +11,91 @@
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
+<div class="progress-container">
+    <div class="progress-steps">
+        <div class="step current">
+            <div class="step-circle"><span>1</span></div>
+            <div class="step-label" th:text="#{step.customer}">Customer</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>2</span></div>
+            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>3</span></div>
+            <div class="step-label" th:text="#{step.location}">Location</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>4</span></div>
+            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>5</span></div>
+            <div class="step-label" th:text="#{step.severity}">Severity</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>6</span></div>
+            <div class="step-label" th:text="#{step.comments}">Comments</div>
+            <div class="progress-line"></div>
+        </div>
+        <div class="step pending">
+            <div class="step-circle"><span>7</span></div>
+            <div class="step-label" th:text="#{step.review}">Review</div>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+</div>
+<hr>
+
 <div class="language-buttons">
-    <button type="button" class="lang-btn" onclick="setLanguage('en')">English</button>
-    <button type="button" class="lang-btn" onclick="setLanguage('fa')">Farsi</button>
-    <button type="button" class="lang-btn" onclick="setLanguage('ru')">Russian</button>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="en">
+        <button type="submit" class="lang-btn">English</button>
+    </form>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="fa">
+        <button type="submit" class="lang-btn">فارسی</button>
+    </form>
+    <form action="/language" method="post" style="display: inline;">
+        <input type="hidden" name="lang" value="ru">
+        <button type="submit" class="lang-btn">Русский</button>
+    </form>
 </div>
 
 <form action="/register" method="post" id="customerForm">
     <input type="hidden" name="language" id="language" value="en">
 
     <div class="form-group">
-        <label for="fname">First name :</label>
+        <label for="fname" th:text="#{customer.first_name}">First name :</label>
         <input type="text" name="fname" id="fname" required/>
     </div>
 
     <div class="form-group">
-        <label for="lname">Last name :</label>
+        <label for="lname" th:text="#{customer.last_name}">Last name :</label>
         <input type="text" name="lname" id="lname" required/>
     </div>
 
     <div class="form-group">
-        <label for="email">Email :</label>
+        <label for="email" th:text="#{customer.email}">Email :</label>
         <input type="email" name="email" id="email" required/>
     </div>
 
     <div class="form-group">
-        <label for="phone">Phone :</label>
+        <label for="phone" th:text="#{customer.phone}">Phone :</label>
         <input type="text" name="phone" id="phone" required/>
     </div>
 
     <div class="form-group">
-        <label for="address">Address :</label>
+        <label for="address" th:text="#{customer.address}">Address :</label>
         <input type="text" name="address" id="address" required/>
     </div>
 
-    <button type="submit" class="next-btn">Next</button>
+    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
 </form>
 
 <script>
