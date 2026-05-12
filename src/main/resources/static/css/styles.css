@@ -287,3 +287,24 @@ hr {
     margin: 40px auto;
     padding: 25px;
 }
+
+/* Top Right Service Writer Login Button */
+.top-right-login {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.service-login-btn {
+    font-size: 13px;
+    padding: 8px 14px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.service-login-btn:hover {
+    background-color: #e0e0e0;
+}
