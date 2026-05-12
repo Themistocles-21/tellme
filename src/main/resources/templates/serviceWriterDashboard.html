@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Service Writer Login</title>
+  <title>Service Writer Dashboard</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -11,36 +11,24 @@
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
-<div class="login-container">
-  <h2>Service Writer Login</h2>
+<div class="dashboard-container">
+  <h2>Service Writer Dashboard</h2>
 
-  <p class="login-description">
-    Please log in to access the service writer dashboard.
+  <p>
+    Welcome. This page will be used by the service writer to view customer service requests.
   </p>
 
-  <div th:if="${error}" class="error-box">
-    <p th:text="${error}">Invalid username or password.</p>
+  <div class="section">
+    <h3>Service Requests</h3>
+    <p>No service requests are currently displayed here yet.</p>
   </div>
 
-  <form action="/service-writer/login" method="post" class="login-form">
-
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required>
-    </div>
-
-    <button type="submit" class="next-btn">Login</button>
-  </form>
-
-  <br>
+  <a href="/service-writer">
+    <button type="button" class="home-btn">Log Out</button>
+  </a>
 
   <a href="/home">
-    <button type="button" class="home-btn">Back to Customer Page</button>
+    <button type="button" class="home-btn">Customer Form</button>
   </a>
 </div>
 
