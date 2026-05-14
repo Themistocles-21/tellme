@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Service Writer Login</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<h3>CSCD488 Project</h3>
+<h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
+<hr>
+
+<div class="login-container">
+  <h2>Service Writer Login</h2>
+
+  <p class="login-description">
+    Please log in to access the service writer dashboard.
+  </p>
+
+  <div th:if="${error}" class="error-box">
+    <p th:text="${error}">Invalid username or password.</p>
+  </div>
+
+  <form action="/service-writer/login" method="post" class="login-form">
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required>
+    </div>
+
+    <button type="submit" class="next-btn">Login</button>
+  </form>
+
+  <br>
+
+  <a href="/home">
+    <button type="button" class="home-btn">Back to Customer Page</button>
+  </a>
+</div>
+
+</body>
+</html>
