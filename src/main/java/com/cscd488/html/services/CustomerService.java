@@ -10,6 +10,9 @@ import jakarta.transaction.Transactional;
 @Service
 public class CustomerService {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public Customer findByEmail(String email) {
         return entityManager.createQuery("SELECT c FROM Customer c WHERE c.email = :email", Customer.class)
                 .setParameter("email", email)
@@ -18,16 +21,15 @@ public class CustomerService {
                 .orElse(null);
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Transactional
     public void saveCustomer(Customer customer) {
+        System.out.println("Saving customer info...");
         entityManager.persist(customer);
     }
 
     @Transactional
     public void saveVehicle(Vehicle vehicle) {
+        System.out.println("Saving vehicle info...");
         entityManager.persist(vehicle);
     }
 }
