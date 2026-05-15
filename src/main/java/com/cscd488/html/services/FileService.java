@@ -1,7 +1,6 @@
 package com.cscd488.html.services;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -30,9 +29,5 @@ public class FileService {
                 text.getBytes(StandardCharsets.UTF_8),
                 StandardOpenOption.APPEND,
                 StandardOpenOption.CREATE);
-    }
-
-    public String readFile(MultipartFile file) throws IOException {
-        return new String(file.getBytes(), StandardCharsets.UTF_8);
     }
 }

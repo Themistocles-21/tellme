@@ -23,7 +23,13 @@ public class TranslationService {
             return "";
         }
 
-        String apiKey = System.getenv("OPENAI_API_KEY");
+        String apiKey = System.getProperty("OPENAI_API_KEY");
+        if (apiKey == null || apiKey.isEmpty()) {
+            apiKey = System.getenv("OPENAI_API_KEY");
+        }
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IllegalStateException("OPENAI_API_KEY not set. Add -DOPENAI_API_KEY=your-key in IntelliJ Run Configuration");
+        }
 
         HttpClient client = HttpClient.newHttpClient();
 
