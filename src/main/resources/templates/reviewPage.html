@@ -94,7 +94,10 @@
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
     <input type="hidden" name="freeFormText" th:value="${vehicle.freeFormText}">
 
-    <button type="submit" class="confirm-btn" th:text="#{button.confirm}">Confirm</button>
+    <div class="button-group">
+        <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
+        <button type="submit" class="confirm-btn" th:text="#{button.confirm}">Confirm</button>
+    </div>
 </form>
 
 </body>

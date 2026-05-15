@@ -129,6 +129,13 @@ textarea {
     margin: 20px 0;
 }
 
+/* Button Group Styles */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
 /* Button Styles */
 .next-btn, .confirm-btn, .home-btn {
     font-size: 16px;
@@ -144,6 +151,23 @@ textarea {
 
 .next-btn:hover, .confirm-btn:hover, .home-btn:hover {
     background-color: #e0e0e0;
+}
+
+/* Back Button Styles */
+.back-btn {
+    font-size: 16px;
+    padding: 12px 24px;
+    margin-top: 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
 }
 
 /* Grid Button Styles */
