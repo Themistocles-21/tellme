@@ -22,11 +22,13 @@ public class Vehicle {
     @Column(name = "free_form_text", length = 1000)
     private String freeFormText;
 
+    @Column(name = "translated_text", length = 1000)
+    private String translatedText;
+
     @ManyToOne
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -53,6 +55,9 @@ public class Vehicle {
 
     public String getFreeFormText() { return freeFormText; }
     public void setFreeFormText(String freeFormText) { this.freeFormText = freeFormText; }
+
+    public String getTranslatedText() { return translatedText; }
+    public void setTranslatedText(String translatedText) { this.translatedText = translatedText; }
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }

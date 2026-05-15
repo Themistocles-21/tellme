@@ -56,8 +56,14 @@
 <p><strong th:text="#{confirmation.order_number}">Order Number:</strong> <span th:text="${orderNumber}"></span></p>
 <p><strong th:text="#{confirmation.date_time}">Date & Time:</strong> <span th:text="${dateTime}"></span></p>
 <p><strong th:text="#{confirmation.summary}">Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
-<p><strong th:text="#{confirmation.spam}">Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
+
+<div th:if="${originalText != null and originalText != ''}">
+    <p><strong>Original Comments:</strong> <span th:text="${originalText}"></span></p>
+    <p><strong>Translated Comments:</strong> <span th:text="${translatedText}"></span></p>
+</div>
+
 <p><strong th:text="#{confirmation.email}">Email:</strong> <span th:text="${email}"></span></p>
+<p><strong th:text="#{confirmation.spam}">Spam reminder:</strong> <span th:text="${msgToReadEmail}"></span></p>
 
 <br/>
 

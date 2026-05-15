@@ -36,66 +36,94 @@ public class ReviewController {
     @PostMapping("/confirmationPage")
     public String confirm(@ModelAttribute Customer customer,
                           @ModelAttribute Vehicle vehicle,
-                          Model model) throws IOException, MessagingException, InterruptedException {
-
-        vehicle.setCustomer(customer);
-
-        Customer existingCustomer = customerService.findByEmail(customer.getEmail());
-
-        if (existingCustomer != null) {
-            vehicle.setCustomer(existingCustomer);
-            customerService.saveVehicle(vehicle);
-        } else {
-            customerService.saveCustomer(customer);
-            customerService.saveVehicle(vehicle);
-        }
-
-        String orderNumber = UUID.randomUUID().toString().substring(0, 8);
-        String issueSummary = buildIssueSummary(vehicle);
-
+                          Model model) {
         try {
-            String emailBody = String.format(
-                    "Dear %s,\n\nYour service request has been submitted.\n\nOrder Number: %s\nIssue: %s\nSeverity: %s\n\nWe will contact you within 24 hours.\n\nThank you!",
-                    customer.getFname(), orderNumber, issueSummary, vehicle.getSeverity()
-            );
-            emailService.sendSimpleEmail(customer.getEmail(), emailBody, "Service Request Confirmation");
+            vehicle.setCustomer(customer);
+
+            Customer existingCustomer = customerService.findByEmail(customer.getEmail());
+
+            if (existingCustomer != null) {
+                vehicle.setCustomer(existingCustomer);
+                customerService.saveVehicle(vehicle);
+            } else {
+                customerService.saveCustomer(customer);
+                customerService.saveVehicle(vehicle);
+            }
+
+            String orderNumber = UUID.randomUUID().toString().substring(0, 8);
+            String issueSummary = buildIssueSummary(vehicle);
+
+            try {
+                String emailBody = String.format(
+                        "Dear %s,\n\nYour service request has been submitted.\n\nOrder Number: %s\nIssue: %s\nSeverity: %s\n\nWe will contact you within 24 hours.\n\nThank you!",
+                        customer.getFname(), orderNumber, issueSummary, vehicle.getSeverity()
+                );
+                emailService.sendSimpleEmail(customer.getEmail(), emailBody, "Service Request Confirmation");
+            } catch (Exception e) {
+                System.err.println("Failed to send email: " + e.getMessage());
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+            String formattedDateTime = LocalDateTime.now().format(formatter);
+
+            String originalText = vehicle.getFreeFormText();
+            String translatedText = "";
+
+            if (originalText != null && !originalText.trim().isEmpty()) {
+                try {
+                    translatedText = translate.translate(originalText);
+                    vehicle.setTranslatedText(translatedText);
+                    customerService.saveVehicle(vehicle);
+
+                    String text = formattedDateTime + "\nOrder Number: " + orderNumber + "\n" +
+                            "Customer: " + customer.getFname() + " " + customer.getLname() + "\n" +
+                            "Email: " + customer.getEmail() + "\n" +
+                            "Vehicle: " + vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel() + "\n" +
+                            "VIN: " + vehicle.getVin() + "\n" +
+                            "Issue Location: " + vehicle.getIssueLocation() + "\n" +
+                            "Issue Type: " + vehicle.getIssueType() + "\n" +
+                            "Severity: " + vehicle.getSeverity() + "\n" +
+                            "Original Comments: " + originalText + "\n" +
+                            "Translated Comments: " + translatedText;
+
+                    String fileName = customer.getLname() + "_" + orderNumber + ".txt";
+                    fileWriter.writeToFile(text, fileName);
+
+                    emailService.sendEmailWithAttachment(
+                            customer.getEmail(),
+                            "Your service request details are attached.",
+                            customer.getLname() + " " + vehicle.getModel() + " - Service Request",
+                            fileName
+                    );
+
+                    System.out.println("Translation saved and file created: " + fileName);
+
+                } catch (Exception e) {
+                    System.err.println("Translation or file creation failed: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+
+            Customer displayCustomer = (existingCustomer != null) ? existingCustomer : customer;
+            model.addAttribute("customer", displayCustomer);
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("confirmationMsg", "Your order was successfully submitted!");
+            model.addAttribute("orderNumber", orderNumber);
+            model.addAttribute("dateTime", LocalDateTime.now().toString());
+            model.addAttribute("email", displayCustomer.getEmail());
+            model.addAttribute("msgToReadEmail", "Please check your inbox and make sure email is not marked as spam.");
+            model.addAttribute("issueSummary", issueSummary);
+            model.addAttribute("originalText", originalText);
+            model.addAttribute("translatedText", translatedText);
+
+            return "confirmationPage";
+
         } catch (Exception e) {
-            System.err.println("Failed to send email: " + e.getMessage());
+            System.err.println("Error in confirmation: " + e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("error", "An error occurred processing your request: " + e.getMessage());
+            return "customerInfo";
         }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
-        String formattedDateTime = LocalDateTime.now().format(formatter);
-
-        String originalText = vehicle.getFreeFormText();
-        if (originalText != null && !originalText.trim().isEmpty()) {
-            String translatedText = translate.translate(originalText);
-
-            String text = formattedDateTime + "\nOrder Number: " + orderNumber + customer.toString() + vehicle.toString();
-            String fileName = customer.getLname() + ".txt";
-            fileWriter.writeToFile(text, fileName);
-
-            String translationContent = fileWriter.readFromFile("translation.txt");
-            fileWriter.append("\n" + translationContent, fileName);
-
-            emailService.sendEmailWithAttachment(
-                    customer.getEmail(),
-                    text,
-                    customer.getLname() + " " + vehicle.getModel() + " issue",
-                    fileName
-            );
-        }
-
-        Customer displayCustomer = (existingCustomer != null) ? existingCustomer : customer;
-        model.addAttribute("customer", displayCustomer);
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("confirmationMsg", "Your order was successfully submitted!");
-        model.addAttribute("orderNumber", orderNumber);
-        model.addAttribute("dateTime", LocalDateTime.now().toString());
-        model.addAttribute("email", displayCustomer.getEmail());
-        model.addAttribute("msgToReadEmail", "Please check your inbox and make sure email is not marked as spam.");
-        model.addAttribute("issueSummary", issueSummary);
-
-        return "confirmationPage";
     }
 
     private String buildIssueSummary(Vehicle vehicle) {
