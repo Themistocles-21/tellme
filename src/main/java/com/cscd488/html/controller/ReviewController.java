@@ -4,11 +4,16 @@ import com.cscd488.html.model.Customer;
 import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.services.CustomerService;
 import com.cscd488.html.services.EmailSenderService;
+import com.cscd488.html.services.FileService;
+import com.cscd488.html.services.TranslationService;
+import jakarta.mail.MessagingException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Controller
@@ -16,6 +21,12 @@ public class ReviewController {
 
     private final CustomerService customerService;
     private final EmailSenderService emailService;
+
+    @Autowired
+    private TranslationService translate;
+
+    @Autowired
+    private FileService fileWriter;
 
     public ReviewController(CustomerService customerService, EmailSenderService emailService) {
         this.customerService = customerService;
@@ -25,7 +36,7 @@ public class ReviewController {
     @PostMapping("/confirmationPage")
     public String confirm(@ModelAttribute Customer customer,
                           @ModelAttribute Vehicle vehicle,
-                          Model model) throws IOException {
+                          Model model) throws IOException, MessagingException, InterruptedException {
 
         vehicle.setCustomer(customer);
 
@@ -50,6 +61,28 @@ public class ReviewController {
             emailService.sendSimpleEmail(customer.getEmail(), emailBody, "Service Request Confirmation");
         } catch (Exception e) {
             System.err.println("Failed to send email: " + e.getMessage());
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+
+        String originalText = vehicle.getFreeFormText();
+        if (originalText != null && !originalText.trim().isEmpty()) {
+            String translatedText = translate.translate(originalText);
+
+            String text = formattedDateTime + "\nOrder Number: " + orderNumber + customer.toString() + vehicle.toString();
+            String fileName = customer.getLname() + ".txt";
+            fileWriter.writeToFile(text, fileName);
+
+            String translationContent = fileWriter.readFromFile("translation.txt");
+            fileWriter.append("\n" + translationContent, fileName);
+
+            emailService.sendEmailWithAttachment(
+                    customer.getEmail(),
+                    text,
+                    customer.getLname() + " " + vehicle.getModel() + " issue",
+                    fileName
+            );
         }
 
         Customer displayCustomer = (existingCustomer != null) ? existingCustomer : customer;
