@@ -51,10 +51,6 @@
 </div>
 <hr>
 
-<div class="button-group">
-    <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
-</div>
-
 <form action="/vehicle/issue/location" method="post">
     <input type="hidden" name="fname" th:value="${customer.fname}">
     <input type="hidden" name="lname" th:value="${customer.lname}">
@@ -78,6 +74,10 @@
         <button type="submit" name="issueLocation" value="exterior" class="location-btn" th:text="#{location.exterior}">Body / Exterior</button>
         <button type="submit" name="issueLocation" value="interior" class="location-btn" th:text="#{location.interior}">Interior</button>
         <button type="submit" name="issueLocation" value="other" class="location-btn" th:text="#{location.other}">Other</button>
+    </div>
+
+    <div class="button-group">
+        <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
     </div>
 </form>
 
