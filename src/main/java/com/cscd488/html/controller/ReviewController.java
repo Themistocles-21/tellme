@@ -6,6 +6,7 @@ import com.cscd488.html.services.CustomerService;
 import com.cscd488.html.services.EmailSenderService;
 import com.cscd488.html.services.FileService;
 import com.cscd488.html.services.TranslationService;
+import com.cscd488.html.services.ServiceWriterConfigService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class ReviewController {
 
     private final CustomerService customerService;
     private final EmailSenderService emailService;
+    private final ServiceWriterConfigService serviceWriterConfigService;
 
     @Autowired
     private TranslationService translate;
@@ -28,9 +30,12 @@ public class ReviewController {
     @Autowired
     private FileService fileWriter;
 
-    public ReviewController(CustomerService customerService, EmailSenderService emailService) {
+    public ReviewController(CustomerService customerService,
+                            EmailSenderService emailService,
+                            ServiceWriterConfigService serviceWriterConfigService) {
         this.customerService = customerService;
         this.emailService = emailService;
+        this.serviceWriterConfigService = serviceWriterConfigService;
     }
 
     @PostMapping("/confirmationPage")
@@ -53,6 +58,7 @@ public class ReviewController {
             String orderNumber = UUID.randomUUID().toString().substring(0, 8);
             String issueSummary = buildIssueSummary(vehicle);
 
+            // Send simple confirmation email to customer (keep existing behavior)
             try {
                 String emailBody = String.format(
                         "Dear %s,\n\nYour service request has been submitted.\n\nOrder Number: %s\nIssue: %s\nSeverity: %s\n\nWe will contact you within 24 hours.\n\nThank you!",
@@ -60,7 +66,7 @@ public class ReviewController {
                 );
                 emailService.sendSimpleEmail(customer.getEmail(), emailBody, "Service Request Confirmation");
             } catch (Exception e) {
-                System.err.println("Failed to send email: " + e.getMessage());
+                System.err.println("Failed to send email to customer: " + e.getMessage());
             }
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
@@ -89,14 +95,17 @@ public class ReviewController {
                     String fileName = customer.getLname() + "_" + orderNumber + ".txt";
                     fileWriter.writeToFile(text, fileName);
 
+                    // Send email with attachment to SERVICE WRITER (not customer)
+                    String serviceWriterEmail = serviceWriterConfigService.getServiceWriterEmail();
                     emailService.sendEmailWithAttachment(
-                            customer.getEmail(),
-                            "Your service request details are attached.",
-                            customer.getLname() + " " + vehicle.getModel() + " - Service Request",
+                            serviceWriterEmail,
+                            "New service request submitted. Details attached.",
+                            "Work Order - " + orderNumber + " - " + customer.getLname() + " " + vehicle.getModel(),
                             fileName
                     );
 
                     System.out.println("Translation saved and file created: " + fileName);
+                    System.out.println("Email sent to service writer: " + serviceWriterEmail);
 
                 } catch (Exception e) {
                     System.err.println("Translation or file creation failed: " + e.getMessage());
