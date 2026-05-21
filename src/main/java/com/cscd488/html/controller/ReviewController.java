@@ -98,25 +98,25 @@ public class ReviewController {
                     String fileName = customer.getLname() + "_" + orderNumber + ".txt";
                     fileWriter.writeToFile(text, fileName);
 
-                    byte[] pdfBytes = pdfService.generateWorkOrderPdf(customer, vehicle, orderNumber);
-                    String pdfFileName = customer.getLname() + "_" + orderNumber + ".pdf";
-
-                    String serviceWriterEmail = serviceWriterConfigService.getServiceWriterEmail();
-                    emailService.sendEmailWithPdfAttachment(
-                            serviceWriterEmail,
-                            "New service request submitted. Work order attached.",
-                            "Work Order - " + orderNumber + " - " + customer.getLname() + " " + vehicle.getModel(),
-                            pdfBytes,
-                            pdfFileName
-                    );
-
-                    System.out.println("PDF generated and sent to service writer: " + serviceWriterEmail);
-
                 } catch (Exception e) {
                     System.err.println("Translation or file creation failed: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
+
+            byte[] pdfBytes = pdfService.generateWorkOrderPdf(customer, vehicle, orderNumber);
+            String pdfFileName = customer.getLname() + "_" + orderNumber + ".pdf";
+
+            String serviceWriterEmail = serviceWriterConfigService.getServiceWriterEmail();
+            emailService.sendEmailWithPdfAttachment(
+                    serviceWriterEmail,
+                    "New service request submitted. Work order attached.",
+                    "Work Order - " + orderNumber + " - " + customer.getLname() + " " + vehicle.getModel(),
+                    pdfBytes,
+                    pdfFileName
+            );
+
+            System.out.println("PDF generated and sent to service writer: " + serviceWriterEmail);
 
             Customer displayCustomer = (existingCustomer != null) ? existingCustomer : customer;
             model.addAttribute("customer", displayCustomer);
