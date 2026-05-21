@@ -7,6 +7,7 @@ import com.cscd488.html.services.EmailSenderService;
 import com.cscd488.html.services.FileService;
 import com.cscd488.html.services.TranslationService;
 import com.cscd488.html.services.ServiceWriterConfigService;
+import com.cscd488.html.services.PdfService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class ReviewController {
     private final CustomerService customerService;
     private final EmailSenderService emailService;
     private final ServiceWriterConfigService serviceWriterConfigService;
+    private final PdfService pdfService;
 
     @Autowired
     private TranslationService translate;
@@ -32,10 +34,12 @@ public class ReviewController {
 
     public ReviewController(CustomerService customerService,
                             EmailSenderService emailService,
-                            ServiceWriterConfigService serviceWriterConfigService) {
+                            ServiceWriterConfigService serviceWriterConfigService,
+                            PdfService pdfService) {
         this.customerService = customerService;
         this.emailService = emailService;
         this.serviceWriterConfigService = serviceWriterConfigService;
+        this.pdfService = pdfService;
     }
 
     @PostMapping("/confirmationPage")
@@ -58,7 +62,7 @@ public class ReviewController {
             String orderNumber = UUID.randomUUID().toString().substring(0, 8);
             String issueSummary = buildIssueSummary(vehicle);
 
-            // Send simple confirmation email to customer (keep existing behavior)
+            // Send simple confirmation email to customer
             try {
                 String emailBody = String.format(
                         "Dear %s,\n\nYour service request has been submitted.\n\nOrder Number: %s\nIssue: %s\nSeverity: %s\n\nWe will contact you within 24 hours.\n\nThank you!",
@@ -81,34 +85,25 @@ public class ReviewController {
                     vehicle.setTranslatedText(translatedText);
                     customerService.saveVehicle(vehicle);
 
-                    String text = formattedDateTime + "\nOrder Number: " + orderNumber + "\n" +
-                            "Customer: " + customer.getFname() + " " + customer.getLname() + "\n" +
-                            "Email: " + customer.getEmail() + "\n" +
-                            "Vehicle: " + vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel() + "\n" +
-                            "VIN: " + vehicle.getVin() + "\n" +
-                            "Issue Location: " + vehicle.getIssueLocation() + "\n" +
-                            "Issue Type: " + vehicle.getIssueType() + "\n" +
-                            "Severity: " + vehicle.getSeverity() + "\n" +
-                            "Original Comments: " + originalText + "\n" +
-                            "Translated Comments: " + translatedText;
+                    // Generate PDF work order
+                    byte[] pdfBytes = pdfService.generateWorkOrderPdf(customer, vehicle, orderNumber);
+                    String pdfFileName = customer.getLname() + "_" + orderNumber + ".pdf";
 
-                    String fileName = customer.getLname() + "_" + orderNumber + ".txt";
-                    fileWriter.writeToFile(text, fileName);
-
-                    // Send email with attachment to SERVICE WRITER (not customer)
+                    // Send email with PDF attachment to Service Writer
                     String serviceWriterEmail = serviceWriterConfigService.getServiceWriterEmail();
-                    emailService.sendEmailWithAttachment(
+                    emailService.sendEmailWithPdfAttachment(
                             serviceWriterEmail,
-                            "New service request submitted. Details attached.",
+                            "New service request submitted. Work order attached.",
                             "Work Order - " + orderNumber + " - " + customer.getLname() + " " + vehicle.getModel(),
-                            fileName
+                            pdfBytes,
+                            pdfFileName
                     );
 
-                    System.out.println("Translation saved and file created: " + fileName);
-                    System.out.println("Email sent to service writer: " + serviceWriterEmail);
+                    System.out.println("PDF generated and sent to service writer: " + serviceWriterEmail);
+                    System.out.println("Order Number: " + orderNumber);
 
                 } catch (Exception e) {
-                    System.err.println("Translation or file creation failed: " + e.getMessage());
+                    System.err.println("PDF generation or email failed: " + e.getMessage());
                     e.printStackTrace();
                 }
             }

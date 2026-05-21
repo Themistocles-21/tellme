@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServiceWriterConfigService {
-    private String serviceWriterEmail = "deriklittle02@gmail.com"; // default for testing ;)
+    private String serviceWriterEmail = "deriklittle02@gmail.com";
 
     public String getServiceWriterEmail() {
         return serviceWriterEmail;

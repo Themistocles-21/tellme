@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 import java.io.File;
 
 @Service
@@ -36,6 +37,22 @@ public class EmailSenderService {
 
         FileSystemResource fileSystemResource = new FileSystemResource(new File(attachment));
         mimeMessageHelper.addAttachment(fileSystemResource.getFilename(), fileSystemResource);
+
+        mailSender.send(mimeMailMessage);
+    }
+
+    public void sendEmailWithPdfAttachment(String toEmail, String body, String subject, byte[] pdfBytes, String pdfFileName) throws MessagingException {
+        MimeMessage mimeMailMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, true);
+
+        mimeMessageHelper.setFrom("cscd488team@gmail.com");
+        mimeMessageHelper.setTo(toEmail);
+        mimeMessageHelper.setText(body);
+        mimeMessageHelper.setSubject(subject);
+
+        // Attach PDF from byte array
+        ByteArrayDataSource dataSource = new ByteArrayDataSource(pdfBytes, "application/pdf");
+        mimeMessageHelper.addAttachment(pdfFileName, dataSource);
 
         mailSender.send(mimeMailMessage);
     }
