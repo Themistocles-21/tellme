@@ -2,12 +2,19 @@ package com.cscd488.html.controller;
 
 import com.cscd488.html.model.Customer;
 import com.cscd488.html.model.Vehicle;
+import com.cscd488.html.services.ServiceToggleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class VehicleController {
+
+    private final ServiceToggleService serviceToggleService;
+
+    public VehicleController(ServiceToggleService serviceToggleService) {
+        this.serviceToggleService = serviceToggleService;
+    }
 
     @PostMapping("/vehicle/register")
     public String vehicleRegister(@ModelAttribute Customer customer,
@@ -26,6 +33,7 @@ public class VehicleController {
         vehicle.setIssueLocation(issueLocation);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
         return "issueType";
     }
 
