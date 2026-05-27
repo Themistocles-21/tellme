@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -30,6 +31,15 @@ public class CustomerService {
     @Transactional
     public void saveVehicle(Vehicle vehicle) {
         System.out.println("Saving vehicle info...");
-        entityManager.persist(vehicle);
+        entityManager.merge(vehicle);
+    }
+
+    public List<Vehicle> getAllVehicles() {
+        return entityManager.createQuery("SELECT v FROM Vehicle v ORDER BY v.id DESC", Vehicle.class)
+                .getResultList();
+    }
+
+    public Vehicle getVehicleById(Long id) {
+        return entityManager.find(Vehicle.class, id);
     }
 }

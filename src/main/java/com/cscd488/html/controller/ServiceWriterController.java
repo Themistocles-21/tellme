@@ -1,5 +1,7 @@
 package com.cscd488.html.controller;
 
+import com.cscd488.html.model.Vehicle;
+import com.cscd488.html.services.CustomerService;
 import com.cscd488.html.services.ServiceToggleService;
 import com.cscd488.html.services.ServiceWriterConfigService;
 import jakarta.servlet.http.HttpSession;
@@ -12,11 +14,14 @@ public class ServiceWriterController {
 
     private final ServiceToggleService serviceToggleService;
     private final ServiceWriterConfigService serviceWriterConfigService;
+    private final CustomerService customerService;
 
     public ServiceWriterController(ServiceToggleService serviceToggleService,
-                                   ServiceWriterConfigService serviceWriterConfigService) {
+                                   ServiceWriterConfigService serviceWriterConfigService,
+                                   CustomerService customerService) {
         this.serviceToggleService = serviceToggleService;
         this.serviceWriterConfigService = serviceWriterConfigService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/service-writer")
@@ -77,6 +82,55 @@ public class ServiceWriterController {
         model.addAttribute("disabledLanguages", serviceToggleService.getDisabledServices());
         model.addAttribute("serviceWriterEmail", serviceWriterConfigService.getServiceWriterEmail());
         return "serviceWriterDashboard";
+    }
+
+    @GetMapping("/service-writer/orders")
+    public String viewAllOrders(HttpSession session, Model model) {
+        if (session.getAttribute("serviceWriterLoggedIn") == null) {
+            return "redirect:/service-writer";
+        }
+        model.addAttribute("vehicles", customerService.getAllVehicles());
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
+        return "workOrderList";
+    }
+
+    @GetMapping("/service-writer/order/{id}")
+    public String editOrder(@PathVariable Long id, HttpSession session, Model model) {
+        if (session.getAttribute("serviceWriterLoggedIn") == null) {
+            return "redirect:/service-writer";
+        }
+        Vehicle vehicle = customerService.getVehicleById(id);
+        if (vehicle == null) {
+            return "redirect:/service-writer/orders";
+        }
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
+        return "editWorkOrder";
+    }
+
+    @PostMapping("/service-writer/order/update")
+    public String updateOrder(@ModelAttribute Vehicle vehicle,
+                              @RequestParam(required = false) String writerNotes,
+                              @RequestParam String status,
+                              HttpSession session) {
+        if (session.getAttribute("serviceWriterLoggedIn") == null) {
+            return "redirect:/service-writer";
+        }
+        Vehicle existingVehicle = customerService.getVehicleById(vehicle.getId());
+        if (existingVehicle != null) {
+            existingVehicle.setStatus(status);
+            if (writerNotes != null && !writerNotes.trim().isEmpty()) {
+                String currentNotes = existingVehicle.getWriterNotes();
+                String newNote = writerNotes.trim();
+                if (currentNotes == null || currentNotes.isEmpty()) {
+                    existingVehicle.setWriterNotes(newNote);
+                } else {
+                    existingVehicle.setWriterNotes(currentNotes + "\n---\n" + newNote);
+                }
+            }
+            customerService.saveVehicle(existingVehicle);
+        }
+        return "redirect:/service-writer/orders";
     }
 
     @PostMapping("/service-writer/logout")

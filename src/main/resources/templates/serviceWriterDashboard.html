@@ -187,6 +187,18 @@
     </div>
   </div>
 
+  <div class="section">
+    <h3>Work Order Management</h3>
+    <p>View, edit, and update status of all customer work orders.</p>
+    <div class="button-group">
+      <a th:href="@{/service-writer/orders}">
+        <button type="button" class="toggle-btn" style="background-color: #8b6914; color: #fef7e0;">
+          View All Work Orders
+        </button>
+      </a>
+    </div>
+  </div>
+
   <div class="button-group">
     <form th:action="@{/service-writer/logout}" method="post" style="display: inline;">
       <button type="submit" class="back-btn">Log Out</button>

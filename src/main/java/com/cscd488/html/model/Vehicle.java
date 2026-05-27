@@ -25,6 +25,12 @@ public class Vehicle {
     @Column(name = "translated_text", length = 1000)
     private String translatedText;
 
+    @Column(name = "status")
+    private String status = "Pending";
+
+    @Column(name = "writer_notes", length = 2000)
+    private String writerNotes;
+
     @ManyToOne
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
@@ -58,6 +64,12 @@ public class Vehicle {
 
     public String getTranslatedText() { return translatedText; }
     public void setTranslatedText(String translatedText) { this.translatedText = translatedText; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public String getWriterNotes() { return writerNotes; }
+    public void setWriterNotes(String writerNotes) { this.writerNotes = writerNotes; }
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
