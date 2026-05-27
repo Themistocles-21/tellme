@@ -120,14 +120,14 @@
 
 <div class="pdf-list-container">
     <div class="header-actions">
-        <h2>📄 Stored Work Orders</h2>
+        <h2>Stored Work Orders</h2>
         <div class="stats">
             Total PDFs: <span th:text="${pdfs.size()}">0</span>
         </div>
     </div>
 
     <div class="header-actions" style="margin-bottom: 20px;">
-        <a th:href="@{/service-writer/dashboard}" class="pdf-btn" style="background-color: #8b6914; color: #fef7e0;">← Back to Dashboard</a>
+        <a th:href="@{/service-writer/dashboard}" class="pdf-btn" style="background-color: #8b6914; color: #fef7e0;">Back to Dashboard</a>
         <a th:href="@{/home}" class="pdf-btn" style="background-color: #6b4c1a; color: #fef7e0;">Customer Form</a>
     </div>
 
@@ -146,14 +146,14 @@
         <div class="pdf-actions">
             <a th:href="@{/service-writer/pdf/view/{filename}(filename=${pdf.filename})}"
                target="_blank"
-               class="pdf-btn view-btn">👁️ View</a>
+               class="pdf-btn view-btn">View</a>
             <a th:href="@{/service-writer/pdf/download/{filename}(filename=${pdf.filename})}"
-               class="pdf-btn download-btn">📥 Download</a>
+               class="pdf-btn download-btn">Download</a>
             <form th:action="@{/service-writer/pdf/delete/{filename}(filename=${pdf.filename})}"
                   method="post"
                   style="display: inline;"
                   onsubmit="return confirm('Are you sure you want to delete this work order?');">
-                <button type="submit" class="pdf-btn delete-btn">🗑️ Delete</button>
+                <button type="submit" class="pdf-btn delete-btn">Delete</button>
             </form>
         </div>
     </div>
