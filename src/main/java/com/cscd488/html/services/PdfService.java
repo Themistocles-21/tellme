@@ -3,9 +3,7 @@ package com.cscd488.html.services;
 import com.cscd488.html.model.Customer;
 import com.cscd488.html.model.Vehicle;
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.*;
 import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
@@ -19,212 +17,212 @@ public class PdfService {
 
         try {
             Document document = new Document(PageSize.A4);
-            document.setMargins(20, 20, 20, 20);
+            document.setMargins(36, 36, 36, 36);
             PdfWriter.getInstance(document, out);
             document.open();
 
-            // Font definitions - smaller fonts to fit one page
-            Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8);
-            Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 8);
-            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
+            // Professional fonts
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+            Font sectionFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11);
+            Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
+            Font labelFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9);
+            Font valueFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
             String formattedDateTime = LocalDateTime.now().format(formatter);
 
-            // ===== HEADER SECTION (Order # and Date) =====
+            // ===== HEADER SECTION =====
             PdfPTable headerTable = new PdfPTable(2);
             headerTable.setWidthPercentage(100);
             headerTable.setWidths(new float[]{50, 50});
 
-            PdfPCell leftHeader = new PdfPCell(new Phrase(" ", normalFont));
-            leftHeader.setBorder(Rectangle.NO_BORDER);
-            headerTable.addCell(leftHeader);
+            // Left side - Company Info
+            PdfPCell companyCell = new PdfPCell();
+            companyCell.setBorder(Rectangle.NO_BORDER);
+            Paragraph companyName = new Paragraph("AUTO REPAIR CENTER", titleFont);
+            companyName.setSpacingAfter(5);
+            companyCell.addElement(companyName);
+            Paragraph tagline = new Paragraph("Professional Automotive Service", FontFactory.getFont(FontFactory.HELVETICA, 10));
+            tagline.setSpacingAfter(3);
+            companyCell.addElement(tagline);
+            Paragraph address = new Paragraph("123 Main Street, Anytown, USA 12345", normalFont);
+            companyCell.addElement(address);
+            Paragraph phone = new Paragraph("Tel: (555) 123-4567 | Email: service@autorepair.com", normalFont);
+            companyCell.addElement(phone);
+            headerTable.addCell(companyCell);
 
-            PdfPCell rightHeader = new PdfPCell(new Phrase("Order #: " + orderNumber + "     Date: " + formattedDateTime, normalFont));
-            rightHeader.setBorder(Rectangle.NO_BORDER);
-            rightHeader.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            headerTable.addCell(rightHeader);
+            // Right side - Order Info
+            PdfPCell orderCell = new PdfPCell();
+            orderCell.setBorder(Rectangle.NO_BORDER);
+            orderCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            PdfPTable orderInfoTable = new PdfPTable(2);
+            orderInfoTable.setWidthPercentage(100);
+            orderInfoTable.setWidths(new float[]{40, 60});
+
+            addStyledCell(orderInfoTable, "WORK ORDER #:", orderNumber, labelFont, valueFont);
+            addStyledCell(orderInfoTable, "Date:", formattedDateTime, labelFont, valueFont);
+
+            orderCell.addElement(orderInfoTable);
+            headerTable.addCell(orderCell);
 
             document.add(headerTable);
 
-            // ===== CUSTOMER INFORMATION & TECHNICIAN INFO (side by side) =====
-            PdfPTable topSection = new PdfPTable(2);
-            topSection.setWidthPercentage(100);
-            topSection.setWidths(new float[]{50, 50});
+            // Divider line
+            Paragraph divider = new Paragraph(" ", FontFactory.getFont(FontFactory.HELVETICA, 8));
+            divider.setSpacingAfter(5);
+            document.add(divider);
 
-            // LEFT: CUSTOMER INFORMATION
-            PdfPCell customerCell = new PdfPCell();
-            customerCell.setBorder(Rectangle.BOX);
-            customerCell.setPadding(3);
+            PdfPTable lineTable = new PdfPTable(1);
+            PdfPCell lineCell = new PdfPCell();
+            lineCell.setBorder(Rectangle.BOTTOM);
+            lineCell.setBorderWidthBottom(1f);
+            lineCell.setPadding(0);
+            lineTable.addCell(lineCell);
+            document.add(lineTable);
 
+            // ===== CUSTOMER & VEHICLE SECTION (Side by side) =====
+            PdfPTable mainSection = new PdfPTable(2);
+            mainSection.setWidthPercentage(100);
+            mainSection.setWidths(new float[]{50, 50});
+            mainSection.setSpacingBefore(10);
+            mainSection.setSpacingAfter(10);
+
+            // LEFT: Customer Information
+            PdfPCell customerSection = createStyledSection("CUSTOMER INFORMATION", sectionFont);
             PdfPTable customerTable = new PdfPTable(2);
             customerTable.setWidthPercentage(100);
             customerTable.setWidths(new float[]{35, 65});
 
-            addCell(customerTable, "Company Name:", "", boldFont, normalFont);
-            addCell(customerTable, "Driver's Name:", customer.getFname() + " " + customer.getLname(), boldFont, normalFont);
-            addCell(customerTable, "Driver's Number:", customer.getPhone(), boldFont, normalFont);
-            addCell(customerTable, "Email:", customer.getEmail(), boldFont, normalFont);
-            addCell(customerTable, "Address:", customer.getAddress(), boldFont, normalFont);
-            addCell(customerTable, "Reference Number:", orderNumber, boldFont, normalFont);
-            addCell(customerTable, "Purchase Order:", "", boldFont, normalFont);
+            addStyledCell(customerTable, "Name:", customer.getFname() + " " + customer.getLname(), labelFont, valueFont);
+            addStyledCell(customerTable, "Email:", customer.getEmail(), labelFont, valueFont);
+            addStyledCell(customerTable, "Phone:", customer.getPhone(), labelFont, valueFont);
+            addStyledCell(customerTable, "Address:", customer.getAddress(), labelFont, valueFont);
 
-            customerCell.addElement(new Paragraph("CUSTOMER INFORMATION", titleFont));
-            customerCell.addElement(new Paragraph(" "));
-            customerCell.addElement(customerTable);
-            topSection.addCell(customerCell);
+            customerSection.addElement(customerTable);
+            mainSection.addCell(customerSection);
 
-            // RIGHT: TECHNICIAN INFO
-            PdfPCell techCell = new PdfPCell();
-            techCell.setBorder(Rectangle.BOX);
-            techCell.setPadding(3);
-
-            PdfPTable techTable = new PdfPTable(2);
-            techTable.setWidthPercentage(100);
-            techTable.setWidths(new float[]{35, 65});
-
-            addCell(techTable, "Employee Name:", "", boldFont, normalFont);
-            addCell(techTable, "Employee #:", "", boldFont, normalFont);
-            addCell(techTable, "Authorization Person:", "", boldFont, normalFont);
-            addCell(techTable, "Vehicle #:", "", boldFont, normalFont);
-            addCell(techTable, "Travel Mileage:", "", boldFont, normalFont);
-            addCell(techTable, "Time on Job:", "", boldFont, normalFont);
-            addCell(techTable, "Start:", "", boldFont, normalFont);
-            addCell(techTable, "End:", "", boldFont, normalFont);
-
-            techCell.addElement(new Paragraph("TECHNICIAN INFO", titleFont));
-            techCell.addElement(new Paragraph(" "));
-            techCell.addElement(techTable);
-            topSection.addCell(techCell);
-
-            document.add(topSection);
-
-            // ===== VEHICLE INFORMATION & UNIT INFORMATION (side by side) =====
-            PdfPTable middleSection = new PdfPTable(2);
-            middleSection.setWidthPercentage(100);
-            middleSection.setWidths(new float[]{50, 50});
-
-            // LEFT: VEHICLE INFORMATION
-            PdfPCell vehicleCell = new PdfPCell();
-            vehicleCell.setBorder(Rectangle.BOX);
-            vehicleCell.setPadding(3);
-
+            // RIGHT: Vehicle Information
+            PdfPCell vehicleSection = createStyledSection("VEHICLE INFORMATION", sectionFont);
             PdfPTable vehicleTable = new PdfPTable(2);
             vehicleTable.setWidthPercentage(100);
             vehicleTable.setWidths(new float[]{35, 65});
 
-            addCell(vehicleTable, "Make:", vehicle.getMake(), boldFont, normalFont);
-            addCell(vehicleTable, "Model:", vehicle.getModel(), boldFont, normalFont);
-            addCell(vehicleTable, "Year:", vehicle.getYear(), boldFont, normalFont);
-            addCell(vehicleTable, "VIN:", vehicle.getVin(), boldFont, normalFont);
+            addStyledCell(vehicleTable, "Make:", vehicle.getMake(), labelFont, valueFont);
+            addStyledCell(vehicleTable, "Model:", vehicle.getModel(), labelFont, valueFont);
+            addStyledCell(vehicleTable, "Year:", vehicle.getYear(), labelFont, valueFont);
+            addStyledCell(vehicleTable, "VIN:", vehicle.getVin(), labelFont, valueFont);
 
-            vehicleCell.addElement(new Paragraph("VEHICLE INFORMATION", titleFont));
-            vehicleCell.addElement(new Paragraph(" "));
-            vehicleCell.addElement(vehicleTable);
-            middleSection.addCell(vehicleCell);
+            vehicleSection.addElement(vehicleTable);
+            mainSection.addCell(vehicleSection);
 
-            // RIGHT: UNIT INFORMATION (compressed)
-            PdfPCell unitCell = new PdfPCell();
-            unitCell.setBorder(Rectangle.BOX);
-            unitCell.setPadding(3);
+            document.add(mainSection);
 
-            PdfPTable unitTable = new PdfPTable(2);
-            unitTable.setWidthPercentage(100);
-            unitTable.setWidths(new float[]{40, 60});
+            // ===== ISSUE DIAGNOSIS SECTION =====
+            PdfPCell issueSection = createStyledSection("ISSUE DIAGNOSIS", sectionFont);
+            PdfPTable issueTable = new PdfPTable(2);
+            issueTable.setWidthPercentage(100);
+            issueTable.setWidths(new float[]{30, 70});
 
-            addCell(unitTable, "Unit Number:", "", boldFont, normalFont);
-            addCell(unitTable, "Unit Type:", "", boldFont, normalFont);
-            addCell(unitTable, "BM Number:", "", boldFont, normalFont);
-            addCell(unitTable, "Serial Number:", "", boldFont, normalFont);
-            addCell(unitTable, "COD:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Payment Type:", "", boldFont, normalFont);
-            addCell(unitTable, "Total Hours:", "", boldFont, normalFont);
-            addCell(unitTable, "Engine Hours:", "", boldFont, normalFont);
-            addCell(unitTable, "Electric Hours:", "", boldFont, normalFont);
-            addCell(unitTable, "Loaded:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Waiting:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Dropped:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Date Needed:", "", boldFont, normalFont);
+            addStyledCell(issueTable, "Location:", formatIssueLocation(vehicle.getIssueLocation()), labelFont, valueFont);
+            addStyledCell(issueTable, "Issue Type:", formatIssueType(vehicle.getIssueType()), labelFont, valueFont);
+            addStyledCell(issueTable, "Severity:", formatSeverity(vehicle.getSeverity()), labelFont, valueFont);
 
-            unitCell.addElement(new Paragraph("UNIT INFORMATION", titleFont));
-            unitCell.addElement(new Paragraph(" "));
-            unitCell.addElement(unitTable);
-            middleSection.addCell(unitCell);
+            issueSection.addElement(issueTable);
 
-            document.add(middleSection);
-
-            // ===== MILEAGE =====
-            PdfPTable mileageTable = new PdfPTable(2);
-            mileageTable.setWidthPercentage(100);
-            mileageTable.setWidths(new float[]{15, 85});
-            addCell(mileageTable, "MILEAGE:", "", boldFont, normalFont);
-            document.add(mileageTable);
-
-            // ===== COMPLAINT (compressed) =====
-            PdfPTable complaintTable = new PdfPTable(1);
-            complaintTable.setWidthPercentage(100);
-            PdfPCell complaintCell = new PdfPCell();
-            complaintCell.setBorder(Rectangle.BOX);
-            complaintCell.setPadding(3);
-
-            StringBuilder complaintText = new StringBuilder();
-            complaintText.append("Location: ").append(vehicle.getIssueLocation()).append("  |  ");
-            complaintText.append("Issue: ").append(vehicle.getIssueType()).append("  |  ");
-            complaintText.append("Severity: ").append(vehicle.getSeverity());
-
-            Paragraph complaintPara = new Paragraph(complaintText.toString(), normalFont);
-            complaintCell.addElement(new Paragraph("COMPLAINT:", boldFont));
-            complaintCell.addElement(complaintPara);
-
+            // Customer comments
             if (vehicle.getFreeFormText() != null && !vehicle.getFreeFormText().trim().isEmpty()) {
-                complaintCell.addElement(new Paragraph("Customer: " + vehicle.getFreeFormText(), normalFont));
+                Paragraph commentsTitle = new Paragraph("CUSTOMER COMMENTS:", labelFont);
+                commentsTitle.setSpacingBefore(10);
+                commentsTitle.setSpacingAfter(5);
+                issueSection.addElement(commentsTitle);
+                Paragraph comments = new Paragraph(vehicle.getFreeFormText(), valueFont);
+                comments.setSpacingAfter(10);
+                issueSection.addElement(comments);
             }
+
+            // Translated comments
             if (vehicle.getTranslatedText() != null && !vehicle.getTranslatedText().trim().isEmpty()) {
-                complaintCell.addElement(new Paragraph("Translated: " + vehicle.getTranslatedText(), normalFont));
+                Paragraph translatedTitle = new Paragraph("TRANSLATED COMMENTS:", labelFont);
+                translatedTitle.setSpacingBefore(5);
+                translatedTitle.setSpacingAfter(5);
+                issueSection.addElement(translatedTitle);
+                Paragraph translated = new Paragraph(vehicle.getTranslatedText(), valueFont);
+                issueSection.addElement(translated);
             }
 
-            complaintTable.addCell(complaintCell);
-            document.add(complaintTable);
+            document.add(issueSection);
 
-            // ===== AUTHORIZATION (compressed) =====
-            PdfPTable authTable = new PdfPTable(1);
-            authTable.setWidthPercentage(100);
-            PdfPCell authCell = new PdfPCell();
-            authCell.setBorder(Rectangle.BOX);
-            authCell.setPadding(3);
+            // ===== SERVICE NOTES SECTION (For technician use) =====
+            PdfPCell notesSection = createStyledSection("SERVICE NOTES", sectionFont);
+            Paragraph notesPlaceholder = new Paragraph("___________________________________________________________________", normalFont);
+            notesPlaceholder.setSpacingAfter(5);
+            notesSection.addElement(notesPlaceholder);
+            notesPlaceholder = new Paragraph("___________________________________________________________________", normalFont);
+            notesPlaceholder.setSpacingAfter(5);
+            notesSection.addElement(notesPlaceholder);
+            notesPlaceholder = new Paragraph("___________________________________________________________________", normalFont);
+            notesSection.addElement(notesPlaceholder);
+            document.add(notesSection);
 
-            String authText = "I authorize repair work and necessary materials. You may operate vehicle for testing/inspection. " +
-                    "Mechanic's lien acknowledged. Not responsible for fire, theft, or accident damage.";
+            // ===== COST ESTIMATE SECTION =====
+            PdfPCell costSection = createStyledSection("COST ESTIMATE", sectionFont);
+            PdfPTable costTable = new PdfPTable(4);
+            costTable.setWidthPercentage(100);
+            costTable.setWidths(new float[]{25, 25, 25, 25});
 
-            authCell.addElement(new Paragraph(authText, FontFactory.getFont(FontFactory.HELVETICA, 7)));
-            authTable.addCell(authCell);
-            document.add(authTable);
-
-            // ===== TOTAL COST SECTION (compressed) =====
-            PdfPTable totalTable = new PdfPTable(6);
-            totalTable.setWidthPercentage(100);
-            totalTable.setWidths(new float[]{16, 16, 16, 16, 18, 18});
-
-            String[] totalHeaders = {"Parts", "Labor", "Supplies", "Fees", "Subtotal", "Total"};
-            for (String header : totalHeaders) {
-                PdfPCell headerCell = new PdfPCell(new Phrase(header, boldFont));
+            String[] costHeaders = {"Description", "Qty", "Unit Price", "Total"};
+            for (String header : costHeaders) {
+                PdfPCell headerCell = new PdfPCell(new Phrase(header, headerFont));
+                headerCell.setPadding(6);
                 headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                headerCell.setPadding(3);
-                totalTable.addCell(headerCell);
+                costTable.addCell(headerCell);
             }
 
-            for (int i = 0; i < 6; i++) {
-                PdfPCell emptyCell = new PdfPCell(new Phrase("", normalFont));
-                emptyCell.setPadding(4);
-                totalTable.addCell(emptyCell);
+            for (int i = 0; i < 4; i++) {
+                PdfPCell emptyCell = new PdfPCell(new Phrase(" ", normalFont));
+                emptyCell.setPadding(8);
+                emptyCell.setBorder(Rectangle.BOX);
+                costTable.addCell(emptyCell);
             }
 
-            document.add(totalTable);
+            costSection.addElement(costTable);
+            document.add(costSection);
 
-            // ===== SIGNATURE LINE =====
-            Paragraph signatureLine = new Paragraph("Customer Signature: _______________________________     Date: _____________", normalFont);
-            signatureLine.setSpacingBefore(5);
-            document.add(signatureLine);
+            // ===== AUTHORIZATION & SIGNATURE =====
+            PdfPCell authSection = createStyledSection("AUTHORIZATION", sectionFont);
+            Paragraph authText = new Paragraph("I hereby authorize the above repair work and the addition of necessary materials. " +
+                    "You are authorized to operate the vehicle for testing and inspection. " +
+                    "A mechanic's lien is acknowledged on the vehicle for the amount of repairs. " +
+                    "The shop is not responsible for fire, theft, or damage to the vehicle while on premises.", normalFont);
+            authText.setSpacingAfter(15);
+            authSection.addElement(authText);
+
+            PdfPTable signatureTable = new PdfPTable(2);
+            signatureTable.setWidthPercentage(100);
+            signatureTable.setWidths(new float[]{50, 50});
+
+            PdfPCell customerSig = new PdfPCell();
+            customerSig.setBorder(Rectangle.NO_BORDER);
+            customerSig.addElement(new Paragraph("Customer Signature: _____________________________", normalFont));
+            customerSig.addElement(new Paragraph("Date: _____________", normalFont));
+            signatureTable.addCell(customerSig);
+
+            PdfPCell technicianSig = new PdfPCell();
+            technicianSig.setBorder(Rectangle.NO_BORDER);
+            technicianSig.addElement(new Paragraph("Technician Signature: _____________________________", normalFont));
+            technicianSig.addElement(new Paragraph("Date: _____________", normalFont));
+            signatureTable.addCell(technicianSig);
+
+            authSection.addElement(signatureTable);
+            document.add(authSection);
+
+            // Footer
+            Paragraph footer = new Paragraph("Thank you for choosing Auto Repair Center", FontFactory.getFont(FontFactory.HELVETICA, 8));
+            footer.setAlignment(Element.ALIGN_CENTER);
+            footer.setSpacingBefore(20);
+            document.add(footer);
 
             document.close();
 
@@ -236,14 +234,63 @@ public class PdfService {
         return out.toByteArray();
     }
 
-    private void addCell(PdfPTable table, String label, String value, Font boldFont, Font normalFont) {
-        PdfPCell labelCell = new PdfPCell(new Phrase(label, boldFont));
-        labelCell.setPadding(3);
+    private PdfPCell createStyledSection(String title, Font font) {
+        PdfPCell cell = new PdfPCell();
+        cell.setBorder(Rectangle.BOX);
+        cell.setPadding(12);
+        cell.setPaddingBottom(15);
 
-        PdfPCell valueCell = new PdfPCell(new Phrase(value != null ? value : "", normalFont));
-        valueCell.setPadding(3);
+        Paragraph titlePara = new Paragraph(title, font);
+        titlePara.setSpacingAfter(12);
+        titlePara.setAlignment(Element.ALIGN_LEFT);
+        cell.addElement(titlePara);
+
+        return cell;
+    }
+
+    private void addStyledCell(PdfPTable table, String label, String value, Font labelFont, Font valueFont) {
+        PdfPCell labelCell = new PdfPCell(new Phrase(label, labelFont));
+        labelCell.setPadding(4);
+        labelCell.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell valueCell = new PdfPCell(new Phrase(value != null ? value : "", valueFont));
+        valueCell.setPadding(4);
+        valueCell.setBorder(Rectangle.NO_BORDER);
 
         table.addCell(labelCell);
         table.addCell(valueCell);
+    }
+
+    private String formatIssueLocation(String location) {
+        if (location == null) return "";
+        switch(location) {
+            case "engine": return "Engine";
+            case "transmission": return "Transmission";
+            case "brakes": return "Brakes";
+            case "electrical": return "Electrical System";
+            case "suspension": return "Suspension/Steering";
+            case "exhaust": return "Exhaust System";
+            case "hvac": return "Heating/AC";
+            case "exterior": return "Body/Exterior";
+            case "interior": return "Interior";
+            default: return location.substring(0, 1).toUpperCase() + location.substring(1);
+        }
+    }
+
+    private String formatIssueType(String type) {
+        if (type == null) return "";
+        String formatted = type.replace("_", " ").replace("-", " ");
+        return formatted.substring(0, 1).toUpperCase() + formatted.substring(1);
+    }
+
+    private String formatSeverity(String severity) {
+        if (severity == null) return "";
+        switch(severity) {
+            case "mild": return "Mild";
+            case "moderate": return "Moderate";
+            case "severe": return "Severe";
+            case "emergency": return "Emergency";
+            default: return severity.substring(0, 1).toUpperCase() + severity.substring(1);
+        }
     }
 }
