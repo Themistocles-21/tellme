@@ -15,6 +15,9 @@ public class Vehicle {
     private String model;
     private String year;
 
+    private String mileage;
+    private String licensePlate;
+
     private String issueLocation;
     private String issueType;
     private String severity;
@@ -43,6 +46,12 @@ public class Vehicle {
 
     public String getYear() { return year; }
     public void setYear(String year) { this.year = year; }
+
+    public String getMileage() { return mileage; }
+    public void setMileage(String mileage) { this.mileage = mileage; }
+
+    public String getLicensePlate() { return licensePlate; }
+    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
 
     public String getIssueLocation() { return issueLocation; }
     public void setIssueLocation(String issueLocation) { this.issueLocation = issueLocation; }

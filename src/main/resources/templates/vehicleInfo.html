@@ -59,6 +59,7 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="companyName" th:value="${customer.companyName}">
 
     <div class="form-group">
         <label for="make" th:text="#{vehicle.make}">Make :</label>
@@ -78,6 +79,16 @@
     <div class="form-group">
         <label for="vin" th:text="#{vehicle.vin}">VIN :</label>
         <input type="text" name="vin" id="vin" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="mileage">Current Mileage :</label>
+        <input type="text" name="mileage" id="mileage" placeholder="e.g., 45,230"/>
+    </div>
+
+    <div class="form-group">
+        <label for="licensePlate">License Plate (optional):</label>
+        <input type="text" name="licensePlate" id="licensePlate" placeholder="e.g., ABC-1234"/>
     </div>
 
     <div class="button-group">
