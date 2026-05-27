@@ -70,7 +70,7 @@
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <textarea name="additionalInfo" rows="6" cols="50" placeholder="Describe the issue in detail..."></textarea>
+    <textarea name="additionalInfo" rows="6" cols="50" th:placeholder="#{placeholder.comments}"></textarea>
 
     <div class="button-group">
         <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>

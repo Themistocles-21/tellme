@@ -62,33 +62,33 @@
     <input type="hidden" name="companyName" th:value="${customer.companyName}">
 
     <div class="form-group">
-        <label for="make" th:text="#{vehicle.make}">Make :</label>
-        <input type="text" name="make" id="make" placeholder="Toyota, Ford, Honda, etc." required/>
+        <label for="make" th:text="#{vehicle.make} + ':'">Make :</label>
+        <input type="text" name="make" id="make" th:placeholder="#{placeholder.make}" required/>
     </div>
 
     <div class="form-group">
-        <label for="model" th:text="#{vehicle.model}">Model :</label>
-        <input type="text" name="model" id="model" placeholder="Camry, F-150, Civic, etc." required/>
+        <label for="model" th:text="#{vehicle.model} + ':'">Model :</label>
+        <input type="text" name="model" id="model" th:placeholder="#{placeholder.model}" required/>
     </div>
 
     <div class="form-group">
-        <label for="year" th:text="#{vehicle.year}">Year :</label>
-        <input type="text" name="year" id="year" placeholder="2020, 2021, 2022" required/>
+        <label for="year" th:text="#{vehicle.year} + ':'">Year :</label>
+        <input type="text" name="year" id="year" th:placeholder="#{placeholder.year}" required/>
     </div>
 
     <div class="form-group">
-        <label for="vin" th:text="#{vehicle.vin}">VIN :</label>
-        <input type="text" name="vin" id="vin" placeholder="1HGCM82633A123456" required/>
+        <label for="vin" th:text="#{vehicle.vin} + ':'">VIN :</label>
+        <input type="text" name="vin" id="vin" th:placeholder="#{placeholder.vin}" required/>
     </div>
 
     <div class="form-group">
-        <label for="mileage">Current Mileage :</label>
-        <input type="text" name="mileage" id="mileage" placeholder="45,230"/>
+        <label for="mileage" th:text="#{vehicle.mileage} + ':'">Current Mileage :</label>
+        <input type="text" name="mileage" id="mileage" th:placeholder="#{placeholder.mileage}"/>
     </div>
 
     <div class="form-group">
-        <label for="licensePlate">License Plate :</label>
-        <input type="text" name="licensePlate" id="licensePlate" placeholder="ABC-1234"/>
+        <label for="licensePlate" th:text="#{vehicle.license_plate} + ':'">License Plate :</label>
+        <input type="text" name="licensePlate" id="licensePlate" th:placeholder="#{placeholder.license_plate}"/>
     </div>
 
     <div class="button-group">

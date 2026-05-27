@@ -54,28 +54,37 @@
 
 <div class="section">
     <h3 th:text="#{review.customer}">Customer Information</h3>
-    <p><strong th:text="#{customer.first_name}">First Name:</strong> <span th:text="${customer.fname}"></span></p>
-    <p><strong th:text="#{customer.last_name}">Last Name:</strong> <span th:text="${customer.lname}"></span></p>
-    <p><strong th:text="#{customer.email}">Email:</strong> <span th:text="${customer.email}"></span></p>
-    <p><strong th:text="#{customer.phone}">Phone:</strong> <span th:text="${customer.phone}"></span></p>
-    <p><strong th:text="#{customer.address}">Address:</strong> <span th:text="${customer.address}"></span></p>
+    <p><strong>First Name :</strong> <span th:text="${customer.fname}"></span></p>
+    <p><strong>Last Name :</strong> <span th:text="${customer.lname}"></span></p>
+    <p><strong>Email :</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong>Phone :</strong> <span th:text="${customer.phone}"></span></p>
+    <p><strong>Address :</strong> <span th:text="${customer.address}"></span></p>
+    <p th:if="${customer.companyName != null and customer.companyName != ''}">
+        <strong>Company Name :</strong> <span th:text="${customer.companyName}"></span>
+    </p>
 </div>
 
 <div class="section">
     <h3 th:text="#{review.vehicle}">Vehicle Information</h3>
-    <p><strong th:text="#{vehicle.make}">Make:</strong> <span th:text="${vehicle.make}"></span></p>
-    <p><strong th:text="#{vehicle.model}">Model:</strong> <span th:text="${vehicle.model}"></span></p>
-    <p><strong th:text="#{vehicle.year}">Year:</strong> <span th:text="${vehicle.year}"></span></p>
-    <p><strong th:text="#{vehicle.vin}">VIN:</strong> <span th:text="${vehicle.vin}"></span></p>
+    <p><strong>Make :</strong> <span th:text="${vehicle.make}"></span></p>
+    <p><strong>Model :</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong>Year :</strong> <span th:text="${vehicle.year}"></span></p>
+    <p><strong>VIN :</strong> <span th:text="${vehicle.vin}"></span></p>
+    <p th:if="${vehicle.mileage != null and vehicle.mileage != ''}">
+        <strong>Current Mileage :</strong> <span th:text="${vehicle.mileage}"></span>
+    </p>
+    <p th:if="${vehicle.licensePlate != null and vehicle.licensePlate != ''}">
+        <strong>License Plate :</strong> <span th:text="${vehicle.licensePlate}"></span>
+    </p>
 </div>
 
 <div class="section">
     <h3 th:text="#{review.diagnosis}">Issue Diagnosis</h3>
-    <p><strong th:text="#{review.location}">Location:</strong> <span th:text="${vehicle.issueLocation}"></span></p>
-    <p><strong th:text="#{review.issue_type}">Issue Type:</strong> <span th:text="${vehicle.issueType}"></span></p>
-    <p><strong th:text="#{review.severity}">Severity:</strong> <span th:text="${vehicle.severity}"></span></p>
+    <p><strong>Location :</strong> <span th:text="${vehicle.issueLocation}"></span></p>
+    <p><strong>Issue Type :</strong> <span th:text="${vehicle.issueType}"></span></p>
+    <p><strong>Severity :</strong> <span th:text="${vehicle.severity}"></span></p>
     <p th:if="${vehicle.freeFormText != null and vehicle.freeFormText != ''}">
-        <strong th:text="#{review.comments}">Additional Details:</strong> <span th:text="${vehicle.freeFormText}"></span>
+        <strong>Additional Details :</strong> <span th:text="${vehicle.freeFormText}"></span>
     </p>
 </div>
 
@@ -86,10 +95,13 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="companyName" th:value="${customer.companyName}">
     <input type="hidden" name="make" th:value="${vehicle.make}">
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="mileage" th:value="${vehicle.mileage}">
+    <input type="hidden" name="licensePlate" th:value="${vehicle.licensePlate}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
