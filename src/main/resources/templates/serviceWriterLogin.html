@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Service Writer Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Service Writer Dashboard</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -11,38 +12,83 @@
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
 
-<div class="login-container">
-  <h2>Service Writer Login</h2>
+<div class="dashboard-container">
+  <h2>Service Writer Dashboard</h2>
 
-  <p class="login-description">
-    Please log in to access the service writer dashboard.
-  </p>
-
-  <div th:if="${error}" class="error-box">
-    <p th:text="${error}">Invalid username or password.</p>
+  <!-- Service Writer Email Configuration Section -->
+  <div class="section">
+    <h3>Work Order Email Configuration</h3>
+    <p>Set the email address where work order attachments will be sent.</p>
+    <form th:action="@{/service-writer/update-email}" method="post">
+      <div class="form-group">
+        <label for="serviceWriterEmail">Service Writer Email:</label>
+        <input type="email" name="serviceWriterEmail" id="serviceWriterEmail"
+               th:value="${serviceWriterEmail}" required>
+      </div>
+      <div class="button-group">
+        <button type="submit" class="toggle-btn">Update Email</button>
+      </div>
+    </form>
+    <p th:if="${emailUpdated}" style="color: green; margin-top: 10px;">✓ Email updated successfully!</p>
   </div>
 
-  <form action="/service-writer/login" method="post" class="login-form">
+  <div class="section">
+    <h3>Manage Available Services</h3>
+    <p>Toggle services off to hide them from customers.</p>
 
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required>
-    </div>
+    <div style="overflow-x: auto;">
+      <table class="service-table">
+        <thead>
+        <tr><th>Category</th><th>Service</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+        <!-- ENGINE -->
+        <tr th:with="key='no_start'"><td>Engine</td><td>Won't Start</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='check_engine'"><td>Engine</td><td>Check Engine Light</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='rough_idle'"><td>Engine</td><td>Rough Idle</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='loss_power'"><td>Engine</td><td>Loss of Power</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='knocking'"><td>Engine</td><td>Knocking Noise</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='overheating'"><td>Engine</td><td>Overheating</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='oil_leak'"><td>Engine</td><td>Oil Leak</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='smoke'"><td>Engine</td><td>Smoke from Exhaust</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
 
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required>
-    </div>
+        <!-- TRANSMISSION -->
+        <tr th:with="key='slipping'"><td>Transmission</td><td>Slipping Gears</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='rough_shifting'"><td>Transmission</td><td>Rough Shifting</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='delayed_engagement'"><td>Transmission</td><td>Delayed Engagement</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='leaking'"><td>Transmission</td><td>Fluid Leak</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
 
-    <button type="submit" class="next-btn">Login</button>
-  </form>
-
-  <br>
-
-  <a href="/home">
-    <button type="button" class="home-btn">Back to Customer Page</button>
-  </a>
-</div>
-
-</body>
-</html>
+        <!-- BRAKES -->
+        <tr th:with="key='squeaking'"><td>Brakes</td><td>Squeaking Noise</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='grinding'"><td>Brakes</td><td>Grinding Noise</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : 'Disable'"></button></form></td></tr>
+        <tr th:with="key='soft_pedal'"><td>Brakes</td><td>Soft Pedal</td>
+          <td th:class="${disabledServices.contains(key)} ? 'disabled' : 'enabled'" th:text="${disabledServices.contains(key)} ? 'Disabled' : 'Enabled'"></td>
+          <td><form th:action="@{/service-writer/toggle}" method="post"><input type="hidden" name="serviceKey" th:value="${key}"><button class="toggle-btn" type="submit" th:text="${disabledServices.contains(key)} ? 'Enable' : '

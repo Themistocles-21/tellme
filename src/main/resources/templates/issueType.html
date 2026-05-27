@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title th:text="#{issue_type.title}">Issue Type</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -64,8 +65,7 @@
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
-    <div class="type-grid" th:switch="${vehicle.issueLocation}">
-
+    <div th:switch="${vehicle.issueLocation}">
         <div th:case="engine" class="type-grid">
             <button th:unless="${disabledServices.contains('no_start')}" type="submit" name="issueType" value="no_start" class="type-btn" th:text="#{engine.no_start}">Won't start</button>
             <button th:unless="${disabledServices.contains('check_engine')}" type="submit" name="issueType" value="check_engine" class="type-btn" th:text="#{engine.check_engine}">Check engine light</button>
@@ -140,35 +140,12 @@
         <div th:case="other" class="type-grid">
             <button th:unless="${disabledServices.contains('other')}" type="submit" name="issueType" value="other" class="type-btn" th:text="#{other.other}">Other issue</button>
         </div>
-
     </div>
 
     <div class="button-group">
         <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
     </div>
 </form>
-
-<style>
-    .type-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        max-width: 600px;
-        margin: 20px 0;
-    }
-    .type-btn {
-        font-size: 16px;
-        padding: 12px 24px;
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        cursor: pointer;
-        text-align: center;
-    }
-    .type-btn:hover {
-        background-color: #e0e0e0;
-    }
-</style>
 
 </body>
 </html>

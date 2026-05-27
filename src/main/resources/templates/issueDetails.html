@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title th:text="#{comments.title}">Additional Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -67,7 +68,7 @@
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
     <textarea name="additionalInfo" rows="6" cols="50" th:placeholder="#{comments.placeholder}"></textarea>
-    <br/>
+
     <div class="button-group">
         <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
         <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>

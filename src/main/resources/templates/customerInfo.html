@@ -2,20 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title th:text="#{customer.title}">Customer Information</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
+<div class="top-right-login">
+    <a href="/service-writer">
+        <button type="button" class="service-login-btn">Service Writer Login</button>
+    </a>
+</div>
+
 <h3>CSCD488 Project</h3>
 <h4>Team #4: Aaron Oehler, Derik Little, Danish Wahidi</h4>
 <hr>
-
-<div class="top-right-login">
-    <a href="/service-writer">
-        <button type="button" class="home-btn">Service Writer Login</button>
-    </a>
-</div>
 
 <div class="progress-container">
     <div class="progress-steps">
@@ -101,7 +102,9 @@
         <input type="text" name="address" id="address" required/>
     </div>
 
-    <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
+    <div class="button-group">
+        <button type="submit" class="next-btn" th:text="#{button.next}">Next</button>
+    </div>
 </form>
 
 <script>
