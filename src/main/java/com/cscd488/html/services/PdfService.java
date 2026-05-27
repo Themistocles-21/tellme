@@ -29,6 +29,11 @@ public class PdfService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
             String formattedDateTime = LocalDateTime.now().format(formatter);
 
+            // Extra space at top (shift everything down)
+            Paragraph topSpacer = new Paragraph(" ", FontFactory.getFont(FontFactory.HELVETICA, 12));
+            topSpacer.setSpacingAfter(20);
+            document.add(topSpacer);
+
             // ===== HEADER SECTION (Order # and Date) =====
             PdfPTable headerTable = new PdfPTable(2);
             headerTable.setWidthPercentage(100);
@@ -44,7 +49,7 @@ public class PdfService {
             headerTable.addCell(rightHeader);
             document.add(headerTable);
 
-            // ===== CUSTOMER INFORMATION & TECHNICIAN INFO (side by side) =====
+            // ===== CUSTOMER INFORMATION & TECHNICIAN INFO (side by side with grid lines) =====
             PdfPTable topSection = new PdfPTable(2);
             topSection.setWidthPercentage(100);
             topSection.setWidths(new float[]{50, 50});
@@ -52,19 +57,20 @@ public class PdfService {
             // LEFT: CUSTOMER INFORMATION
             PdfPCell customerCell = new PdfPCell();
             customerCell.setBorder(Rectangle.BOX);
+            customerCell.setBorderWidth(1);
             customerCell.setPadding(3);
 
             PdfPTable customerTable = new PdfPTable(2);
             customerTable.setWidthPercentage(100);
             customerTable.setWidths(new float[]{35, 65});
 
-            addCell(customerTable, "Company Name:", getValueOrBlank(customer.getCompanyName()), boldFont, normalFont);
-            addCell(customerTable, "Driver's Name:", customer.getFname() + " " + customer.getLname(), boldFont, normalFont);
-            addCell(customerTable, "Driver's Number:", customer.getPhone(), boldFont, normalFont);
-            addCell(customerTable, "Email:", customer.getEmail(), boldFont, normalFont);
-            addCell(customerTable, "Address:", customer.getAddress(), boldFont, normalFont);
-            addCell(customerTable, "Reference Number:", orderNumber, boldFont, normalFont);
-            addCell(customerTable, "Purchase Order:", "", boldFont, normalFont);
+            addCellWithBorders(customerTable, "Company Name:", getValueOrBlank(customer.getCompanyName()), boldFont, normalFont);
+            addCellWithBorders(customerTable, "Driver's Name:", customer.getFname() + " " + customer.getLname(), boldFont, normalFont);
+            addCellWithBorders(customerTable, "Driver's Number:", customer.getPhone(), boldFont, normalFont);
+            addCellWithBorders(customerTable, "Email:", customer.getEmail(), boldFont, normalFont);
+            addCellWithBorders(customerTable, "Address:", customer.getAddress(), boldFont, normalFont);
+            addCellWithBorders(customerTable, "Reference Number:", orderNumber, boldFont, normalFont);
+            addCellWithBorders(customerTable, "Purchase Order:", "_________________", boldFont, normalFont);
 
             customerCell.addElement(new Paragraph("CUSTOMER INFORMATION", titleFont));
             customerCell.addElement(new Paragraph(" "));
@@ -74,20 +80,21 @@ public class PdfService {
             // RIGHT: TECHNICIAN INFO (fill-in blanks)
             PdfPCell techCell = new PdfPCell();
             techCell.setBorder(Rectangle.BOX);
+            techCell.setBorderWidth(1);
             techCell.setPadding(3);
 
             PdfPTable techTable = new PdfPTable(2);
             techTable.setWidthPercentage(100);
             techTable.setWidths(new float[]{35, 65});
 
-            addCell(techTable, "Employee Name:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Employee #:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Authorization Person:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Vehicle #:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Travel Mileage:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Time on Job:", "_________________", boldFont, normalFont);
-            addCell(techTable, "Start:", "_________", boldFont, normalFont);
-            addCell(techTable, "End:", "_________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Employee Name:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Employee #:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Authorization Person:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Vehicle #:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Travel Mileage:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Time on Job:", "_________________", boldFont, normalFont);
+            addCellWithBorders(techTable, "Start:", "_________", boldFont, normalFont);
+            addCellWithBorders(techTable, "End:", "_________", boldFont, normalFont);
 
             techCell.addElement(new Paragraph("TECHNICIAN INFO", titleFont));
             techCell.addElement(new Paragraph(" "));
@@ -96,7 +103,7 @@ public class PdfService {
 
             document.add(topSection);
 
-            // ===== VEHICLE INFORMATION & UNIT INFORMATION (side by side) =====
+            // ===== VEHICLE INFORMATION & UNIT INFORMATION (side by side with grid lines) =====
             PdfPTable middleSection = new PdfPTable(2);
             middleSection.setWidthPercentage(100);
             middleSection.setWidths(new float[]{50, 50});
@@ -104,18 +111,19 @@ public class PdfService {
             // LEFT: VEHICLE INFORMATION
             PdfPCell vehicleCell = new PdfPCell();
             vehicleCell.setBorder(Rectangle.BOX);
+            vehicleCell.setBorderWidth(1);
             vehicleCell.setPadding(3);
 
             PdfPTable vehicleTable = new PdfPTable(2);
             vehicleTable.setWidthPercentage(100);
             vehicleTable.setWidths(new float[]{35, 65});
 
-            addCell(vehicleTable, "Manufacture:", vehicle.getMake(), boldFont, normalFont);
-            addCell(vehicleTable, "Model:", vehicle.getModel(), boldFont, normalFont);
-            addCell(vehicleTable, "Year:", vehicle.getYear(), boldFont, normalFont);
-            addCell(vehicleTable, "VIN:", vehicle.getVin(), boldFont, normalFont);
-            addCell(vehicleTable, "License Plate:", getValueOrBlank(vehicle.getLicensePlate()), boldFont, normalFont);
-            addCell(vehicleTable, "Current Mileage:", getValueOrBlank(vehicle.getMileage()), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "Manufacture:", vehicle.getMake(), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "Model:", vehicle.getModel(), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "Year:", vehicle.getYear(), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "VIN:", vehicle.getVin(), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "License Plate:", getValueOrBlank(vehicle.getLicensePlate()), boldFont, normalFont);
+            addCellWithBorders(vehicleTable, "Current Mileage:", getValueOrBlank(vehicle.getMileage()), boldFont, normalFont);
 
             vehicleCell.addElement(new Paragraph("VEHICLE INFORMATION", titleFont));
             vehicleCell.addElement(new Paragraph(" "));
@@ -125,25 +133,26 @@ public class PdfService {
             // RIGHT: UNIT INFORMATION (fill-in blanks)
             PdfPCell unitCell = new PdfPCell();
             unitCell.setBorder(Rectangle.BOX);
+            unitCell.setBorderWidth(1);
             unitCell.setPadding(3);
 
             PdfPTable unitTable = new PdfPTable(2);
             unitTable.setWidthPercentage(100);
             unitTable.setWidths(new float[]{40, 60});
 
-            addCell(unitTable, "Unit Number:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Unit Type:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "BM Number:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Serial Number:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "COD:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Payment Type:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Total Hours:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Engine Hours:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Electric Hours:", "_________________", boldFont, normalFont);
-            addCell(unitTable, "Loaded:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Waiting:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Dropped:", "Yes ___ No ___", boldFont, normalFont);
-            addCell(unitTable, "Date Needed:", "_____________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Unit Number:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Unit Type:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "BM Number:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Serial Number:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "COD:", "Yes ___ No ___", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Payment Type:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Total Hours:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Engine Hours:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Electric Hours:", "_________________", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Loaded:", "Yes ___ No ___", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Waiting:", "Yes ___ No ___", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Dropped:", "Yes ___ No ___", boldFont, normalFont);
+            addCellWithBorders(unitTable, "Date Needed:", "_____________", boldFont, normalFont);
 
             unitCell.addElement(new Paragraph("UNIT INFORMATION", titleFont));
             unitCell.addElement(new Paragraph(" "));
@@ -152,18 +161,19 @@ public class PdfService {
 
             document.add(middleSection);
 
-            // ===== MILEAGE (separate row) =====
+            // ===== MILEAGE (separate row with grid lines) =====
             PdfPTable mileageTable = new PdfPTable(2);
             mileageTable.setWidthPercentage(100);
             mileageTable.setWidths(new float[]{15, 85});
-            addCell(mileageTable, "MILEAGE:", getValueOrBlank(vehicle.getMileage()), boldFont, normalFont);
+            addCellWithBorders(mileageTable, "MILEAGE:", getValueOrBlank(vehicle.getMileage()), boldFont, normalFont);
             document.add(mileageTable);
 
-            // ===== COMPLAINT SECTION =====
+            // ===== COMPLAINT SECTION with grid lines =====
             PdfPTable complaintTable = new PdfPTable(1);
             complaintTable.setWidthPercentage(100);
             PdfPCell complaintCell = new PdfPCell();
             complaintCell.setBorder(Rectangle.BOX);
+            complaintCell.setBorderWidth(1);
             complaintCell.setPadding(3);
 
             StringBuilder complaintText = new StringBuilder();
@@ -190,11 +200,12 @@ public class PdfService {
             complaintTable.addCell(complaintCell);
             document.add(complaintTable);
 
-            // ===== AUTHORIZATION SECTION =====
+            // ===== AUTHORIZATION SECTION with grid lines =====
             PdfPTable authTable = new PdfPTable(1);
             authTable.setWidthPercentage(100);
             PdfPCell authCell = new PdfPCell();
             authCell.setBorder(Rectangle.BOX);
+            authCell.setBorderWidth(1);
             authCell.setPadding(3);
 
             String authText = "I hereby authorize the repair work to be done along with the necessary materials. " +
@@ -206,7 +217,7 @@ public class PdfService {
             authTable.addCell(authCell);
             document.add(authTable);
 
-            // ===== TOTAL COST SECTION =====
+            // ===== TOTAL COST SECTION with grid lines =====
             PdfPTable totalTable = new PdfPTable(6);
             totalTable.setWidthPercentage(100);
             totalTable.setWidths(new float[]{16, 16, 16, 16, 18, 18});
@@ -216,30 +227,38 @@ public class PdfService {
                 PdfPCell headerCell = new PdfPCell(new Phrase(header, boldFont));
                 headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 headerCell.setPadding(3);
+                headerCell.setBorder(Rectangle.BOX);
+                headerCell.setBorderWidth(1);
                 totalTable.addCell(headerCell);
             }
 
             for (int i = 0; i < 6; i++) {
                 PdfPCell emptyCell = new PdfPCell(new Phrase("", normalFont));
                 emptyCell.setPadding(4);
+                emptyCell.setBorder(Rectangle.BOX);
+                emptyCell.setBorderWidth(1);
                 totalTable.addCell(emptyCell);
             }
 
             document.add(totalTable);
 
-            // ===== SIGNATURE LINES =====
+            // ===== SIGNATURE LINES with grid lines =====
             PdfPTable signatureTable = new PdfPTable(2);
             signatureTable.setWidthPercentage(100);
             signatureTable.setWidths(new float[]{50, 50});
 
             PdfPCell customerSigCell = new PdfPCell();
-            customerSigCell.setBorder(Rectangle.NO_BORDER);
+            customerSigCell.setBorder(Rectangle.BOX);
+            customerSigCell.setBorderWidth(1);
+            customerSigCell.setPadding(5);
             customerSigCell.addElement(new Paragraph("Customer Signature: _______________________________", normalFont));
             customerSigCell.addElement(new Paragraph("Date: _____________", normalFont));
             signatureTable.addCell(customerSigCell);
 
             PdfPCell techSigCell = new PdfPCell();
-            techSigCell.setBorder(Rectangle.NO_BORDER);
+            techSigCell.setBorder(Rectangle.BOX);
+            techSigCell.setBorderWidth(1);
+            techSigCell.setPadding(5);
             techSigCell.addElement(new Paragraph("Technician Signature: _______________________________", normalFont));
             techSigCell.addElement(new Paragraph("Date: _____________", normalFont));
             signatureTable.addCell(techSigCell);
@@ -256,14 +275,16 @@ public class PdfService {
         return out.toByteArray();
     }
 
-    private void addCell(PdfPTable table, String label, String value, Font boldFont, Font normalFont) {
+    private void addCellWithBorders(PdfPTable table, String label, String value, Font boldFont, Font normalFont) {
         PdfPCell labelCell = new PdfPCell(new Phrase(label, boldFont));
         labelCell.setPadding(3);
-        labelCell.setBorder(Rectangle.NO_BORDER);
+        labelCell.setBorder(Rectangle.BOX);
+        labelCell.setBorderWidth(1);
 
         PdfPCell valueCell = new PdfPCell(new Phrase(value != null ? value : "", normalFont));
         valueCell.setPadding(3);
-        valueCell.setBorder(Rectangle.NO_BORDER);
+        valueCell.setBorder(Rectangle.BOX);
+        valueCell.setBorderWidth(1);
 
         table.addCell(labelCell);
         table.addCell(valueCell);

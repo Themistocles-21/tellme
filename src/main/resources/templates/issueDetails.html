@@ -59,15 +59,18 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="companyName" th:value="${customer.companyName}">
     <input type="hidden" name="make" th:value="${vehicle.make}">
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="mileage" th:value="${vehicle.mileage}">
+    <input type="hidden" name="licensePlate" th:value="${vehicle.licensePlate}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
     <input type="hidden" name="issueType" th:value="${vehicle.issueType}">
     <input type="hidden" name="severity" th:value="${vehicle.severity}">
 
-    <textarea name="additionalInfo" rows="6" cols="50" th:placeholder="#{comments.placeholder}"></textarea>
+    <textarea name="additionalInfo" rows="6" cols="50" placeholder="Describe the issue in detail..."></textarea>
 
     <div class="button-group">
         <button type="button" class="back-btn" onclick="history.back()" th:text="#{button.back}">Back</button>
