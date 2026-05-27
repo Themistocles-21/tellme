@@ -354,10 +354,24 @@ textarea {
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .service-login-btn:hover {
     background-color: #545b62;
+}
+
+/* Fix for very small phones */
+@media (max-width: 380px) {
+    .service-login-btn {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .top-right-login {
+        top: 5px;
+        right: 5px;
+    }
 }
 
 /* Headers */
