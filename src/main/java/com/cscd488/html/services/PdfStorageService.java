@@ -106,11 +106,6 @@ public class PdfStorageService {
         return Files.readAllBytes(filePath);
     }
 
-    public boolean fileExists(String filename) {
-        Path filePath = this.storageLocation.resolve(filename);
-        return Files.exists(filePath);
-    }
-
     public static class PdfMetadata {
         public String filename;
         public String displayName;
