@@ -9,6 +9,7 @@ import com.cscd488.html.services.TranslationService;
 import com.cscd488.html.services.ServiceWriterConfigService;
 import com.cscd488.html.services.PdfService;
 import com.cscd488.html.services.ServiceToggleService;
+import com.cscd488.html.services.PdfStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,9 @@ public class ReviewController {
 
     @Autowired
     private ServiceToggleService serviceToggleService;
+
+    @Autowired
+    private PdfStorageService pdfStorageService;
 
     public ReviewController(CustomerService customerService,
                             EmailSenderService emailService,
@@ -108,6 +112,13 @@ public class ReviewController {
 
             byte[] pdfBytes = pdfService.generateWorkOrderPdf(customer, vehicle, orderNumber);
             String pdfFileName = customer.getLname() + "_" + orderNumber + ".pdf";
+
+            try {
+                pdfStorageService.storePdf(pdfBytes, pdfFileName);
+                System.out.println("PDF stored for dashboard: " + pdfFileName);
+            } catch (Exception e) {
+                System.err.println("Failed to store PDF: " + e.getMessage());
+            }
 
             String serviceWriterEmail = serviceWriterConfigService.getServiceWriterEmail();
             emailService.sendEmailWithPdfAttachment(

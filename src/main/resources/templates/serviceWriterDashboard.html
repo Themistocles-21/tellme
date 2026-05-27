@@ -175,6 +175,18 @@
     </table>
   </div>
 
+  <div class="section">
+    <h3>📄 Stored Work Orders</h3>
+    <p>View and manage all generated work order PDFs.</p>
+    <div class="button-group">
+      <a th:href="@{/service-writer/pdfs}">
+        <button type="button" class="toggle-btn" style="background-color: #8b6914; color: #fef7e0;">
+          View All Work Orders
+        </button>
+      </a>
+    </div>
+  </div>
+
   <div class="button-group">
     <form th:action="@{/service-writer/logout}" method="post" style="display: inline;">
       <button type="submit" class="back-btn">Log Out</button>
