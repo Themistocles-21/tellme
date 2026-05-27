@@ -369,16 +369,15 @@ textarea {
 }
 
 .top-right-login {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    left: auto;
+    position: absolute;
+    top: 20px;
+    right: 20px;
     z-index: 100;
 }
 
 .service-login-btn {
-    font-size: 12px;
-    padding: 6px 12px;
+    font-size: 14px;
+    padding: 8px 20px;
     background-color: #8b6914;
     color: #fef7e0;
     border: 1px solid #daa520;
@@ -484,6 +483,14 @@ a {
         overflow-x: auto;
         white-space: nowrap;
     }
+
+    .top-right-login {
+        position: relative;
+        text-align: right;
+        margin-bottom: 15px;
+        top: 0;
+        right: 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -544,19 +551,15 @@ a {
         padding: 20px;
     }
 
-    .top-right-login {
-        right: 5px;
+    .service-login-btn {
+        font-size: 12px;
+        padding: 6px 15px;
     }
 }
 
 @media (max-width: 380px) {
     .service-login-btn {
         font-size: 10px;
-        padding: 4px 8px;
-    }
-
-    .top-right-login {
-        top: 5px;
-        right: 5px;
+        padding: 4px 12px;
     }
 }
