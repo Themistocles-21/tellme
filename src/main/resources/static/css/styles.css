@@ -472,20 +472,29 @@ a {
         width: 100%;
     }
 
+    /* Smaller progress bar for mobile */
+    .progress-container {
+        margin: 10px auto 15px auto;
+    }
+
+    .progress-steps {
+        min-width: 350px;
+    }
+
+    .step-circle {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+
     .step-label {
-        font-size: 8px;
+        font-size: 7px;
         white-space: normal;
         word-break: keep-all;
     }
 
-    .step-circle {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
-    }
-
-    .progress-steps {
-        min-width: 400px;
+    .progress-line {
+        top: 11px;
     }
 
     .login-container {
