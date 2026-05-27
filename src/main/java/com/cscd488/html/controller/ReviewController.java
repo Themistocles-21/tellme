@@ -111,7 +111,8 @@ public class ReviewController {
             }
 
             byte[] pdfBytes = pdfService.generateWorkOrderPdf(customer, vehicle, orderNumber);
-            String pdfFileName = customer.getLname() + "_" + orderNumber + ".pdf";
+
+            String pdfFileName = customer.getLname() + "_" + vehicle.getId() + ".pdf";
 
             try {
                 pdfStorageService.storePdf(pdfBytes, pdfFileName);

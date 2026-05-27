@@ -31,7 +31,11 @@ public class CustomerService {
     @Transactional
     public void saveVehicle(Vehicle vehicle) {
         System.out.println("Saving vehicle info...");
-        entityManager.merge(vehicle);
+        if (vehicle.getId() == null) {
+            entityManager.persist(vehicle);
+        } else {
+            entityManager.merge(vehicle);
+        }
     }
 
     public List<Vehicle> getAllVehicles() {
