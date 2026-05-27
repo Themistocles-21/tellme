@@ -8,6 +8,7 @@ import com.cscd488.html.services.FileService;
 import com.cscd488.html.services.TranslationService;
 import com.cscd488.html.services.ServiceWriterConfigService;
 import com.cscd488.html.services.PdfService;
+import com.cscd488.html.services.ServiceToggleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,9 @@ public class ReviewController {
 
     @Autowired
     private FileService fileWriter;
+
+    @Autowired
+    private ServiceToggleService serviceToggleService;
 
     public ReviewController(CustomerService customerService,
                             EmailSenderService emailService,
@@ -127,6 +131,7 @@ public class ReviewController {
             model.addAttribute("issueSummary", issueSummary);
             model.addAttribute("originalText", originalText);
             model.addAttribute("translatedText", translatedText);
+            model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
 
             return "confirmationPage";
 
@@ -134,6 +139,7 @@ public class ReviewController {
             System.err.println("Error in confirmation: " + e.getMessage());
             e.printStackTrace();
             model.addAttribute("error", "An error occurred processing your request: " + e.getMessage());
+            model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
             return "customerInfo";
         }
     }

@@ -3,6 +3,7 @@ package com.cscd488.html.controller;
 import com.cscd488.html.model.Customer;
 import com.cscd488.html.model.Vehicle;
 import com.cscd488.html.services.ServiceToggleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class VehicleController {
 
-    private final ServiceToggleService serviceToggleService;
-
-    public VehicleController(ServiceToggleService serviceToggleService) {
-        this.serviceToggleService = serviceToggleService;
-    }
+    @Autowired
+    private ServiceToggleService serviceToggleService;
 
     @PostMapping("/vehicle/register")
     public String vehicleRegister(@ModelAttribute Customer customer,
@@ -22,6 +20,7 @@ public class VehicleController {
                                   Model model) {
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
         return "issueLocation";
     }
 
@@ -45,6 +44,7 @@ public class VehicleController {
         vehicle.setIssueType(issueType);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
         return "issueSeverity";
     }
 
@@ -56,6 +56,7 @@ public class VehicleController {
         vehicle.setSeverity(severity);
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
         return "issueDetails";
     }
 
@@ -69,6 +70,7 @@ public class VehicleController {
         }
         model.addAttribute("customer", customer);
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
         return "reviewPage";
     }
 }
