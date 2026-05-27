@@ -44,6 +44,7 @@ public class ServiceWriterController {
         }
         model.addAttribute("loggedIn", true);
         model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
+        model.addAttribute("disabledLanguages", serviceToggleService.getDisabledServices());
         model.addAttribute("serviceWriterEmail", serviceWriterConfigService.getServiceWriterEmail());
         return "serviceWriterDashboard";
     }
@@ -73,6 +74,7 @@ public class ServiceWriterController {
         model.addAttribute("emailUpdated", true);
         model.addAttribute("loggedIn", true);
         model.addAttribute("disabledServices", serviceToggleService.getDisabledServices());
+        model.addAttribute("disabledLanguages", serviceToggleService.getDisabledServices());
         model.addAttribute("serviceWriterEmail", serviceWriterConfigService.getServiceWriterEmail());
         return "serviceWriterDashboard";
     }

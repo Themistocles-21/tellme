@@ -64,11 +64,11 @@
         <input type="hidden" name="lang" value="en">
         <button type="submit" class="lang-btn">English</button>
     </form>
-    <form action="/language" method="post" style="display: inline;">
+    <form th:if="${!#strings.contains(disabledServices, 'lang_fa')}" action="/language" method="post" style="display: inline;">
         <input type="hidden" name="lang" value="fa">
         <button type="submit" class="lang-btn">فارسی</button>
     </form>
-    <form action="/language" method="post" style="display: inline;">
+    <form th:if="${!#strings.contains(disabledServices, 'lang_ru')}" action="/language" method="post" style="display: inline;">
         <input type="hidden" name="lang" value="ru">
         <button type="submit" class="lang-btn">Русский</button>
     </form>
