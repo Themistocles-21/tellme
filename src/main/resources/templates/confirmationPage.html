@@ -83,113 +83,92 @@
 </div>
 
 <script>
-    (function() {
-        const canvas = document.getElementById('confettiCanvas');
-        const ctx = canvas.getContext('2d');
+    // Simple working confetti
+    var canvas = document.getElementById('confettiCanvas');
+    var ctx = canvas.getContext('2d');
 
-        let width, height;
+    // Set canvas size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-        function resizeCanvas() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            console.log('Canvas size:', width, 'x', height);
-        }
+    var particles = [];
+    var particleCount = 300;
 
-        const particles = [];
-        const PARTICLE_COUNT = 350;
+    // Colors for confetti
+    var colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B', '#8B6914', '#DAa520'];
 
-        function random(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 
-        class ConfettiParticle {
-            constructor() {
-                // X position - spread across FULL width
-                this.x = random(0, window.innerWidth);
-                // Start above the visible area
-                this.y = random(-200, -20);
-                this.size = random(6, 14);
-                this.speedY = random(3, 9);
-                this.speedX = random(-2.5, 2.5);
-                // Colors - gold, bronze, copper tones
-                const colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B'];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.rotation = random(0, 360);
-                this.rotationSpeed = random(-8, 8);
-            }
-
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                this.rotation += this.rotationSpeed;
-
-                // Reset when off screen
-                if (this.y > height + 100) {
-                    this.y = random(-150, -30);
-                    this.x = random(0, width);
-                }
-
-                // Wrap horizontally
-                if (this.x > width + 50) {
-                    this.x = -50;
-                }
-                if (this.x < -50) {
-                    this.x = width + 50;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.fillStyle = this.color;
-                ctx.fillRect(-this.size/2, -this.size/3, this.size, this.size * 0.7);
-                ctx.restore();
-            }
-        }
-
-        let animationId;
-
-        function initConfetti() {
-            resizeCanvas();
-
-            // Create particles
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new ConfettiParticle());
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-                for (let particle of particles) {
-                    particle.update();
-                    particle.draw();
-                }
-                animationId = requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            // Stop after 5 seconds
-            setTimeout(() => {
-                cancelAnimationFrame(animationId);
-                canvas.style.display = 'none';
-            }, 5000);
-        }
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            // Reposition particles on resize
-            for (let particle of particles) {
-                particle.x = random(0, width);
-                particle.y = random(-200, -20);
-            }
+    // Create particles
+    for (var i = 0; i < particleCount; i++) {
+        particles.push({
+            x: random(0, canvas.width),     // Full width
+            y: random(-200, -20),           // Start above screen
+            size: random(5, 12),
+            speedY: random(2, 8),
+            speedX: random(-2, 2),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: random(0, 360),
+            rotationSpeed: random(-5, 5)
         });
+    }
 
-        // Start when page loads
-        window.addEventListener('load', initConfetti);
-    })();
+    function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < particles.length; i++) {
+            var p = particles[i];
+
+            // Update position
+            p.y += p.speedY;
+            p.x += p.speedX;
+            p.rotation += p.rotationSpeed;
+
+            // Reset if off screen
+            if (p.y > canvas.height + 100) {
+                p.y = random(-150, -30);
+                p.x = random(0, canvas.width);
+            }
+
+            // Wrap around sides
+            if (p.x > canvas.width + 50) p.x = -50;
+            if (p.x < -50) p.x = canvas.width + 50;
+
+            // Draw confetti
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size/2, -p.size/3, p.size, p.size * 0.6);
+            ctx.restore();
+        }
+
+        requestAnimationFrame(drawConfetti);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Reposition particles when window resizes
+        for (var i = 0; i < particles.length; i++) {
+            particles[i].x = random(0, canvas.width);
+            particles[i].y = random(-200, -20);
+        }
+    });
+
+    // Start confetti
+    drawConfetti();
+
+    // Stop confetti after 5 seconds
+    setTimeout(function() {
+        var ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'none';
+    }, 5000);
 </script>
 
 </body>
