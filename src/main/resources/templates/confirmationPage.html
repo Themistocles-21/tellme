@@ -54,7 +54,7 @@
 
 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
     <div class="success-box">
-        <h2>🎉 Order Submitted! 🎉</h2>
+        <h2 th:text="#{confirmation.message}">Order Submitted</h2>
         <p th:text="${confirmationMsg}">Your order was successfully submitted!</p>
     </div>
 
@@ -85,7 +85,6 @@
 </div>
 
 <script>
-    // Confetti animation
     (function() {
         const canvas = document.getElementById('confettiCanvas');
         const ctx = canvas.getContext('2d');
@@ -94,7 +93,7 @@
         let height = window.innerHeight;
 
         let particles = [];
-        const particleCount = 200;
+        const particleCount = 300;
 
         function resizeCanvas() {
             width = window.innerWidth;
@@ -110,13 +109,13 @@
         class Particle {
             constructor() {
                 this.x = random(0, width);
-                this.y = random(-height, 0);
-                this.size = random(5, 12);
-                this.speedY = random(3, 8);
-                this.speedX = random(-2, 2);
-                this.color = `hsl(${random(0, 360)}, 100%, 60%)`;
+                this.y = random(-height * 0.3, 0);
+                this.size = random(4, 10);
+                this.speedY = random(2, 7);
+                this.speedX = random(-1.5, 1.5);
+                this.color = `hsl(${random(30, 60)}, 80%, 55%)`;
                 this.rotation = random(0, 360);
-                this.rotationSpeed = random(-5, 5);
+                this.rotationSpeed = random(-3, 3);
             }
 
             update() {
@@ -125,7 +124,7 @@
                 this.rotation += this.rotationSpeed;
 
                 if (this.y > height + 100) {
-                    this.y = random(-100, 0);
+                    this.y = random(-100, -20);
                     this.x = random(0, width);
                 }
                 if (this.x > width + 50) this.x = -50;

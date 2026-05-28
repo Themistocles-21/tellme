@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class ReviewController {
@@ -136,7 +137,7 @@ public class ReviewController {
             model.addAttribute("vehicle", vehicle);
             model.addAttribute("confirmationMsg", "Your order was successfully submitted!");
             model.addAttribute("orderNumber", orderNumber);
-            model.addAttribute("dateTime", LocalDateTime.now().toString());
+            model.addAttribute("dateTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm")));
             model.addAttribute("email", displayCustomer.getEmail());
             model.addAttribute("msgToReadEmail", "Please check your inbox and make sure email is not marked as spam.");
             model.addAttribute("issueSummary", issueSummary);
