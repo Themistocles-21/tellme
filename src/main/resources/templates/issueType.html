@@ -59,10 +59,13 @@
     <input type="hidden" name="phone" th:value="${customer.phone}">
     <input type="hidden" name="address" th:value="${customer.address}">
     <input type="hidden" name="language" th:value="${customer.language}">
+    <input type="hidden" name="companyName" th:value="${customer.companyName}">
     <input type="hidden" name="make" th:value="${vehicle.make}">
     <input type="hidden" name="model" th:value="${vehicle.model}">
     <input type="hidden" name="year" th:value="${vehicle.year}">
     <input type="hidden" name="vin" th:value="${vehicle.vin}">
+    <input type="hidden" name="mileage" th:value="${vehicle.mileage}">
+    <input type="hidden" name="licensePlate" th:value="${vehicle.licensePlate}">
     <input type="hidden" name="issueLocation" th:value="${vehicle.issueLocation}">
 
     <div th:switch="${vehicle.issueLocation}">
