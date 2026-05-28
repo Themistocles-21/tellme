@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<h2 th:text="#{confirmation.title}">Order Submitted</h2>
+<hr>
+
 <div class="progress-container">
     <div class="progress-steps">
         <div class="step completed">
@@ -50,21 +53,59 @@
 <hr>
 
 <div class="success-box">
-    <h2 th:text="#{confirmation.message}">Order Submitted</h2>
+    <h3 th:text="#{confirmation.message}">Order Submitted</h3>
     <p th:text="${confirmationMsg}"></p>
 </div>
 
-<p><strong th:text="#{confirmation.order_number}">Order Number:</strong> <span th:text="${orderNumber}"></span></p>
-<p><strong th:text="#{confirmation.date_time}">Date & Time:</strong> <span th:text="${dateTime}"></span></p>
-<p><strong th:text="#{confirmation.summary}">Issue Summary:</strong> <span th:text="${issueSummary}"></span></p>
-
-<div th:if="${originalText != null and originalText != ''}">
-    <p><strong>Original Comments:</strong> <span th:text="${originalText}"></span></p>
-    <p><strong>Translated Comments:</strong> <span th:text="${translatedText}"></span></p>
+<div class="section">
+    <h3 th:text="#{review.customer}">Customer Information</h3>
+    <p><strong th:text="#{customer.first_name} + ':'">First Name :</strong> <span th:text="${customer.fname}"></span></p>
+    <p><strong th:text="#{customer.last_name} + ':'">Last Name :</strong> <span th:text="${customer.lname}"></span></p>
+    <p><strong th:text="#{customer.email} + ':'">Email :</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong th:text="#{customer.phone} + ':'">Phone :</strong> <span th:text="${customer.phone}"></span></p>
+    <p><strong th:text="#{customer.address} + ':'">Address :</strong> <span th:text="${customer.address}"></span></p>
+    <p th:if="${customer.companyName != null and customer.companyName != ''}">
+        <strong th:text="#{customer.company_name} + ':'">Company Name :</strong> <span th:text="${customer.companyName}"></span>
+    </p>
 </div>
 
-<p><strong th:text="#{confirmation.email}">Email:</strong> <span th:text="${email}"></span></p>
-<p th:text="#{confirmation.spam}"></p>
+<div class="section">
+    <h3 th:text="#{review.vehicle}">Vehicle Information</h3>
+    <p><strong th:text="#{vehicle.make} + ':'">Make :</strong> <span th:text="${vehicle.make}"></span></p>
+    <p><strong th:text="#{vehicle.model} + ':'">Model :</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong th:text="#{vehicle.year} + ':'">Year :</strong> <span th:text="${vehicle.year}"></span></p>
+    <p><strong th:text="#{vehicle.vin} + ':'">VIN :</strong> <span th:text="${vehicle.vin}"></span></p>
+    <p th:if="${vehicle.mileage != null and vehicle.mileage != ''}">
+        <strong th:text="#{vehicle.mileage} + ':'">Current Mileage :</strong> <span th:text="${vehicle.mileage}"></span>
+    </p>
+    <p th:if="${vehicle.licensePlate != null and vehicle.licensePlate != ''}">
+        <strong th:text="#{vehicle.license_plate} + ':'">License Plate :</strong> <span th:text="${vehicle.licensePlate}"></span>
+    </p>
+</div>
+
+<div class="section">
+    <h3 th:text="#{review.diagnosis}">Issue Diagnosis</h3>
+    <p><strong th:text="#{review.location} + ':'">Location :</strong> <span th:text="${vehicle.issueLocation}"></span></p>
+    <p><strong th:text="#{review.issue_type} + ':'">Issue Type :</strong> <span th:text="${vehicle.issueType}"></span></p>
+    <p><strong th:text="#{review.severity} + ':'">Severity :</strong> <span th:text="${vehicle.severity}"></span></p>
+</div>
+
+<div class="section">
+    <h3>Order Details</h3>
+    <p><strong th:text="#{confirmation.order_number} + ':'">Order Number :</strong> <span th:text="${orderNumber}"></span></p>
+    <p><strong th:text="#{confirmation.date_time} + ':'">Date & Time :</strong> <span th:text="${dateTime}"></span></p>
+    <p><strong th:text="#{confirmation.summary} + ':'">Issue Summary :</strong> <span th:text="${issueSummary}"></span></p>
+    <p><strong th:text="#{confirmation.email} + ':'">Email :</strong> <span th:text="${email}"></span></p>
+    <p th:text="#{confirmation.spam}"></p>
+</div>
+
+<div th:if="${originalText != null and originalText != ''}" class="section">
+    <h3>Customer Comments</h3>
+    <p><strong>Original Comments :</strong> <span th:text="${originalText}"></span></p>
+    <p th:if="${translatedText != null and translatedText != ''}">
+        <strong>Translated Comments :</strong> <span th:text="${translatedText}"></span>
+    </p>
+</div>
 
 <div class="button-group">
     <form action="/home" method="get">
