@@ -38,13 +38,11 @@
             z-index: 1000;
         }
 
-        .order-details {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .order-details p {
-            margin: 12px 0;
+        .section {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -58,7 +56,7 @@
         <p th:text="${confirmationMsg}">Your order was successfully submitted!</p>
     </div>
 
-    <div class="section order-details">
+    <div class="section">
         <h3>Order Details</h3>
         <p><strong th:text="#{confirmation.order_number} + ':'">Order Number :</strong> <span th:text="${orderNumber}"></span></p>
         <p><strong th:text="#{confirmation.date_time} + ':'">Date & Time :</strong> <span th:text="${dateTime}"></span></p>
@@ -93,13 +91,18 @@
         let height = window.innerHeight;
 
         let particles = [];
-        const particleCount = 300;
+        const particleCount = 400;
 
         function resizeCanvas() {
             width = window.innerWidth;
             height = window.innerHeight;
             canvas.width = width;
             canvas.height = height;
+            // Reset particles on resize
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
         }
 
         function random(min, max) {
@@ -108,14 +111,19 @@
 
         class Particle {
             constructor() {
+                // Spawn at random X across entire width
                 this.x = random(0, width);
-                this.y = random(-height * 0.3, 0);
-                this.size = random(4, 10);
-                this.speedY = random(2, 7);
-                this.speedX = random(-1.5, 1.5);
-                this.color = `hsl(${random(30, 60)}, 80%, 55%)`;
+                // Start above the viewport
+                this.y = random(-height * 0.5, -10);
+                this.size = random(5, 12);
+                this.speedY = random(3, 10);
+                this.speedX = random(-3, 3);
+                // Warm colors: gold, orange, brown
+                const hueOptions = [45, 35, 25, 55, 40];
+                const hue = hueOptions[Math.floor(Math.random() * hueOptions.length)];
+                this.color = `hsl(${hue}, 85%, 55%)`;
                 this.rotation = random(0, 360);
-                this.rotationSpeed = random(-3, 3);
+                this.rotationSpeed = random(-5, 5);
             }
 
             update() {
@@ -123,12 +131,17 @@
                 this.x += this.speedX;
                 this.rotation += this.rotationSpeed;
 
+                // Reset when off screen
                 if (this.y > height + 100) {
                     this.y = random(-100, -20);
                     this.x = random(0, width);
                 }
-                if (this.x > width + 50) this.x = -50;
-                if (this.x < -50) this.x = width + 50;
+                if (this.x > width + 60) {
+                    this.x = -60;
+                }
+                if (this.x < -60) {
+                    this.x = width + 60;
+                }
             }
 
             draw() {
@@ -136,21 +149,19 @@
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation * Math.PI / 180);
                 ctx.fillStyle = this.color;
-                ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                // Draw rectangle (confetti shape)
+                ctx.fillRect(-this.size/2, -this.size/3, this.size, this.size * 0.6);
                 ctx.restore();
             }
         }
 
         function init() {
             resizeCanvas();
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
             animate();
 
             setTimeout(() => {
                 fadeOut();
-            }, 4000);
+            }, 4500);
         }
 
         let animationId;
@@ -167,7 +178,7 @@
         function fadeOut() {
             let opacity = 1;
             let fadeStart = performance.now();
-            const fadeDuration = 1000;
+            const fadeDuration = 1200;
 
             function fade(timestamp) {
                 const elapsed = timestamp - fadeStart;
@@ -187,10 +198,6 @@
 
         window.addEventListener('resize', () => {
             resizeCanvas();
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
         });
 
         init();
