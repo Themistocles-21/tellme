@@ -93,6 +93,9 @@
         let particles = [];
         const particleCount = 200;
 
+        // Brown and gold colors matching the page design
+        const colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B', '#8B6914'];
+
         function resizeCanvas() {
             width = window.innerWidth;
             height = window.innerHeight;
@@ -111,7 +114,7 @@
                 this.size = random(5, 12);
                 this.speedY = random(3, 8);
                 this.speedX = random(-2, 2);
-                this.color = `hsl(${random(0, 360)}, 100%, 60%)`;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.rotation = random(0, 360);
                 this.rotationSpeed = random(-5, 5);
             }
