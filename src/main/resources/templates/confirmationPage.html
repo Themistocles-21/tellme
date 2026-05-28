@@ -5,113 +5,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title th:text="#{confirmation.title}">Order Submitted</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .success-box {
+            text-align: center;
+            padding: 30px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #5a3e1b 0%, #8b6914 100%);
+            color: #fef7e0;
+            border-radius: 12px;
+            border: 1px solid #daa520;
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .order-details {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .order-details p {
+            margin: 12px 0;
+        }
+    </style>
 </head>
 <body>
 
-<h2 th:text="#{confirmation.title}">Order Submitted</h2>
-<hr>
+<canvas id="confettiCanvas"></canvas>
 
-<div class="progress-container">
-    <div class="progress-steps">
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.customer}">Customer</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.vehicle}">Vehicle</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.location}">Location</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.issue_type}">Issue Type</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.severity}">Severity</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.comments}">Comments</div>
-            <div class="progress-line"></div>
-        </div>
-        <div class="step completed">
-            <div class="step-circle"><span></span></div>
-            <div class="step-label" th:text="#{step.review}">Review</div>
-            <div class="progress-line"></div>
-        </div>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div class="success-box">
+        <h2>🎉 Order Submitted! 🎉</h2>
+        <p th:text="${confirmationMsg}">Your order was successfully submitted!</p>
+    </div>
+
+    <div class="section order-details">
+        <h3>Order Details</h3>
+        <p><strong th:text="#{confirmation.order_number} + ':'">Order Number :</strong> <span th:text="${orderNumber}"></span></p>
+        <p><strong th:text="#{confirmation.date_time} + ':'">Date & Time :</strong> <span th:text="${dateTime}"></span></p>
+        <p><strong th:text="#{confirmation.summary} + ':'">Issue Summary :</strong> <span th:text="${issueSummary}"></span></p>
+        <p><strong th:text="#{confirmation.email} + ':'">Email :</strong> <span th:text="${email}"></span></p>
+        <p th:text="#{confirmation.spam}" style="font-size: 12px; color: #8b6914; margin-top: 10px;"></p>
+    </div>
+
+    <div th:if="${originalText != null and originalText != ''}" class="section">
+        <h3>Customer Comments</h3>
+        <p><strong>Original Comments :</strong></p>
+        <p style="background: #fff8f0; padding: 10px; border-radius: 6px; margin-top: 5px;" th:text="${originalText}"></p>
+        <p th:if="${translatedText != null and translatedText != ''}">
+            <strong>Translated Comments :</strong>
+        </p>
+        <p th:if="${translatedText != null and translatedText != ''}" style="background: #e8d5a8; padding: 10px; border-radius: 6px; margin-top: 5px;" th:text="${translatedText}"></p>
+    </div>
+
+    <div class="button-group" style="margin-top: 30px;">
+        <form action="/home" method="get">
+            <button type="submit" class="home-btn" th:text="#{button.home}">Return Home</button>
+        </form>
     </div>
 </div>
-<hr>
 
-<div class="success-box">
-    <h3 th:text="#{confirmation.message}">Order Submitted</h3>
-    <p th:text="${confirmationMsg}"></p>
-</div>
+<script>
+    // Confetti animation
+    (function() {
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
 
-<div class="section">
-    <h3 th:text="#{review.customer}">Customer Information</h3>
-    <p><strong th:text="#{customer.first_name} + ':'">First Name :</strong> <span th:text="${customer.fname}"></span></p>
-    <p><strong th:text="#{customer.last_name} + ':'">Last Name :</strong> <span th:text="${customer.lname}"></span></p>
-    <p><strong th:text="#{customer.email} + ':'">Email :</strong> <span th:text="${customer.email}"></span></p>
-    <p><strong th:text="#{customer.phone} + ':'">Phone :</strong> <span th:text="${customer.phone}"></span></p>
-    <p><strong th:text="#{customer.address} + ':'">Address :</strong> <span th:text="${customer.address}"></span></p>
-    <p th:if="${customer.companyName != null and customer.companyName != ''}">
-        <strong th:text="#{customer.company_name} + ':'">Company Name :</strong> <span th:text="${customer.companyName}"></span>
-    </p>
-</div>
+        let width = window.innerWidth;
+        let height = window.innerHeight;
 
-<div class="section">
-    <h3 th:text="#{review.vehicle}">Vehicle Information</h3>
-    <p><strong th:text="#{vehicle.make} + ':'">Make :</strong> <span th:text="${vehicle.make}"></span></p>
-    <p><strong th:text="#{vehicle.model} + ':'">Model :</strong> <span th:text="${vehicle.model}"></span></p>
-    <p><strong th:text="#{vehicle.year} + ':'">Year :</strong> <span th:text="${vehicle.year}"></span></p>
-    <p><strong th:text="#{vehicle.vin} + ':'">VIN :</strong> <span th:text="${vehicle.vin}"></span></p>
-    <p th:if="${vehicle.mileage != null and vehicle.mileage != ''}">
-        <strong th:text="#{vehicle.mileage} + ':'">Current Mileage :</strong> <span th:text="${vehicle.mileage}"></span>
-    </p>
-    <p th:if="${vehicle.licensePlate != null and vehicle.licensePlate != ''}">
-        <strong th:text="#{vehicle.license_plate} + ':'">License Plate :</strong> <span th:text="${vehicle.licensePlate}"></span>
-    </p>
-</div>
+        let particles = [];
+        const particleCount = 200;
 
-<div class="section">
-    <h3 th:text="#{review.diagnosis}">Issue Diagnosis</h3>
-    <p><strong th:text="#{review.location} + ':'">Location :</strong> <span th:text="${vehicle.issueLocation}"></span></p>
-    <p><strong th:text="#{review.issue_type} + ':'">Issue Type :</strong> <span th:text="${vehicle.issueType}"></span></p>
-    <p><strong th:text="#{review.severity} + ':'">Severity :</strong> <span th:text="${vehicle.severity}"></span></p>
-</div>
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
 
-<div class="section">
-    <h3>Order Details</h3>
-    <p><strong th:text="#{confirmation.order_number} + ':'">Order Number :</strong> <span th:text="${orderNumber}"></span></p>
-    <p><strong th:text="#{confirmation.date_time} + ':'">Date & Time :</strong> <span th:text="${dateTime}"></span></p>
-    <p><strong th:text="#{confirmation.summary} + ':'">Issue Summary :</strong> <span th:text="${issueSummary}"></span></p>
-    <p><strong th:text="#{confirmation.email} + ':'">Email :</strong> <span th:text="${email}"></span></p>
-    <p th:text="#{confirmation.spam}"></p>
-</div>
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-<div th:if="${originalText != null and originalText != ''}" class="section">
-    <h3>Customer Comments</h3>
-    <p><strong>Original Comments :</strong> <span th:text="${originalText}"></span></p>
-    <p th:if="${translatedText != null and translatedText != ''}">
-        <strong>Translated Comments :</strong> <span th:text="${translatedText}"></span>
-    </p>
-</div>
+        class Particle {
+            constructor() {
+                this.x = random(0, width);
+                this.y = random(-height, 0);
+                this.size = random(5, 12);
+                this.speedY = random(3, 8);
+                this.speedX = random(-2, 2);
+                this.color = `hsl(${random(0, 360)}, 100%, 60%)`;
+                this.rotation = random(0, 360);
+                this.rotationSpeed = random(-5, 5);
+            }
 
-<div class="button-group">
-    <form action="/home" method="get">
-        <button type="submit" class="home-btn" th:text="#{button.home}">Return Home</button>
-    </form>
-</div>
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > height + 100) {
+                    this.y = random(-100, 0);
+                    this.x = random(0, width);
+                }
+                if (this.x > width + 50) this.x = -50;
+                if (this.x < -50) this.x = width + 50;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function init() {
+            resizeCanvas();
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            animate();
+
+            setTimeout(() => {
+                fadeOut();
+            }, 4000);
+        }
+
+        let animationId;
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function fadeOut() {
+            let opacity = 1;
+            let fadeStart = performance.now();
+            const fadeDuration = 1000;
+
+            function fade(timestamp) {
+                const elapsed = timestamp - fadeStart;
+                opacity = Math.max(0, 1 - (elapsed / fadeDuration));
+                canvas.style.opacity = opacity;
+
+                if (elapsed < fadeDuration) {
+                    requestAnimationFrame(fade);
+                } else {
+                    cancelAnimationFrame(animationId);
+                    canvas.style.display = 'none';
+                }
+            }
+
+            requestAnimationFrame(fade);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        });
+
+        init();
+    })();
+</script>
 
 </body>
 </html>
