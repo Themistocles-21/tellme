@@ -83,32 +83,28 @@
 </div>
 
 <script>
-    // Simple working confetti
     var canvas = document.getElementById('confettiCanvas');
     var ctx = canvas.getContext('2d');
 
-    // Set canvas size
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     var particles = [];
-    var particleCount = 300;
-
-    // Colors for confetti
-    var colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B', '#8B6914', '#DAa520'];
+    var particleCount = 400;
+    var colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B', '#8B6914'];
 
     function random(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    // Create particles
+    // WIDER spread - using canvas width * 1.5 to go beyond edges
     for (var i = 0; i < particleCount; i++) {
         particles.push({
-            x: random(0, canvas.width),     // Full width
-            y: random(-200, -20),           // Start above screen
+            x: random(-canvas.width * 0.5, canvas.width * 1.5),
+            y: random(-200, -20),
             size: random(5, 12),
             speedY: random(2, 8),
-            speedX: random(-2, 2),
+            speedX: random(-3, 3),
             color: colors[Math.floor(Math.random() * colors.length)],
             rotation: random(0, 360),
             rotationSpeed: random(-5, 5)
@@ -121,22 +117,18 @@
         for (var i = 0; i < particles.length; i++) {
             var p = particles[i];
 
-            // Update position
             p.y += p.speedY;
             p.x += p.speedX;
             p.rotation += p.rotationSpeed;
 
-            // Reset if off screen
             if (p.y > canvas.height + 100) {
                 p.y = random(-150, -30);
-                p.x = random(0, canvas.width);
+                p.x = random(-canvas.width * 0.5, canvas.width * 1.5);
             }
 
-            // Wrap around sides
-            if (p.x > canvas.width + 50) p.x = -50;
-            if (p.x < -50) p.x = canvas.width + 50;
+            if (p.x > canvas.width + 100) p.x = -100;
+            if (p.x < -100) p.x = canvas.width + 100;
 
-            // Draw confetti
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rotation * Math.PI / 180);
@@ -148,24 +140,19 @@
         requestAnimationFrame(drawConfetti);
     }
 
-    // Handle window resize
     window.addEventListener('resize', function() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Reposition particles when window resizes
         for (var i = 0; i < particles.length; i++) {
-            particles[i].x = random(0, canvas.width);
+            particles[i].x = random(-canvas.width * 0.5, canvas.width * 1.5);
             particles[i].y = random(-200, -20);
         }
     });
 
-    // Start confetti
     drawConfetti();
 
-    // Stop confetti after 5 seconds
     setTimeout(function() {
-        var ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.display = 'none';
     }, 5000);
