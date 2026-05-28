@@ -90,24 +90,21 @@
     canvas.height = window.innerHeight;
 
     var particles = [];
-    var particleCount = 300;
+    var particleCount = 350;
     var colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B', '#8B6914'];
 
     function random(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    // Center the confetti - spawn in the middle 60% of the screen
-    var centerStart = canvas.width * 0.2;
-    var centerEnd = canvas.width * 0.8;
-
+    // Full width - spawn across entire browser width
     for (var i = 0; i < particleCount; i++) {
         particles.push({
-            x: random(centerStart, centerEnd),
+            x: random(0, canvas.width),
             y: random(-200, -20),
             size: random(5, 12),
             speedY: random(2, 8),
-            speedX: random(-1.5, 1.5),
+            speedX: random(-2, 2),
             color: colors[Math.floor(Math.random() * colors.length)],
             rotation: random(0, 360),
             rotationSpeed: random(-5, 5)
@@ -116,10 +113,6 @@
 
     function drawConfetti() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Update center bounds on resize
-        var currentCenterStart = canvas.width * 0.2;
-        var currentCenterEnd = canvas.width * 0.8;
 
         for (var i = 0; i < particles.length; i++) {
             var p = particles[i];
@@ -130,8 +123,11 @@
 
             if (p.y > canvas.height + 100) {
                 p.y = random(-150, -30);
-                p.x = random(currentCenterStart, currentCenterEnd);
+                p.x = random(0, canvas.width);
             }
+
+            if (p.x > canvas.width + 50) p.x = -50;
+            if (p.x < -50) p.x = canvas.width + 50;
 
             ctx.save();
             ctx.translate(p.x, p.y);
@@ -148,11 +144,8 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        var newCenterStart = canvas.width * 0.2;
-        var newCenterEnd = canvas.width * 0.8;
-
         for (var i = 0; i < particles.length; i++) {
-            particles[i].x = random(newCenterStart, newCenterEnd);
+            particles[i].x = random(0, canvas.width);
             particles[i].y = random(-200, -20);
         }
     });
