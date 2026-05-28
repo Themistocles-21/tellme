@@ -28,14 +28,14 @@
             }
         }
 
-        canvas {
+        #confettiCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1000;
+            z-index: 9999;
         }
 
         .section {
@@ -87,43 +87,37 @@
         const canvas = document.getElementById('confettiCanvas');
         const ctx = canvas.getContext('2d');
 
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-        let particles = [];
-        const particleCount = 400;
+        let width, height;
 
         function resizeCanvas() {
             width = window.innerWidth;
             height = window.innerHeight;
             canvas.width = width;
             canvas.height = height;
-            // Reset particles on resize
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+            console.log('Canvas size:', width, 'x', height);
         }
+
+        const particles = [];
+        const PARTICLE_COUNT = 350;
 
         function random(min, max) {
             return Math.random() * (max - min) + min;
         }
 
-        class Particle {
+        class ConfettiParticle {
             constructor() {
-                // Spawn at random X across entire width
-                this.x = random(0, width);
-                // Start above the viewport
-                this.y = random(-height * 0.5, -10);
-                this.size = random(5, 12);
-                this.speedY = random(3, 10);
-                this.speedX = random(-3, 3);
-                // Warm colors: gold, orange, brown
-                const hueOptions = [45, 35, 25, 55, 40];
-                const hue = hueOptions[Math.floor(Math.random() * hueOptions.length)];
-                this.color = `hsl(${hue}, 85%, 55%)`;
+                // X position - spread across FULL width
+                this.x = random(0, window.innerWidth);
+                // Start above the visible area
+                this.y = random(-200, -20);
+                this.size = random(6, 14);
+                this.speedY = random(3, 9);
+                this.speedX = random(-2.5, 2.5);
+                // Colors - gold, bronze, copper tones
+                const colors = ['#DAA520', '#B8860B', '#CD7F32', '#FFD700', '#C5A35A', '#E8B84B'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.rotation = random(0, 360);
-                this.rotationSpeed = random(-5, 5);
+                this.rotationSpeed = random(-8, 8);
             }
 
             update() {
@@ -133,14 +127,16 @@
 
                 // Reset when off screen
                 if (this.y > height + 100) {
-                    this.y = random(-100, -20);
+                    this.y = random(-150, -30);
                     this.x = random(0, width);
                 }
-                if (this.x > width + 60) {
-                    this.x = -60;
+
+                // Wrap horizontally
+                if (this.x > width + 50) {
+                    this.x = -50;
                 }
-                if (this.x < -60) {
-                    this.x = width + 60;
+                if (this.x < -50) {
+                    this.x = width + 50;
                 }
             }
 
@@ -149,58 +145,50 @@
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation * Math.PI / 180);
                 ctx.fillStyle = this.color;
-                // Draw rectangle (confetti shape)
-                ctx.fillRect(-this.size/2, -this.size/3, this.size, this.size * 0.6);
+                ctx.fillRect(-this.size/2, -this.size/3, this.size, this.size * 0.7);
                 ctx.restore();
             }
         }
 
-        function init() {
-            resizeCanvas();
-            animate();
-
-            setTimeout(() => {
-                fadeOut();
-            }, 4500);
-        }
-
         let animationId;
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let particle of particles) {
-                particle.update();
-                particle.draw();
+        function initConfetti() {
+            resizeCanvas();
+
+            // Create particles
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new ConfettiParticle());
             }
-            animationId = requestAnimationFrame(animate);
-        }
 
-        function fadeOut() {
-            let opacity = 1;
-            let fadeStart = performance.now();
-            const fadeDuration = 1200;
-
-            function fade(timestamp) {
-                const elapsed = timestamp - fadeStart;
-                opacity = Math.max(0, 1 - (elapsed / fadeDuration));
-                canvas.style.opacity = opacity;
-
-                if (elapsed < fadeDuration) {
-                    requestAnimationFrame(fade);
-                } else {
-                    cancelAnimationFrame(animationId);
-                    canvas.style.display = 'none';
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let particle of particles) {
+                    particle.update();
+                    particle.draw();
                 }
+                animationId = requestAnimationFrame(animate);
             }
 
-            requestAnimationFrame(fade);
+            animate();
+
+            // Stop after 5 seconds
+            setTimeout(() => {
+                cancelAnimationFrame(animationId);
+                canvas.style.display = 'none';
+            }, 5000);
         }
 
         window.addEventListener('resize', () => {
             resizeCanvas();
+            // Reposition particles on resize
+            for (let particle of particles) {
+                particle.x = random(0, width);
+                particle.y = random(-200, -20);
+            }
         });
 
-        init();
+        // Start when page loads
+        window.addEventListener('load', initConfetti);
     })();
 </script>
 
