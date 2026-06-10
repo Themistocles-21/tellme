@@ -29,12 +29,10 @@ public class PdfService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
             String formattedDateTime = LocalDateTime.now().format(formatter);
 
-            // Extra space at top (shift everything down)
             Paragraph topSpacer = new Paragraph(" ", FontFactory.getFont(FontFactory.HELVETICA, 12));
             topSpacer.setSpacingAfter(20);
             document.add(topSpacer);
 
-            // ===== HEADER SECTION (Order # and Date) =====
             PdfPTable headerTable = new PdfPTable(2);
             headerTable.setWidthPercentage(100);
             headerTable.setWidths(new float[]{50, 50});
@@ -49,12 +47,10 @@ public class PdfService {
             headerTable.addCell(rightHeader);
             document.add(headerTable);
 
-            // ===== CUSTOMER INFORMATION & TECHNICIAN INFO (side by side with grid lines) =====
             PdfPTable topSection = new PdfPTable(2);
             topSection.setWidthPercentage(100);
             topSection.setWidths(new float[]{50, 50});
 
-            // LEFT: CUSTOMER INFORMATION
             PdfPCell customerCell = new PdfPCell();
             customerCell.setBorder(Rectangle.BOX);
             customerCell.setBorderWidth(1);
@@ -77,7 +73,6 @@ public class PdfService {
             customerCell.addElement(customerTable);
             topSection.addCell(customerCell);
 
-            // RIGHT: TECHNICIAN INFO (fill-in blanks)
             PdfPCell techCell = new PdfPCell();
             techCell.setBorder(Rectangle.BOX);
             techCell.setBorderWidth(1);
@@ -103,12 +98,10 @@ public class PdfService {
 
             document.add(topSection);
 
-            // ===== VEHICLE INFORMATION & UNIT INFORMATION (side by side with grid lines) =====
             PdfPTable middleSection = new PdfPTable(2);
             middleSection.setWidthPercentage(100);
             middleSection.setWidths(new float[]{50, 50});
 
-            // LEFT: VEHICLE INFORMATION
             PdfPCell vehicleCell = new PdfPCell();
             vehicleCell.setBorder(Rectangle.BOX);
             vehicleCell.setBorderWidth(1);
@@ -130,7 +123,6 @@ public class PdfService {
             vehicleCell.addElement(vehicleTable);
             middleSection.addCell(vehicleCell);
 
-            // RIGHT: UNIT INFORMATION (fill-in blanks)
             PdfPCell unitCell = new PdfPCell();
             unitCell.setBorder(Rectangle.BOX);
             unitCell.setBorderWidth(1);
@@ -161,14 +153,12 @@ public class PdfService {
 
             document.add(middleSection);
 
-            // ===== MILEAGE (separate row with grid lines) =====
             PdfPTable mileageTable = new PdfPTable(2);
             mileageTable.setWidthPercentage(100);
             mileageTable.setWidths(new float[]{15, 85});
             addCellWithBorders(mileageTable, "MILEAGE:", getValueOrBlank(vehicle.getMileage()), boldFont, normalFont);
             document.add(mileageTable);
 
-            // ===== COMPLAINT SECTION with grid lines =====
             PdfPTable complaintTable = new PdfPTable(1);
             complaintTable.setWidthPercentage(100);
             PdfPCell complaintCell = new PdfPCell();
@@ -192,7 +182,6 @@ public class PdfService {
                 complaintCell.addElement(new Paragraph("Translated Comments: " + vehicle.getTranslatedText(), normalFont));
             }
 
-            // Add blank lines for technician notes
             complaintCell.addElement(new Paragraph(" "));
             complaintCell.addElement(new Paragraph("Technician Notes: _______________________________________________", normalFont));
             complaintCell.addElement(new Paragraph("_______________________________________________________________", normalFont));
@@ -200,7 +189,6 @@ public class PdfService {
             complaintTable.addCell(complaintCell);
             document.add(complaintTable);
 
-            // ===== AUTHORIZATION SECTION with grid lines =====
             PdfPTable authTable = new PdfPTable(1);
             authTable.setWidthPercentage(100);
             PdfPCell authCell = new PdfPCell();
@@ -217,7 +205,6 @@ public class PdfService {
             authTable.addCell(authCell);
             document.add(authTable);
 
-            // ===== TOTAL COST SECTION with grid lines =====
             PdfPTable totalTable = new PdfPTable(6);
             totalTable.setWidthPercentage(100);
             totalTable.setWidths(new float[]{16, 16, 16, 16, 18, 18});
@@ -242,7 +229,6 @@ public class PdfService {
 
             document.add(totalTable);
 
-            // ===== SIGNATURE LINES with grid lines =====
             PdfPTable signatureTable = new PdfPTable(2);
             signatureTable.setWidthPercentage(100);
             signatureTable.setWidths(new float[]{50, 50});

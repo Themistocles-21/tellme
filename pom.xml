@@ -40,7 +40,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- OpenPDF for PDF generation -->
         <dependency>
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>

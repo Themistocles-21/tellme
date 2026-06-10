@@ -50,7 +50,6 @@ public class EmailSenderService {
         mimeMessageHelper.setText(body);
         mimeMessageHelper.setSubject(subject);
 
-        // Attach PDF from byte array
         ByteArrayDataSource dataSource = new ByteArrayDataSource(pdfBytes, "application/pdf");
         mimeMessageHelper.addAttachment(pdfFileName, dataSource);
 
